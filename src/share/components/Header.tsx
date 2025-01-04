@@ -52,16 +52,16 @@ function Header() {
   const [showNav, setShowNav] = useState(false);
 
   return (
-    <header className="p-2 fixed top-0 w-full flex justify-between items-center sm:px-5 sm:py-0">
+    <header className="px-5 py-2 fixed top-0 w-full flex justify-between items-center sm:py-0">
       <Link href={"/"} className="text-lg font-bold scale-100">
         PrimeTech
       </Link>
       <nav className="relative flex flex-col items-end">
-        <span
-          className="inline-block bg-secondaryColor p-1 cursor-pointer rounded-full sm:hidden"
-          onClick={() => setShowNav(!showNav)}
-        >
-          <MenuIcon className="size-5" />
+        <span>
+          <MenuIcon
+            className="size-5 sm:hidden cursor-pointer"
+            onClick={() => setShowNav(!showNav)}
+          />
         </span>
         <ul
           className={`

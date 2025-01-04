@@ -1,4 +1,4 @@
-import Header from "@/home/components/Header";
+import Header from "@/share/components/Header";
 
 export default function MainLayout({
   children,
@@ -8,7 +8,7 @@ export default function MainLayout({
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="mt-11">{children}</main>
     </>
   );
 }

@@ -1,3 +1,9 @@
+import Hero from "@/home/components/hero/Hero";
+
 export default function Home() {
-  return <section className="mt-10">content</section>;
+  return (
+    <>
+      <Hero />
+    </>
+  );
 }

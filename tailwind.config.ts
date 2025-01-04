@@ -10,7 +10,7 @@ export default {
     extend: {
       colors: {
         primaryColor: "#0A403A",
-        secondaryColor: "#F3EDE5",
+        secondaryColor: "#ECE2D5",
         sectionColor: "#F9F0E5",
       },
     },
