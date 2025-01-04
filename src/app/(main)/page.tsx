@@ -1,6 +1,7 @@
 import Hero from "@/home/components/hero/Hero";
+import PopularProductsSection from "@/home/components/popularProductsSection/PopularProductsSection";
 import RecentSection from "@/home/components/recentSection/RecentSection";
-import SalesSection from "@/home/salesSection/SalesSection";
+import SalesSection from "@/home/components/salesSection/SalesSection";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <RecentSection />
       <SalesSection />
+      <PopularProductsSection />
     </>
   );
 }

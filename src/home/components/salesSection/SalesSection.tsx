@@ -3,7 +3,7 @@ import ProductItem from "@/share/components/ProductItem";
 
 function SalesSection() {
   return (
-    <section className="p-10 bg-white flex flex-col gap-5 md:flex-row md:items-center">
+    <section className="p-10 mb-10 mt-10 bg-white flex flex-col gap-5 md:flex-row md:items-center">
       <header className="md:w-[50%]">
         <h2 className="text-lg font-bold">Ofertas</h2>
         <p className="mb-5 mt-5 text-sm text-pretty">
