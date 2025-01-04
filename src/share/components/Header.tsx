@@ -52,7 +52,7 @@ function Header() {
   const [showNav, setShowNav] = useState(false);
 
   return (
-    <header className="px-5 py-2 fixed top-0 w-full flex justify-between items-center sm:py-0">
+    <header className="h-[58px] px-10 fixed top-0 w-full flex justify-between items-center sm:py-0 md:z-50">
       <Link href={"/"} className="text-lg font-bold scale-100">
         PrimeTech
       </Link>

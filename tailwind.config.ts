@@ -13,6 +13,7 @@ export default {
         secondaryColor: "#ECE2D5",
         sectionColor: "#F9F0E5",
       },
+      screens: { xs: "475px", "lg-md": "952px" },
     },
   },
   plugins: [],

@@ -17,12 +17,13 @@ function Categories() {
   ];
 
   return (
-    <div className="flex gap-3 justify-center pt-5 mb-6">
+    <div className="flex gap-3 justify-center pt-5 mb-6 md:m-0 md:p-0 md:flex-col md:relative md:z-50">
+      <span className="hidden md:inline md:text-md">Categorias</span>
       {categoryItems.map(({ label, href }) => (
         <Link
           key={label}
           href={href}
-          className="bg-primaryColor text-sm text-white/90 px-4 py-2 rounded-lg"
+          className="bg-primaryColor text-center text-md text-white/90 px-4 py-2 rounded-lg text-xs lg:text-sm"
         >
           {label}
         </Link>
