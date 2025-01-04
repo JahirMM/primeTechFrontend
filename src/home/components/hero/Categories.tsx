@@ -17,7 +17,7 @@ function Categories() {
   ];
 
   return (
-    <div className="flex gap-3 justify-center pt-5 mb-6 md:m-0 md:p-0 md:flex-col md:relative md:z-50">
+    <div className="flex gap-3 justify-center pt-5 mb-6 md:m-0 md:p-0 md:flex-col md:relative">
       <span className="hidden md:inline md:text-md">Categorias</span>
       {categoryItems.map(({ label, href }) => (
         <Link
