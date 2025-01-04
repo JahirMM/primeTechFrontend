@@ -9,6 +9,7 @@ import BoxesIcon from "@/icons/BoxesIcon";
 import MenuIcon from "@/icons/MenuIcon";
 import HomeIcon from "@/icons/HomeIcon";
 import UserIcon from "@/icons/UserIcon";
+import XmarkIcon from "@/icons/XmarkIcon";
 
 const navItems = [
   {
@@ -34,7 +35,7 @@ const navItems = [
   },
   {
     label: "Productos Favoritos",
-    icon: <HeartIcon className="size-3" />,
+    icon: <HeartIcon className="size-3 text-red-600" />,
     textClass: "sm:hidden",
     contendorClass:
       "sm:gap-0 sm:ml-10  sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black",
@@ -58,10 +59,17 @@ function Header() {
       </Link>
       <nav className="relative flex flex-col items-end">
         <span>
-          <MenuIcon
-            className="size-5 sm:hidden cursor-pointer"
-            onClick={() => setShowNav(!showNav)}
-          />
+          {showNav ? (
+            <XmarkIcon
+              className="size-6 sm:hidden cursor-pointer"
+              onClick={() => setShowNav(!showNav)}
+            />
+          ) : (
+            <MenuIcon
+              className="size-5 sm:hidden cursor-pointer"
+              onClick={() => setShowNav(!showNav)}
+            />
+          )}
         </span>
         <ul
           className={`
