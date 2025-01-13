@@ -1,5 +1,6 @@
+import ProductList from "@/home/components/ProductList";
+
 import ArrowIcon from "@/icons/ArrowIcon";
-import ProductItem from "@/share/components/ProductItem";
 
 function SalesSection() {
   return (
@@ -15,20 +16,7 @@ function SalesSection() {
           <ArrowIcon className="size-4 text-white" />
         </button>
       </header>
-      <ul
-        className="w-full overflow-auto flex gap-5"
-        aria-label="Lista de productos recientes"
-      >
-        <li>
-          <ProductItem />
-        </li>
-        <li>
-          <ProductItem />
-        </li>
-        <li>
-          <ProductItem />
-        </li>
-      </ul>
+      <ProductList filter={{ onSale: true }} withBorder={true} />
     </section>
   );
 }

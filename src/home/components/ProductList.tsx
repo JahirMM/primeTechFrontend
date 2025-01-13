@@ -1,0 +1,42 @@
+"use client";
+
+import { useProducts } from "@/share/hook/useGetProducts";
+
+import ProductItem from "@/share/components/ProductItem";
+import { FilterInterface } from "@/share/interfaces/filterInterface";
+
+function ProductList({
+  filter,
+  withBorder,
+}: {
+  filter: FilterInterface;
+  withBorder: boolean;
+}) {
+  const { data, isLoading, isError, error } = useProducts(filter);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error: {error.message}</p>;
+  console.log(data);
+
+  return (
+    <ul
+      className="w-full overflow-auto flex gap-5"
+      aria-label="Lista de productos recientes"
+    >
+      {data?.products && data.products.length > 0 ? (
+        data.products.map((product) => (
+          <li key={product.productId}>
+            <ProductItem
+              styleClass={withBorder ? "border-[1px] border-gray-400" : "mt-10"}
+              product={product}
+            />
+          </li>
+        ))
+      ) : (
+        <div>No hay productos</div>
+      )}
+    </ul>
+  );
+}
+
+export default ProductList;

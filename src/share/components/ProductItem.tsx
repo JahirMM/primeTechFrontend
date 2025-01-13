@@ -1,7 +1,19 @@
-function ProductItem() {
+import StarIcon from "@/icons/StarIcon";
+import { Product } from "@/share/interfaces/productInterface";
+
+import { splitPrice } from "@/share/utils/precioUtils";
+
+interface ProductItemInterface {
+  styleClass: string;
+  product: Product;
+}
+
+function ProductItem({ styleClass, product }: ProductItemInterface) {
+  const { integerNumber, decimalNumber } = splitPrice(product.price || 0);
+
   return (
     <article
-      className="bg-white min-h-[252px] min-w-[216px] max-h-[252px] max-w-[216px] p-3 rounded-xl"
+      className={`bg-white min-h-[252px] min-w-[216px] max-h-[252px] max-w-[216px] p-3 rounded-xl ${styleClass}`}
       aria-labelledby="product-title"
     >
       <div className="w-full h-[132px] flex items-center justify-center overflow-hidden">
@@ -14,17 +26,23 @@ function ProductItem() {
 
       <div>
         <div className="flex gap-3 text-xs mt-2">
-          <span>marca</span>
-          <span>4.9</span>
+          <span>{product.brand}</span>
+          {product.averageRating > 0 ? (
+            <div className="flex items-center gap-2">
+              <StarIcon className="text-yellow-500 size-3" />
+              <span className="text-xs">{product.averageRating}</span>
+            </div>
+          ) : null}
         </div>
         <h3
           id="product-title"
           className="inline-block mt-2 text-base font-bold truncate w-full"
         >
-          Nombre del producto
+          {product.name}
         </h3>
         <div className="mt-2">
-          <span>$120</span>.<span className="text-xs">000</span>
+          <span>${integerNumber || 0}</span>.
+          <span className="text-xs">{decimalNumber || "00"}</span>
         </div>
       </div>
     </article>

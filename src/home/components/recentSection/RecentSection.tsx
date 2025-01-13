@@ -16,7 +16,7 @@ function RecentSection() {
           aria-label="Lista de productos recientes"
         >
           <li>
-            <ProductItem />
+            {/* <ProductItem /> */}
           </li>
         </ul>
       </div>
