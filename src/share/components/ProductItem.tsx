@@ -1,3 +1,4 @@
+import BoxIcon from "@/icons/BoxIcon";
 import StarIcon from "@/icons/StarIcon";
 import { Product } from "@/share/interfaces/productInterface";
 
@@ -8,20 +9,26 @@ interface ProductItemInterface {
   product: Product;
 }
 
+const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
+
 function ProductItem({ styleClass, product }: ProductItemInterface) {
   const { integerNumber, decimalNumber } = splitPrice(product.price || 0);
 
   return (
     <article
-      className={`bg-white min-h-[252px] min-w-[216px] max-h-[252px] max-w-[216px] p-3 rounded-xl ${styleClass}`}
-      aria-labelledby="product-title"
+      className={`bg-white min-h-[252px] min-w-[216px] max-h-[252px] max-w-[216px] p-3 rounded-xl ${styleClass} mb-3`}
+      aria-labelledby={`product-title-${product.productId}`}
     >
       <div className="w-full h-[132px] flex items-center justify-center overflow-hidden">
-        <img
-          src="/images/home/img-home.svg"
-          alt="Imagen de producto - Nombre del producto"
-          className="object-contain w-full h-full"
-        />
+        {backendDomain && product.image ? (
+          <img
+            src={backendDomain + product.image}
+            alt={`Imagen de producto - ${product.name}`}
+            className="object-contain w-full h-full"
+          />
+        ) : (
+          <BoxIcon className="size-20 text-gray-400" />
+        )}
       </div>
 
       <div>
@@ -35,7 +42,7 @@ function ProductItem({ styleClass, product }: ProductItemInterface) {
           ) : null}
         </div>
         <h3
-          id="product-title"
+          id={`product-title-${product.productId}`}
           className="inline-block mt-2 text-base font-bold truncate w-full"
         >
           {product.name}

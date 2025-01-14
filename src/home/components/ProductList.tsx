@@ -4,6 +4,7 @@ import { useProducts } from "@/share/hook/useGetProducts";
 
 import ProductItem from "@/share/components/ProductItem";
 import { FilterInterface } from "@/share/interfaces/filterInterface";
+import ProductListSkeleton from "../skeletons/ProductListSkeleton";
 
 function ProductList({
   filter,
@@ -14,7 +15,7 @@ function ProductList({
 }) {
   const { data, isLoading, isError, error } = useProducts(filter);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <ProductListSkeleton withMargin={withBorder} />;
   if (isError) return <p>Error: {error.message}</p>;
   console.log(data);
 
