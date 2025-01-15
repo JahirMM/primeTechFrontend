@@ -8,5 +8,7 @@ export const useProducts = (filters: Record<string, any> = {}) => {
   return useQuery<ProductsResponse, Error>({
     queryKey: ["products", filters],
     queryFn: () => getProducts(filters),
+    staleTime: 1000 * 60 * 3,
+    refetchOnWindowFocus: true,
   });
 };
