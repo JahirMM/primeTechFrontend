@@ -5,11 +5,11 @@ import Link from "next/link";
 
 import CartShoppingIcon from "@/icons/CartShoppingIcon";
 import HeartIcon from "@/icons/HeartIcon";
+import XmarkIcon from "@/icons/XmarkIcon";
 import BoxesIcon from "@/icons/BoxesIcon";
 import MenuIcon from "@/icons/MenuIcon";
 import HomeIcon from "@/icons/HomeIcon";
 import UserIcon from "@/icons/UserIcon";
-import XmarkIcon from "@/icons/XmarkIcon";
 
 const navItems = [
   {
@@ -17,14 +17,16 @@ const navItems = [
     icon: <HomeIcon className="size-3 sm:hidden" />,
     textClass: "",
     contendorClass:
-      "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:bg-gray-900 sm:text-white",
+      "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:bg-gray-900 sm:text-white sm:py-1",
+    href: "/",
   },
   {
     label: "Productos",
     icon: <BoxesIcon className="size-3 sm:hidden" />,
     textClass: "",
     contendorClass:
-      "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:bg-secondaryColor sm:text-black",
+      "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:bg-secondaryColor sm:text-black sm:py-1",
+    href: "/",
   },
   {
     label: "Perfil",
@@ -32,13 +34,15 @@ const navItems = [
     textClass: "sm:hidden",
     contendorClass:
       "sm:gap-0 sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black",
+    href: "/login",
   },
   {
     label: "Productos Favoritos",
-    icon: <HeartIcon className="size-3 text-red-600" />,
+    icon: <HeartIcon className="text-red-600 size-3" />,
     textClass: "sm:hidden",
     contendorClass:
       "sm:gap-0 sm:ml-10  sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black",
+    href: "/login",
   },
   {
     label: "Carrito de compras",
@@ -46,6 +50,7 @@ const navItems = [
     textClass: "sm:hidden",
     contendorClass:
       "sm:gap-0 sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black",
+    href: "/login",
   },
 ];
 
@@ -61,12 +66,12 @@ function Header() {
         <span>
           {showNav ? (
             <XmarkIcon
-              className="size-6 sm:hidden cursor-pointer"
+              className="cursor-pointer size-6 sm:hidden"
               onClick={() => setShowNav(!showNav)}
             />
           ) : (
             <MenuIcon
-              className="size-5 sm:hidden cursor-pointer"
+              className="cursor-pointer size-5 sm:hidden"
               onClick={() => setShowNav(!showNav)}
             />
           )}
@@ -82,17 +87,20 @@ function Header() {
               sm:flex-row sm:gap-5 sm:rounded-none sm:bg-transparent
               `}
         >
-          {navItems.map(({ label, icon, textClass, contendorClass }) => (
+          {navItems.map(({ label, icon, textClass, contendorClass, href }) => (
             <li
               key={label}
-              className={`flex justify-between items-center gap-10 
-                            w-full whitespace-nowrap 
-                            text-gray-700 hover:text-gray-950 ${contendorClass}`}
             >
-              {icon}
-              <span className={`${textClass}`}>{label}</span>
+              <Link
+                href={href}
+                className={`flex justify-between items-center text-left gap-10 whitespace-nowrap text-gray-700 ${contendorClass}`}
+              >
+                {icon}
+                <span className={`${textClass}`}>{label}</span>
+              </Link>
             </li>
           ))}
+          
         </ul>
       </nav>
     </header>
