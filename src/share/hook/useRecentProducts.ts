@@ -10,10 +10,10 @@ const useRecentProducts = () => {
       (p: Product) => p.productId !== product.productId
     );
 
-    listRecentProducts.push(product);
+    listRecentProducts.unshift(product);
 
     if (listRecentProducts.length > 20) {
-      listRecentProducts.shift();
+      listRecentProducts.pop();
     }
 
     localStorage.setItem("recentProducts", JSON.stringify(listRecentProducts));

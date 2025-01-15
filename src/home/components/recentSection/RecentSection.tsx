@@ -1,24 +1,61 @@
-import ProductItem from "@/share/components/ProductItem";
+"use client";
 
-import Marquee from "../Marquee";
+import { useEffect, useState } from "react";
+
+import { Product } from "@/share/interfaces/productInterface";
+
+import ProductItem from "@/share/components/ProductItem";
+import Marquee from "@/home/components/Marquee";
+import ProductListSkeleton from "@/home/skeletons/ProductListSkeleton";
 
 function RecentSection() {
+  const [listRecentProducts, setListRecentProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const recentProducts = JSON.parse(
+      localStorage.getItem("recentProducts") || "[]"
+    );
+    setListRecentProducts(recentProducts);
+    setIsLoading(false);
+  }, []);
+
   return (
-    <section className="bg-sectionColor py-10 mt-20">
+    <section className="py-10 mt-20 bg-sectionColor">
       <Marquee />
-      <div className="mt-10 px-10">
-        <header className="flex gap-3 items-center">
+      <div className="px-10 mt-10">
+        <header className="flex items-center gap-3">
           <h2 className="text-lg font-bold">Recientes</h2>
           <span className="h-[1px] bg-gray-500 w-full block"></span>
         </header>
-        <ul
-          className="mt-10 w-full overflow-auto flex gap-5"
-          aria-label="Lista de productos recientes"
-        >
-          <li>
-            {/* <ProductItem /> */}
-          </li>
-        </ul>
+        {isLoading ? (
+          <ProductListSkeleton withMargin={false} />
+        ) : (
+          <ul
+            className="flex w-full gap-5 mt-10 overflow-auto"
+            aria-label="Lista de productos recientes"
+          >
+            {listRecentProducts.length > 0 ? (
+              listRecentProducts.map((product: Product) => (
+                <li key={product.productId}>
+                  <ProductItem styleClass="" product={product} />
+                </li>
+              ))
+            ) : (
+              <li className="w-full">
+                <article className="min-h-[252px] max-h-[252px] max p-3 mb-3 flex flex-col items-center justify-center w-full">
+                  <p className="text-lg font-semibold">
+                    ¡Descubre algo nuevo! Explora nuestros productos y encuentra
+                    algo que te encante.
+                  </p>
+                  <button className="px-4 py-2 mt-3 text-xs text-white uppercase rounded-xl bg-primaryColor">
+                    ver productos
+                  </button>
+                </article>
+              </li>
+            )}
+          </ul>
+        )}
       </div>
     </section>
   );
