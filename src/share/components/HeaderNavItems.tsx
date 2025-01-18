@@ -1,0 +1,132 @@
+"use client";
+
+import BoxesIcon from "@/icons/BoxesIcon";
+import CartShoppingIcon from "@/icons/CartShoppingIcon";
+import HeartIcon from "@/icons/HeartIcon";
+import HomeIcon from "@/icons/HomeIcon";
+import UserIcon from "@/icons/UserIcon";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useAuthStore } from "../hook/store/useAuth";
+
+const navItems = [
+  {
+    label: "Inicio",
+    icon: <HomeIcon className="size-3 sm:hidden" />,
+    textClass: "",
+    contendorClass:
+      "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:bg-gray-900 sm:text-white sm:py-1",
+    href: "/",
+    requiresAuth: null,
+  },
+  {
+    label: "Productos",
+    icon: <BoxesIcon className="size-3 sm:hidden" />,
+    textClass: "",
+    contendorClass:
+      "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:bg-secondaryColor sm:text-black sm:py-1",
+    href: "/",
+    requiresAuth: null,
+  },
+  {
+    label: "Iniciar sesion",
+    icon: <BoxesIcon className="size-3 sm:hidden" />,
+    textClass: "",
+    contendorClass:
+      "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:bg-primaryColor sm:text-white sm:py-1",
+    href: "/login",
+    requiresAuth: false,
+  },
+  {
+    label: "Regístrate",
+    icon: <BoxesIcon className="size-3 sm:hidden" />,
+    textClass: "",
+    contendorClass:
+      "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:border sm:border-gray-900 sm:text-black sm:py-1",
+    href: "/",
+    requiresAuth: false,
+  },
+  {
+    label: "Perfil",
+    icon: <UserIcon className="size-3" />,
+    textClass: "sm:hidden",
+    contendorClass:
+      "sm:gap-0 sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black",
+    href: "/",
+    requiresAuth: true,
+  },
+  {
+    label: "Productos Favoritos",
+    icon: <HeartIcon className="text-red-600 size-3" />,
+    textClass: "sm:hidden",
+    contendorClass:
+      "sm:gap-0 sm:ml-10  sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black",
+    href: "/",
+    requiresAuth: true,
+  },
+  {
+    label: "Carrito de compras",
+    icon: <CartShoppingIcon className="size-3 sm:size-4" />,
+    textClass: "sm:hidden",
+    contendorClass:
+      "sm:gap-0 sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black",
+    href: "/",
+    requiresAuth: true,
+  },
+];
+
+function HeaderNavItems({ showNav }: { showNav: boolean }) {
+  const { isAuthenticated, initializeAuth } = useAuthStore();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const initialize = async () => {
+      await initializeAuth();
+      setLoading(false);
+    };
+    initialize();
+  }, [initializeAuth]);
+
+  if (loading) {
+    return <p>Cargando...</p>;
+  }
+
+  return (
+    <ul
+      className={`
+              bg-secondaryColor transition-all duration-500 ease-in-out
+              absolute top-8 rounded-xl
+              transform origin-top-right
+              ${showNav ? "opacity-100 scale-100" : "opacity-0 scale-0"}
+              flex flex-col text-sm text-right gap-y-4 py-2 px-5 list-none
+              sm:opacity-100 sm:scale-100 sm:relative sm:top-auto
+              sm:flex-row sm:gap-5 sm:rounded-none sm:bg-transparent
+              `}
+    >
+      {navItems.map(
+        ({ label, icon, textClass, contendorClass, href, requiresAuth }) => (
+          <li
+            key={label}
+            className={`${
+              requiresAuth === null
+                ? ""
+                : isAuthenticated === requiresAuth
+                ? "inline-block"
+                : "hidden"
+            }`}
+          >
+            <Link
+              href={href}
+              className={`flex justify-between items-center text-left gap-10 whitespace-nowrap text-gray-700 ${contendorClass}`}
+            >
+              {icon}
+              <span className={`${textClass}`}>{label}</span>
+            </Link>
+          </li>
+        )
+      )}
+    </ul>
+  );
+}
+
+export default HeaderNavItems;
