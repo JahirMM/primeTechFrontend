@@ -1,33 +1,18 @@
 "use client";
 
-import BoxesIcon from "@/icons/BoxesIcon";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
+import { useAuthStore } from "../hook/store/useAuth";
+
 import CartShoppingIcon from "@/icons/CartShoppingIcon";
+import BoxesIcon from "@/icons/BoxesIcon";
 import HeartIcon from "@/icons/HeartIcon";
 import HomeIcon from "@/icons/HomeIcon";
 import UserIcon from "@/icons/UserIcon";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useAuthStore } from "../hook/store/useAuth";
+import HeaderNavItemsSkeleton from "../skeletons/HeaderNavItemsSkeleton";
 
 const navItems = [
-  {
-    label: "Inicio",
-    icon: <HomeIcon className="size-3 sm:hidden" />,
-    textClass: "",
-    contendorClass:
-      "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:bg-gray-900 sm:text-white sm:py-1",
-    href: "/",
-    requiresAuth: null,
-  },
-  {
-    label: "Productos",
-    icon: <BoxesIcon className="size-3 sm:hidden" />,
-    textClass: "",
-    contendorClass:
-      "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:bg-secondaryColor sm:text-black sm:py-1",
-    href: "/",
-    requiresAuth: null,
-  },
   {
     label: "Iniciar sesion",
     icon: <BoxesIcon className="size-3 sm:hidden" />,
@@ -52,7 +37,7 @@ const navItems = [
     textClass: "sm:hidden",
     contendorClass:
       "sm:gap-0 sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black",
-    href: "/",
+    href: "/profile",
     requiresAuth: true,
   },
   {
@@ -87,10 +72,6 @@ function HeaderNavItems({ showNav }: { showNav: boolean }) {
     initialize();
   }, [initializeAuth]);
 
-  if (loading) {
-    return <p>Cargando...</p>;
-  }
-
   return (
     <ul
       className={`
@@ -103,26 +84,49 @@ function HeaderNavItems({ showNav }: { showNav: boolean }) {
               sm:flex-row sm:gap-5 sm:rounded-none sm:bg-transparent
               `}
     >
-      {navItems.map(
-        ({ label, icon, textClass, contendorClass, href, requiresAuth }) => (
-          <li
-            key={label}
-            className={`${
-              requiresAuth === null
-                ? ""
-                : isAuthenticated === requiresAuth
-                ? "inline-block"
-                : "hidden"
-            }`}
-          >
-            <Link
-              href={href}
-              className={`flex justify-between items-center text-left gap-10 whitespace-nowrap text-gray-700 ${contendorClass}`}
+      <li>
+        <Link
+          href={"/"}
+          className="flex items-center justify-between gap-10 text-left whitespace-nowrap sm:gap-0 sm:px-5 sm:rounded-xl sm:bg-gray-900 sm:text-white sm:py-1"
+        >
+          <HomeIcon className="size-3 sm:hidden" />
+          <span>Inicio</span>
+        </Link>
+      </li>
+
+      <li>
+        <Link
+          href={"/"}
+          className="flex items-center justify-between gap-10 text-left whitespace-nowrap sm:gap-0 sm:px-5 sm:rounded-xl sm:bg-secondaryColor sm:text-black sm:py-1"
+        >
+          <BoxesIcon className="size-3 sm:hidden" />
+          <span>Productos</span>
+        </Link>
+      </li>
+      {loading ? (
+        <HeaderNavItemsSkeleton />
+      ) : (
+        navItems.map(
+          ({ label, icon, textClass, contendorClass, href, requiresAuth }) => (
+            <li
+              key={label}
+              className={`${
+                requiresAuth === null
+                  ? ""
+                  : isAuthenticated === requiresAuth
+                  ? "inline-block"
+                  : "hidden"
+              }`}
             >
-              {icon}
-              <span className={`${textClass}`}>{label}</span>
-            </Link>
-          </li>
+              <Link
+                href={href}
+                className={`flex justify-between items-center text-left gap-10 whitespace-nowrap text-gray-700 ${contendorClass}`}
+              >
+                {icon}
+                <span className={`${textClass}`}>{label}</span>
+              </Link>
+            </li>
+          )
         )
       )}
     </ul>
