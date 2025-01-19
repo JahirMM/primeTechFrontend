@@ -28,7 +28,7 @@ const navItems = [
     textClass: "",
     contendorClass:
       "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:border sm:border-gray-900 sm:text-black sm:py-1",
-    href: "/",
+    href: "/signUp",
     requiresAuth: false,
   },
   {
