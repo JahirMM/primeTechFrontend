@@ -1,3 +1,4 @@
+import ForwardedCustomPasswordInputField from "@/share/components/CustomPasswordInputField";
 import React, { RefObject, useState } from "react";
 
 function SignUpPasswordValidation({
@@ -19,42 +20,30 @@ function SignUpPasswordValidation({
 
   return (
     <>
-      <div className="flex flex-col gap-2 mb-4">
-        <label htmlFor="password" className="text-xs">
-          Contraseña
-        </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          required
-          defaultValue={""}
-          placeholder="Ingrese una contraseña"
-          className="p-2 text-sm border border-gray-500 rounded-xl placeholder:text-xs focus:outline-none"
-          autoComplete="new-password"
-          ref={passwordRef}
-          onChange={handlePassword}
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="repeatPassword" className="text-xs">
-          Repetir contraseña
-        </label>
-        <input
-          type="password"
-          id="repeatPassword"
-          name="repeatPassword"
-          required
-          defaultValue={""}
-          placeholder="Repita la contraseña"
-          className={`p-2 text-sm border rounded-xl placeholder:text-xs ${
-            showMessageError ? "border-red-500" : "border-gray-500"
-          } focus:outline-none`}
-          autoComplete="new-password"
-          ref={repeatPasswordRef}
-          onChange={handlePassword}
-        />
-      </div>
+      <ForwardedCustomPasswordInputField
+        id="password"
+        name="password"
+        label="Contraseña"
+        required={true}
+        autoComplete="new-password"
+        defaultValue={""}
+        placeholder="Ingrese su contraseña"
+        classContainer="mb-4"
+        onChange={handlePassword}
+        ref={passwordRef}
+      />
+      <ForwardedCustomPasswordInputField
+        id="repeatPassword"
+        name="repeatPassword"
+        label="Repetir contraseña"
+        required={true}
+        autoComplete="new-password"
+        defaultValue={""}
+        placeholder="Ingrese su contraseña"
+        classInputGroup={`${showMessageError ? "border-red-500" : ""}`}
+        onChange={handlePassword}
+        ref={repeatPasswordRef}
+      />
       {showMessageError && (
         <span className="mt-2 text-xs text-red-400">
           Las contraseñas deben coincidir

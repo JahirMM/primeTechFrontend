@@ -1,10 +1,14 @@
 "use client";
 
-import LoginFormSubmitButton from "./LoginFormSubmitButton";
-import AuthBackButton from "../AuthBackButton";
 import { useRef } from "react";
-import { useLogin } from "@/auth/hooks/useLogin";
 import { toast } from "sonner";
+
+import { useLogin } from "@/auth/hooks/useLogin";
+
+import ForwardedCustomPasswordInputField from "@/share/components/CustomPasswordInputField";
+import LoginFormSubmitButton from "@/auth/components/login/LoginFormSubmitButton";
+import ForwardedCustomInputField from "@/share/components/CustomInputField";
+import AuthBackButton from "@/auth/components/AuthBackButton";
 
 function LoginFormSection() {
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -33,36 +37,29 @@ function LoginFormSection() {
       <AuthBackButton />
       <h1 className="text-2xl font-bold uppercase">Iniciar sesión</h1>
       <form action="/login" method="post" onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-y-2">
-          <label htmlFor="email" className="text-sm">
-            Correo
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className="p-2 border border-gray-500 rounded-xl"
-            required
-            autoComplete="username"
-            defaultValue=""
-            ref={emailRef}
-          />
-        </div>
-        <div className="flex flex-col mt-4 mb-8 gap-y-2 md:mt-8 md:mb-12">
-          <label htmlFor="password" className="text-sm">
-            Contraseña
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="p-2 border border-gray-500 rounded-xl"
-            required
-            autoComplete="current-password"
-            defaultValue=""
-            ref={passwordRef}
-          />
-        </div>
+        <ForwardedCustomInputField
+          id="email"
+          name="email"
+          label="Correo"
+          type="email"
+          required={true}
+          autoComplete="username"
+          defaultValue=""
+          placeholder="Ingrese su correo"
+          classInput="p-2 border border-gray-500 rounded-xl focus:outline-none"
+          ref={emailRef}
+        />
+        <ForwardedCustomPasswordInputField
+          id="password"
+          name="password"
+          label="Contraseña"
+          required={true}
+          autoComplete="current-password"
+          defaultValue={""}
+          placeholder="Ingrese su contraseña"
+          classContainer="mt-4 mb-8 md:mt-8 md:mb-12"
+          ref={passwordRef}
+        />
         <LoginFormSubmitButton />
       </form>
     </section>
