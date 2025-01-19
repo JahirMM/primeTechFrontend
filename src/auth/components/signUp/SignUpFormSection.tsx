@@ -1,5 +1,7 @@
 "use client";
 
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 import { useRef } from "react";
 
 import ForwardedCustomInputField from "@/share/components/CustomInputField";
@@ -9,8 +11,8 @@ import AuthBackButton from "../AuthBackButton";
 import { handleTextInput } from "@/share/utils/sanitizeTextInput";
 import { isValidEmail } from "@/share/utils/validEmail";
 
-import { toast } from "sonner";
 import { useSignUp } from "@/auth/hooks/useSignUp";
+import { useLogin } from "@/auth/hooks/useLogin";
 
 function SignUpFormSection() {
   const firstNameRef = useRef<HTMLInputElement | null>(null);
@@ -22,6 +24,7 @@ function SignUpFormSection() {
   const repeatPasswordRef = useRef<HTMLInputElement | null>(null);
 
   const mutationSignUp = useSignUp();
+  const mutationLogin = useLogin();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,7 +79,28 @@ function SignUpFormSection() {
       maternalSurname: formData.maternalSurname,
     };
 
-    mutationSignUp.mutate(dataRequest);
+    try {
+      await mutationSignUp.mutateAsync(dataRequest);
+
+      setTimeout(() => {
+        mutationLogin.mutate({
+          email: dataRequest.email,
+          password: dataRequest.password,
+        });
+      }, 1000);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message, {
+          duration: 5000,
+          style: { backgroundColor: "#FF5353", color: "white" },
+        });
+      } else {
+        toast.error("Ocurrió un error desconocido.", {
+          duration: 5000,
+          style: { backgroundColor: "#FF5353", color: "white" },
+        });
+      }
+    }
   };
 
   return (

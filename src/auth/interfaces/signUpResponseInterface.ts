@@ -3,7 +3,7 @@ export interface UserSignUpInterface {
   firstName: string;
   middleName?: string;
   paternalSurname: string;
-  maternalSurname?: string;
+  maternalSurname: string;
   createdAt: string;
 }
 
