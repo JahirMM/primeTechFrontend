@@ -11,6 +11,7 @@ interface CustomInputFieldProps {
   placeholder: string;
   classContainer?: string;
   classInput?: string;
+  onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
 function CustomInputField(
@@ -25,6 +26,7 @@ function CustomInputField(
     placeholder = "",
     classContainer = "",
     classInput = "",
+    onInput,
   }: CustomInputFieldProps,
   ref: React.Ref<HTMLInputElement>
 ) {
@@ -41,8 +43,9 @@ function CustomInputField(
         autoComplete={autoComplete}
         defaultValue={defaultValue}
         placeholder={placeholder}
-        className={`text-sm p-2 border border-gray-500 rounded-xl placeholder:text-xs ${classInput}`}
+        className={`text-sm p-2 border border-gray-500 rounded-xl placeholder:text-xs focus:outline-none ${classInput}`}
         ref={ref}
+        onInput={onInput}
       />
     </div>
   );
