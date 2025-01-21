@@ -46,7 +46,7 @@ const navItems = [
     textClass: "sm:hidden",
     contendorClass:
       "sm:gap-0 sm:ml-10  sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black",
-    href: "/",
+    href: "/favoriteProducts",
     requiresAuth: true,
   },
   {

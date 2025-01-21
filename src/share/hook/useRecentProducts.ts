@@ -1,13 +1,14 @@
-import { Product } from "../interfaces/productInterface";
-
 const useRecentProducts = () => {
-  const addProductToRecent = (product: Product) => {
-    let listRecentProducts = JSON.parse(
+  const addProductToRecent = (product: {
+    productId: string;
+    name: string;
+    brand: string;
+    price: number;
+    image?: string;
+    averageRating: number;
+  }) => {
+    const listRecentProducts = JSON.parse(
       localStorage.getItem("recentProducts") || "[]"
-    );
-
-    listRecentProducts = listRecentProducts.filter(
-      (p: Product) => p.productId !== product.productId
     );
 
     listRecentProducts.unshift(product);

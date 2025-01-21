@@ -21,13 +21,14 @@ function ProductList({
 
   return (
     <ul
-      className="w-full overflow-auto flex gap-5"
+      className="flex w-full gap-5 overflow-auto"
       aria-label="Lista de productos recientes"
     >
       {data?.products && data.products.length > 0 ? (
         data.products.map((product) => (
           <li key={product.productId}>
             <ProductItem
+              isFavorite={false}
               styleClass={withBorder ? "border-[1px] border-gray-400" : "mt-10"}
               product={product}
             />

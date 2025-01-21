@@ -1,26 +1,29 @@
-import { Product } from "@/share/interfaces/productInterface";
-
-import BoxIcon from "@/icons/BoxIcon";
 import StarIcon from "@/icons/StarIcon";
-
-import { splitPrice } from "@/share/utils/precioUtils";
-
-import ProductActionButtons from "@/share/components/ProductActionButtons";
+import BoxIcon from "@/icons/BoxIcon";
+import ProductActionButtons from "./ProductActionButtons";
+import { splitPrice } from "../utils/precioUtils";
 import useRecentProducts from "../hook/useRecentProducts";
 
 interface ProductItemInterface {
+  isFavorite: boolean;
   styleClass: string;
-  product: Product;
+  product: {
+    productId: string;
+    name: string;
+    brand: string;
+    price: number;
+    image: string;
+    averageRating: number;
+  };
 }
 
 const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
 
-function ProductItem({ styleClass, product }: ProductItemInterface) {
-  const { integerNumber, decimalNumber } = splitPrice(product.price || 0);
+const ProductItem = ({ isFavorite, styleClass, product }: ProductItemInterface) => {
+  const { integerNumber, decimalNumber } = splitPrice(product.price);
   const { addProductToRecent } = useRecentProducts();
 
   const handleViewProductDetails = () => {
-    console.log("VER PRODUCT");
     addProductToRecent(product);
   };
 
@@ -34,7 +37,7 @@ function ProductItem({ styleClass, product }: ProductItemInterface) {
         relative overflow-hidden
         group
         ${styleClass}
-        `}
+      `}
       onClick={handleViewProductDetails}
       aria-labelledby={`product-title-${product.productId}`}
     >
@@ -53,12 +56,12 @@ function ProductItem({ styleClass, product }: ProductItemInterface) {
       <div>
         <div className="flex gap-3 mt-2 text-xs">
           <span>{product.brand}</span>
-          {product.averageRating > 0 ? (
+          {product.averageRating > 0 && (
             <div className="flex items-center gap-2">
               <StarIcon className="text-yellow-500 size-3" />
               <span className="text-xs">{product.averageRating}</span>
             </div>
-          ) : null}
+          )}
         </div>
         <h3
           id={`product-title-${product.productId}`}
@@ -71,9 +74,9 @@ function ProductItem({ styleClass, product }: ProductItemInterface) {
           <span className="text-xs">{decimalNumber || "00"}</span>
         </div>
       </div>
-      <ProductActionButtons />
+      <ProductActionButtons isFavorite={isFavorite} productId={product.productId} />
     </article>
   );
-}
+};
 
 export default ProductItem;
