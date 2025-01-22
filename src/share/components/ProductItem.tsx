@@ -9,6 +9,7 @@ interface ProductItemInterface {
   styleClass: string;
   product: {
     productId: string;
+    favoriteProductId?: string;
     name: string;
     brand: string;
     price: number;
@@ -19,7 +20,11 @@ interface ProductItemInterface {
 
 const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
 
-const ProductItem = ({ isFavorite, styleClass, product }: ProductItemInterface) => {
+const ProductItem = ({
+  isFavorite,
+  styleClass,
+  product,
+}: ProductItemInterface) => {
   const { integerNumber, decimalNumber } = splitPrice(product.price);
   const { addProductToRecent } = useRecentProducts();
 
@@ -74,7 +79,13 @@ const ProductItem = ({ isFavorite, styleClass, product }: ProductItemInterface) 
           <span className="text-xs">{decimalNumber || "00"}</span>
         </div>
       </div>
-      <ProductActionButtons isFavorite={isFavorite} productId={product.productId} />
+      <ProductActionButtons
+        favoriteProductId={
+          product.favoriteProductId ? product.favoriteProductId : ""
+        }
+        isFavorite={isFavorite}
+        productId={product.productId}
+      />
     </article>
   );
 };

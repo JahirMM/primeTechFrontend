@@ -4,17 +4,22 @@ import HeartXmarkIcon from "@/icons/HeartXmarkIcon";
 import HeartPlusIcon from "@/icons/HeartPlusIcon";
 import AddCartIcon from "@/icons/AddCartIcon";
 
+import { useDeleteFavoriteProduct } from "@/share/hook/useDeleteFavoriteProduct";
 import { useFavoriteProduct } from "@/share/hook/useAddFavoriteProduct";
 import { useAuthStore } from "@/share/hook/store/useAuth";
 
 function ProductActionButtons({
+  favoriteProductId,
   isFavorite,
   productId,
 }: {
+  favoriteProductId: string;
   isFavorite: boolean;
   productId: string;
 }) {
   const mutationFavoriteProduct = useFavoriteProduct();
+  const mutationDeleteFavoriteProduct = useDeleteFavoriteProduct();
+
   const { initializeAuth } = useAuthStore();
   const router = useRouter();
 
@@ -32,8 +37,13 @@ function ProductActionButtons({
     if (addToFavorites) {
       mutationFavoriteProduct.mutate(productId);
     } else {
-      console.log("borrar producto favorito");
-      return;
+      if (favoriteProductId) {
+        console.log("ENTREE");
+
+        mutationDeleteFavoriteProduct.mutate(favoriteProductId);
+        return;
+      }
+      console.log("NO ENTREE");
     }
   };
 
@@ -50,7 +60,7 @@ function ProductActionButtons({
       <span className="p-1 text-center rounded-full cursor-pointer bg-secondaryColor">
         {isFavorite ? (
           <HeartXmarkIcon
-            className="size-5"
+            className="text-red-500 size-5"
             onClick={(e) => handleFavoriteProduct(e, false)}
           />
         ) : (

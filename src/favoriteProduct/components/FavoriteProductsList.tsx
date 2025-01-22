@@ -1,26 +1,54 @@
 "use client";
 
+import FavoriteProductsListSkeleton from "@/favoriteProduct/skeletons/FavoriteProductsListSkeleton";
 import ProductItem from "@/share/components/ProductItem";
-import { useFavoriteProducts } from "../hook/useGetFavoriteProducts";
+import MessageBox from "@/share/components/MessageBox";
+
+import { useFavoriteProducts } from "@/favoriteProduct/hook/useGetFavoriteProducts";
 
 function FavoriteProductsList() {
   const { data, isLoading, isError } = useFavoriteProducts();
 
   if (isLoading) {
-    return <div>cargando ...</div>;
+    return <FavoriteProductsListSkeleton />;
   }
 
   if (isError) {
-    return <div>error en la carga de productos favoritos</div>;
+    return (
+      <MessageBox
+        title="¡Oops! Algo salió mal."
+        description="Lo sentimos, pero ocurrió un error inesperado. Por favor, intenta nuevamente o contáctanos si el problema persiste."
+        buttonLabel="Reintentar"
+        onButtonClick={() => window.location.reload()}
+      />
+    );
   }
 
   if (!data || !data.favoriteProducts) {
-    return <div>No hay productos favoritos disponibles.</div>;
+    return (
+      <MessageBox
+        title="No hay productos favoritos en estos momentos."
+        description="Lo sentimos, pero puedes visitar nuestros productos disponibles:"
+        buttonLabel="Ver Productos"
+        redirectPath="/products"
+      />
+    );
+  }
+
+  if (data.favoriteProducts.length === 0) {
+    return (
+      <MessageBox
+        title="No hay productos disponibles en tu lista."
+        description="¡No te preocupes! Explora nuestro catálogo y descubre una amplia variedad de productos que pueden interesarte:"
+        buttonLabel="Ver Catálogo"
+        redirectPath="/products"
+      />
+    );
   }
 
   return (
-    <section className="grid grid-cols-1 bg-red-400 justify-items-center">
-      {data.favoriteProducts.length > 0 ? (
+    <section className="grid grid-cols-1 justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+      {data.favoriteProducts.length > 0 &&
         data.favoriteProducts.map((product) => (
           <ProductItem
             key={product.productId}
@@ -28,10 +56,7 @@ function FavoriteProductsList() {
             styleClass="border-[1px] border-gray-400"
             product={product}
           />
-        ))
-      ) : (
-        <div>No tienes productos favoritos.</div>
-      )}
+        ))}
     </section>
   );
 }

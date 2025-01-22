@@ -11,7 +11,7 @@ export function useFavoriteProduct() {
     mutationFn: addFavoriteProduct,
     onSuccess: () => {
       toast.success("Producto agregado como favorito", {
-        duration: 5000,
+        duration: 2000,
         style: { backgroundColor: "#1F5A54", color: "white" },
       });
     },

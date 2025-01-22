@@ -1,7 +1,9 @@
+import { SuccessResponseInterface } from "@/share/interfaces/successResponseInterface";
 import {
   AddFavoriteProductResponseInterface,
   GetFavoriteProductsResponseInterface,
 } from "@/share/interfaces/favoriteProductInterface";
+
 import { getInitialApi } from "@/share/hook/useInitialApi";
 
 const initialApi = getInitialApi();
@@ -16,9 +18,14 @@ export const addFavoriteProduct = async (
 export const getFavoriteProducts =
   async (): Promise<GetFavoriteProductsResponseInterface> => {
     const response = await initialApi.get("/favorite-products");
-    console.log("PRODUCTOS FAVORITOS");
-
-    console.log(response);
-
     return response.data;
   };
+
+export const deleteFavoriteProduct = async (
+  favoriteProductId: string
+): Promise<SuccessResponseInterface> => {
+  const response = await initialApi.delete(
+    `/favorite-products/${favoriteProductId}`
+  );
+  return response.data;
+};
