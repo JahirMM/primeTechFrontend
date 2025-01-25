@@ -25,7 +25,7 @@ function ProfileNav() {
     setShowMenu((prev) => !prev);
   };
   return (
-    <section className="absolute z-10 w-full px-3 py-4 mt-5 bg-secondaryColor sm:rounded-xl sm:py-5 sm:px-0 sm:relative">
+    <section className="absolute z-10 w-full px-3 py-4 mt-5 bg-secondaryColor sm:rounded-xl sm:py-5 sm:px-0 sm:fixed sm:w-48 sm:h-screen">
       <div
         className={`flex items-center gap-x-2 ${
           showMenu ? "mb-4" : "mb-0"
