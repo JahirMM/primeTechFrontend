@@ -3,14 +3,16 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-import { useAuthStore } from "../hook/store/useAuth";
+import { useAuthStore } from "@/share/hook/store/useAuth";
 
 import CartShoppingIcon from "@/icons/CartShoppingIcon";
 import BoxesIcon from "@/icons/BoxesIcon";
 import HeartIcon from "@/icons/HeartIcon";
 import HomeIcon from "@/icons/HomeIcon";
-import UserIcon from "@/icons/UserIcon";
-import HeaderNavItemsSkeleton from "../skeletons/HeaderNavItemsSkeleton";
+
+import HeaderProfileNavItem from "@/share/components/HeaderProfileNavItem";
+
+import HeaderNavItemsSkeleton from "@/share/skeletons/HeaderNavItemsSkeleton";
 
 const navItems = [
   {
@@ -30,15 +32,6 @@ const navItems = [
       "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:border sm:border-gray-900 sm:text-black sm:py-1",
     href: "/signUp",
     requiresAuth: false,
-  },
-  {
-    label: "Perfil",
-    icon: <UserIcon className="size-3" />,
-    textClass: "sm:hidden",
-    contendorClass:
-      "sm:gap-0 sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black",
-    href: "/profile",
-    requiresAuth: true,
   },
   {
     label: "Productos Favoritos",
@@ -93,7 +86,6 @@ function HeaderNavItems({ showNav }: { showNav: boolean }) {
           <span>Inicio</span>
         </Link>
       </li>
-
       <li>
         <Link
           href={"/"}
@@ -103,6 +95,7 @@ function HeaderNavItems({ showNav }: { showNav: boolean }) {
           <span>Productos</span>
         </Link>
       </li>
+      {isAuthenticated && <HeaderProfileNavItem />}
       {loading ? (
         <HeaderNavItemsSkeleton />
       ) : (

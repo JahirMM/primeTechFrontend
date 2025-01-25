@@ -11,6 +11,7 @@ interface CustomInputFieldProps {
   placeholder: string;
   classContainer?: string;
   classInput?: string;
+  disabled?: boolean;
   onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
@@ -26,6 +27,7 @@ function CustomInputField(
     placeholder = "",
     classContainer = "",
     classInput = "",
+    disabled = false,
     onInput,
   }: CustomInputFieldProps,
   ref: React.Ref<HTMLInputElement>
@@ -46,6 +48,7 @@ function CustomInputField(
         className={`text-sm p-2 border border-gray-500 rounded-xl placeholder:text-xs focus:outline-none ${classInput}`}
         ref={ref}
         onInput={onInput}
+        disabled={disabled}
       />
     </div>
   );

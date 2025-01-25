@@ -38,12 +38,9 @@ function ProductActionButtons({
       mutationFavoriteProduct.mutate(productId);
     } else {
       if (favoriteProductId) {
-        console.log("ENTREE");
-
         mutationDeleteFavoriteProduct.mutate(favoriteProductId);
         return;
       }
-      console.log("NO ENTREE");
     }
   };
 

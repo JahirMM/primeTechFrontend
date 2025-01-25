@@ -1,5 +1,7 @@
+import Profile from "@/profile/components/profile/Profile";
+
 function Page() {
-  return <div className="mt-20">Pefil del usuario</div>;
+  return <Profile />;
 }
 
 export default Page;

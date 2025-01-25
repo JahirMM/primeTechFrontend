@@ -117,6 +117,7 @@ function SignUpFormSection() {
             placeholder="Ingrese su primer nombre"
             required={true}
             autoComplete="given-name"
+            classContainer="mb-4"
             onInput={handleTextInput}
             ref={firstNameRef}
           />
@@ -141,6 +142,7 @@ function SignUpFormSection() {
             placeholder="Ingrese su apellido paterno"
             required={true}
             autoComplete="family-name"
+            classContainer="mb-4"
             onInput={handleTextInput}
             ref={paternalSurnameRef}
           />
