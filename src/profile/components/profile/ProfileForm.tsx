@@ -16,7 +16,7 @@ function ProfileForm({
   isDisabled: boolean;
   setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { data: userInformation, isLoading } = useGetUserInformation();
+  const { data: userInformation } = useGetUserInformation();
 
   const firstNameRef = useRef<HTMLInputElement | null>(null);
   const middleNameRef = useRef<HTMLInputElement | null>(null);
