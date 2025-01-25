@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import PenIcon from "@/icons/PenIcon";
 import ProfileForm from "./ProfileForm";
+import ProfilePicture from "./ProfilePicture";
 
 function Profile() {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -21,9 +22,14 @@ function Profile() {
           onClick={toggleEdit}
         >
           <PenIcon className="text-white size-4" />
-          <span className="text-xs text-white">Editar</span>
+          {isDisabled ? (
+            <span className="text-xs text-white">Editar</span>
+          ) : (
+            <span className="text-xs text-white">Cancelar edición</span>
+          )}
         </button>
       </div>
+      <ProfilePicture />
       <ProfileForm isDisabled={isDisabled} />
     </>
   );
