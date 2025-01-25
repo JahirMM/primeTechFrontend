@@ -30,7 +30,7 @@ function Profile() {
         </button>
       </div>
       <ProfilePicture />
-      <ProfileForm isDisabled={isDisabled} />
+      <ProfileForm isDisabled={isDisabled} setIsDisabled={setIsDisabled} />
     </>
   );
 }

@@ -1,13 +1,21 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import ForwardedCustomInputField from "@/share/components/CustomInputField";
 import { handleTextInput } from "@/share/utils/sanitizeTextInput";
 
+import { useUpdateUserInformation } from "@/profile/hook/useUpdateUserInformarion";
 import { useGetUserInformation } from "@/share/hook/useGetUserInformation";
 
 import PenIcon from "@/icons/PenIcon";
+import { toast } from "sonner";
 
-function ProfileForm({ isDisabled }: { isDisabled: boolean }) {
+function ProfileForm({
+  isDisabled,
+  setIsDisabled,
+}: {
+  isDisabled: boolean;
+  setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { data: userInformation, isLoading } = useGetUserInformation();
 
   const firstNameRef = useRef<HTMLInputElement | null>(null);
@@ -15,6 +23,8 @@ function ProfileForm({ isDisabled }: { isDisabled: boolean }) {
   const paternalSurnameRef = useRef<HTMLInputElement | null>(null);
   const maternalSurnameRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
+
+  const mutationUserInformation = useUpdateUserInformation();
 
   useEffect(() => {
     if (userInformation) {
@@ -38,8 +48,46 @@ function ProfileForm({ isDisabled }: { isDisabled: boolean }) {
     }
   }, [userInformation]);
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = {
+      firstName: firstNameRef.current?.value.trim() || "",
+      middleName: middleNameRef.current?.value.trim() || "",
+      paternalSurname: paternalSurnameRef.current?.value.trim() || "",
+      maternalSurname: maternalSurnameRef.current?.value.trim() || "",
+    };
+
+    if (
+      !formData.firstName ||
+      !formData.paternalSurname ||
+      !formData.maternalSurname
+    ) {
+      toast.error("Por favor llenar todos los campos", {
+        duration: 5000,
+        style: { backgroundColor: "#FF5353", color: "white" },
+      });
+      return;
+    }
+
+    const dataRequest = {
+      firstName: formData.firstName,
+      middleName: formData.middleName,
+      paternalSurname: formData.paternalSurname,
+      maternalSurname: formData.maternalSurname,
+    };
+
+    mutationUserInformation.mutate(dataRequest);
+    setIsDisabled((isDisabled) => !isDisabled);
+  };
+
   return (
-    <form action="/profile" method="post" className="sm:px-10 lg:px-20">
+    <form
+      action="/profile"
+      method="post"
+      onSubmit={handleSubmit}
+      className="sm:px-10 lg:px-20"
+    >
       <div className="mb-4 sm:grid sm:grid-cols-2 sm:gap-x-5">
         <ForwardedCustomInputField
           id="firstName"
