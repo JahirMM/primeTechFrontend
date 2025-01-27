@@ -1,8 +1,11 @@
+import useRecentProducts from "@/share/hook/useRecentProducts";
+
+import ProductActionButtons from "./ProductActionButtons";
+
+import { splitPrice } from "@/share/utils/precioUtils";
+
 import StarIcon from "@/icons/StarIcon";
 import BoxIcon from "@/icons/BoxIcon";
-import ProductActionButtons from "./ProductActionButtons";
-import { splitPrice } from "../utils/precioUtils";
-import useRecentProducts from "../hook/useRecentProducts";
 
 interface ProductItemInterface {
   isFavorite: boolean;
