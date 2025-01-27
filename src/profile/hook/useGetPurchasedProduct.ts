@@ -8,7 +8,7 @@ export const usePurchasedProduct = () => {
   return useQuery<OrdersResponseInterface, Error>({
     queryKey: ["purchasedProduct"],
     queryFn: getPurchasedProduct,
-    staleTime: 1000 * 60 * 6,
+    staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
   });
 };
