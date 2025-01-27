@@ -6,7 +6,7 @@ import { getPurchasedProduct } from "@/profile/service/purchasedProductService";
 
 export const usePurchasedProduct = () => {
   return useQuery<OrdersResponseInterface, Error>({
-    queryKey: ["categories"],
+    queryKey: ["purchasedProduct"],
     queryFn: getPurchasedProduct,
     staleTime: 1000 * 60 * 6,
     refetchOnWindowFocus: false,

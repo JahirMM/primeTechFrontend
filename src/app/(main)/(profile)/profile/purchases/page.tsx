@@ -3,8 +3,8 @@ import PurchasedProductsList from "@/profile/components/purchasedProducts/Purcha
 function page() {
   return (
     <>
-      <h2 className="font-bold text-2xl mb-10">Mis Compras</h2>
-      <PurchasedProductsList />;
+      <h2 className="mb-10 text-2xl font-bold">Mis Compras</h2>
+      <PurchasedProductsList />
     </>
   );
 }

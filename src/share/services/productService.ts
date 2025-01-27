@@ -11,6 +11,5 @@ export const getProducts = async (
   const response = await initialApi.get(
     `/products${queryParams ? `?${queryParams}` : ""}`
   );
-  console.log("Fetched data:", response.data);
   return response.data;
 };

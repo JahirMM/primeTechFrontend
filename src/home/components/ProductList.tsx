@@ -17,7 +17,6 @@ function ProductList({
 
   if (isLoading) return <ProductListSkeleton withMargin={withBorder} />;
   if (isError) return <p>Error: {error.message}</p>;
-  console.log(data);
 
   return (
     <ul
