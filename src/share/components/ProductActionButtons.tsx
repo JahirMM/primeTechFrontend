@@ -46,7 +46,6 @@ function ProductActionButtons({
 
   const handleAddToCart = (event: React.MouseEvent) => {
     event.stopPropagation();
-    console.log("AGREGADO");
   };
 
   return (

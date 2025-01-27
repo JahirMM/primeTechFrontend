@@ -27,7 +27,6 @@ function ProfilePicture() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      console.log("Archivo seleccionado:", file);
       mutationUserImage.mutate(file);
     }
   };
