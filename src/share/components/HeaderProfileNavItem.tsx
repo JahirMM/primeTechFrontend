@@ -5,6 +5,8 @@ import UserIcon from "@/icons/UserIcon";
 
 import { useGetUserInformation } from "@/share/hook/useGetUserInformation";
 
+import HeaderUserPicture from "@/share/components/HeaderUserPicture";
+
 function HeaderProfileNavItem({
   showNav,
   setShowNav,
@@ -12,7 +14,8 @@ function HeaderProfileNavItem({
   showNav: boolean;
   setShowNav: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { data: userInformation, isLoading } = useGetUserInformation();
+  const { data: userInformation, isLoading: userInfoLoading } =
+    useGetUserInformation();
 
   return (
     <li className="relative group">
@@ -26,26 +29,29 @@ function HeaderProfileNavItem({
       </Link>
 
       <div className="absolute hidden mt-1 bg-white border border-gray-400 rounded-xl w-44 sm:group-hover:block sm:right-0 sm:origin-top-right">
-        {isLoading ? (
+        {userInfoLoading ? (
           <p className="px-4 py-2">Cargando...</p>
         ) : (
           <ul className="py-4 space-y-4">
             <li>
               <Link href={"/profile"} className="flex items-center gap-3 px-4">
-                <img
-                  src="/images/home/img-home.svg"
-                  alt=""
-                  className="bg-red-300 rounded-full size-10"
-                />
+                <HeaderUserPicture />
+
                 <div className="flex flex-col text-left gap-y-1">
-                  <span className="text-sm font-bold text-nowrap">
-                    {userInformation!.user.firstName}{" "}
-                    {userInformation!.user.paternalSurname}
-                  </span>
-                  <div className="flex items-center text-xs gap-x-2">
-                    <span>Mi perfil</span>
-                    <ArrowIcon className="font-light size-2" />
-                  </div>
+                  {userInformation ? (
+                    <>
+                      <span className="text-sm font-bold text-nowrap">
+                        {userInformation.user.firstName}{" "}
+                        {userInformation.user.paternalSurname}
+                      </span>
+                      <div className="flex items-center text-xs gap-x-2">
+                        <span>Mi perfil</span>
+                        <ArrowIcon className="font-light size-2" />
+                      </div>
+                    </>
+                  ) : (
+                    <p className="text-sm">Cargando...</p>
+                  )}
                 </div>
               </Link>
             </li>

@@ -2,13 +2,29 @@
 
 import EmptyStateMessage from "@/profile/components/EmptyStateMessage";
 import UserProduct from "@/profile/components/myProducts/UserProduct";
+import NotSellerMessage from "@/profile/components/NotSellerMessage";
 import ErrorMessage from "@/profile/components/ErrorMessage";
 
 import ProfileProductListSkeleton from "@/profile/skeletons/ProfileProductListSkeleton";
 import { useGetUserProducts } from "@/profile/hook/useGetUserProducts";
 
+import { useGetUserInformation } from "@/share/hook/useGetUserInformation";
+
 function UserProductsList() {
+  const { data: userInformation } = useGetUserInformation();
   const { data, isLoading, isError } = useGetUserProducts();
+
+  if (userInformation) {
+    if (!userInformation.user.roleNames.includes("seller")) {
+      return (
+        <NotSellerMessage
+          title="Convierte tu Pasión en Ventas"
+          message="Parece que aún no eres vendedor. ¡Publica tus productos y alcanza a miles de clientes potenciales!"
+          buttonText="Convertirse en Vendedor"
+        />
+      );
+    }
+  }
 
   if (isLoading) return <ProfileProductListSkeleton />;
 

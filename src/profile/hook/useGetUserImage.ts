@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { UserImageInterface } from "@/profile/interfaces/userImageInterface";
-
 import { getUserImage } from "@/profile/service/userImageService";
 import { GetUserImageResponseInterface } from "../interfaces/getUserImageResponseInterface";
 
