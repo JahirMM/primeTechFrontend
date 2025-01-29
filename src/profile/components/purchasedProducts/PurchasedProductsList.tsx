@@ -1,6 +1,11 @@
 "use client";
 
+import ProfileProductListSkeleton from "@/profile/skeletons/ProfileProductListSkeleton";
+
 import PurchasedProduct from "@/profile/components/purchasedProducts/PurchasedProduct";
+import EmptyStateMessage from "@/profile/components/EmptyStateMessage";
+import ErrorMessage from "@/profile/components/ErrorMessage";
+
 import { usePurchasedProduct } from "@/profile/hook/useGetPurchasedProduct";
 
 import { formatDate } from "@/share/utils/formatDate";
@@ -9,12 +14,18 @@ function PurchasedProductsList() {
   const { data, isLoading, isError } = usePurchasedProduct();
 
   if (isLoading) {
-    return <div>Cargando ...</div>;
+    return <ProfileProductListSkeleton />;
   }
 
-  if (isError) {
-    return <div>Error</div>;
-  }
+  if (isError)
+    return (
+      <ErrorMessage
+        title="Ocurrió un error al cargar los productos"
+        message="Por favor, intenta nuevamente más tarde."
+        buttonText="Reintentar"
+        onClick={() => window.location.reload()}
+      />
+    );
 
   return (
     <div className="flex flex-col gap-y-20">
@@ -36,7 +47,12 @@ function PurchasedProductsList() {
           </article>
         ))
       ) : (
-        <div>no tiene productos comrpados</div>
+        <EmptyStateMessage
+          title="No has comprado ningún producto todavía"
+          message="Parece que aún no has realizado ninguna compra. ¡Explora nuestros productos y encuentra lo que necesitas!"
+          buttonText="Explorar Productos"
+          buttonLink="/products"
+        />
       )}
     </div>
   );
