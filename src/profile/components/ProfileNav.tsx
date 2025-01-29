@@ -30,7 +30,7 @@ function ProfileNav() {
         className="flex items-center px-3 cursor-pointer gap-x-2 sm:mb-10 sm:pointer-events-none"
         onClick={toggleMenu}
       >
-        <span className="font-bold text-md">Mi cuenta</span>
+        <span className="text-sm font-bold">Mi cuenta</span>
         <ChevronIcon
           className={`size-3 sm:hidden transition-transform duration-700 ease-linear ${
             showMenu ? "rotate-90" : " rotate-0"

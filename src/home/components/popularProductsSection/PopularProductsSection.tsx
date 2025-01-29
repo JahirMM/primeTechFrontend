@@ -1,5 +1,5 @@
+import HomeProductList from "../HomeProductList";
 import Marquee from "../Marquee";
-import ProductList from "../ProductList";
 
 function PopularProductsSection() {
   return (
@@ -12,7 +12,7 @@ function PopularProductsSection() {
           </h2>
           <span className="h-[1px] bg-gray-500 w-full block"></span>
         </header>
-        <ProductList filter={{ minRating: 4 }} withBorder={false} />
+        <HomeProductList filter={{ minRating: 4 }} withBorder={false} />
       </div>
     </section>
   );

@@ -14,10 +14,10 @@ function Hero() {
       >
         <Categories />
         <div className="text-center md:flex-1">
-          <h1 className="text-3xl font-bold mb-3 md:mb-10 md:text-5xl 2xl:text-6xl 2xl:mb-20">
+          <h1 className="mb-3 text-3xl font-bold md:mb-10 md:text-5xl 2xl:text-6xl 2xl:mb-20">
             Vamos a Comprar <br className="hidden xs:block"></br> Tecnología
           </h1>
-          <p className="text-md">
+          <p className="text-sm">
             Visita nuestros productos y encuentra tu dispositivo ideal
           </p>
         </div>

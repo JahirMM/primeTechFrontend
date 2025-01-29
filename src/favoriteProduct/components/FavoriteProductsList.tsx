@@ -53,7 +53,7 @@ function FavoriteProductsList() {
           <ProductItem
             key={product.productId}
             isFavorite={true}
-            styleClass="border-[1px] border-gray-400"
+            classContainer="border-[1px] border-gray-400 mb-3 min-h-[252px] min-w-[216px] max-h-[252px] max-w-[216px]"
             product={product}
           />
         ))}

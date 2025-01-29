@@ -9,7 +9,7 @@ import BoxIcon from "@/icons/BoxIcon";
 
 interface ProductItemInterface {
   isFavorite: boolean;
-  styleClass: string;
+  classContainer: string;
   product: {
     productId: string;
     favoriteProductId?: string;
@@ -25,7 +25,7 @@ const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
 
 const ProductItem = ({
   isFavorite,
-  styleClass,
+  classContainer,
   product,
 }: ProductItemInterface) => {
   const { integerNumber, decimalNumber } = splitPrice(product.price);
@@ -39,12 +39,11 @@ const ProductItem = ({
     <article
       className={`
         bg-white 
-        min-h-[252px] min-w-[216px] max-h-[252px] max-w-[216px] 
-        p-3 mb-3 rounded-xl
+        p-3 rounded-xl
         cursor-pointer 
         relative overflow-hidden
         group
-        ${styleClass}
+        ${classContainer}
       `}
       onClick={handleViewProductDetails}
       aria-labelledby={`product-title-${product.productId}`}
@@ -62,7 +61,7 @@ const ProductItem = ({
       </div>
 
       <div>
-        <div className="flex gap-3 mt-2 text-xs">
+        <div className="flex gap-3 mt-3 text-xs">
           <span>{product.brand}</span>
           {product.averageRating > 0 && (
             <div className="flex items-center gap-2">
@@ -73,11 +72,11 @@ const ProductItem = ({
         </div>
         <h3
           id={`product-title-${product.productId}`}
-          className="inline-block w-full mt-2 text-base font-bold truncate"
+          className="inline-block w-full mt-2 text-sm font-bold truncate"
         >
           {product.name}
         </h3>
-        <div className="mt-2">
+        <div className="mt-4">
           <span>${integerNumber || 0}</span>.
           <span className="text-xs">{decimalNumber || "00"}</span>
         </div>

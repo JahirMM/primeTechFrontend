@@ -38,7 +38,13 @@ function RecentSection() {
             {listRecentProducts.length > 0 ? (
               listRecentProducts.map((product: Product) => (
                 <li key={product.productId}>
-                  <ProductItem styleClass="" product={product} isFavorite={false} />
+                  <ProductItem
+                    classContainer={
+                      "mb-3 min-h-[252px] min-w-[216px] max-h-[252px] max-w-[216px] "
+                    }
+                    product={product}
+                    isFavorite={false}
+                  />
                 </li>
               ))
             ) : (

@@ -1,11 +1,12 @@
-import React from 'react'
+import ProductsPage from "@/products/components/ProductsPage";
+import React from "react";
 
 function page() {
   return (
-    <section className='mt-10'>
-      productos
-    </section>
-  )
+    <>
+      <ProductsPage />
+    </>
+  );
 }
 
-export default page
+export default page;

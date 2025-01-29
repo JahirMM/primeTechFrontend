@@ -95,7 +95,7 @@ function HeaderNavItems({
       </li>
       <li>
         <Link
-          href={"/"}
+          href={"/products"}
           className="flex items-center justify-between gap-10 text-left whitespace-nowrap sm:gap-0 sm:px-5 sm:rounded-xl sm:bg-secondaryColor sm:text-black sm:py-1"
           onClick={() => setShowNav(!showNav)}
         >

@@ -1,4 +1,4 @@
-import ProductList from "@/home/components/ProductList";
+import HomeProductList from "@/home/components/HomeProductList";
 
 import ArrowIcon from "@/icons/ArrowIcon";
 
@@ -16,7 +16,7 @@ function SalesSection() {
           <ArrowIcon className="size-4 text-white" />
         </button>
       </header>
-      <ProductList filter={{ onSale: true }} withBorder={true} />
+      <HomeProductList filter={{ onSale: true }} withBorder={true} />
     </section>
   );
 }

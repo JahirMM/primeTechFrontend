@@ -6,7 +6,7 @@ import ProductItem from "@/share/components/ProductItem";
 import { FilterInterface } from "@/share/interfaces/filterInterface";
 import ProductListSkeleton from "../skeletons/ProductListSkeleton";
 
-function ProductList({
+function HomeProductList({
   filter,
   withBorder,
 }: {
@@ -28,7 +28,9 @@ function ProductList({
           <li key={product.productId}>
             <ProductItem
               isFavorite={false}
-              styleClass={withBorder ? "border-[1px] border-gray-400" : "mt-10"}
+              classContainer={`min-h-[252px] min-w-[216px] max-h-[252px] max-w-[216px]  ${
+                withBorder ? "border-[1px] border-gray-400" : "mt-10"
+              }`}
               product={product}
             />
           </li>
@@ -40,4 +42,4 @@ function ProductList({
   );
 }
 
-export default ProductList;
+export default HomeProductList;
