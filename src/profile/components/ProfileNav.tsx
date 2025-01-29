@@ -25,28 +25,47 @@ function ProfileNav() {
     setShowMenu((prev) => !prev);
   };
   return (
-    <section className="absolute z-10 w-full px-3 py-4 mt-5 bg-secondaryColor sm:rounded-xl sm:py-5 sm:px-0 sm:fixed sm:w-48 sm:h-screen">
+    <section className="absolute z-10 w-full px-3 py-4 top-14 bg-secondaryColor sm:rounded-xl sm:py-5 sm:mt-5 sm:px-0 sm:fixed sm:w-48 sm:h-screen">
       <div
-        className={`flex items-center gap-x-2 ${
-          showMenu ? "mb-4" : "mb-0"
-        } px-3 cursor-pointer sm:mb-10 sm:pointer-events-none`}
+        className="flex items-center px-3 cursor-pointer gap-x-2 sm:mb-10 sm:pointer-events-none"
         onClick={toggleMenu}
       >
         <span className="font-bold text-md">Mi cuenta</span>
-        <ChevronIcon className={`size-3 sm:hidden transition-transform duration-700 ease-linear ${showMenu ? "rotate-90" : " rotate-0"}`} />
+        <ChevronIcon
+          className={`size-3 sm:hidden transition-transform duration-700 ease-linear ${
+            showMenu ? "rotate-90" : " rotate-0"
+          }`}
+        />
       </div>
       <nav
-        className={`${
-          showMenu ? "inline-block" : "hidden"
-        } sm:inline-block sm:w-full`}
+          className={`overflow-hidden transition-all duration-500 ease-in-out ${
+            showMenu ? "mt-4 max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+          } sm:max-h-none sm:opacity-100`}
       >
         <ul className="flex flex-col w-full gap-y-8">
-          {menuItems.map(({ url, label, Icon }, index) => (
-            <li key={label} className="flex px-3 group sm:px-0">
+          {menuItems.map(({ url, label, Icon }) => (
+            <li
+              key={label}
+              className="flex px-3 group sm:px-0"
+            >
               <span className="hidden w-1 mr-2 sm:block group-hover:bg-primaryColor"></span>
-              <Link href={url} className="flex items-center gap-x-3">
-                <Icon className={`size-7 ${pathname === url ? "text-gray-900" : "text-gray-600"}`} />
-                <span className={`text-sm ${pathname === url ? "font-bold" : "font-normal"}`}>{label}</span>
+              <Link
+                href={url}
+                className="flex items-center gap-x-3"
+                onClick={() => setShowMenu(false)}
+              >
+                <Icon
+                  className={`size-7 ${
+                    pathname === url ? "text-gray-900" : "text-gray-600"
+                  }`}
+                />
+                <span
+                  className={`text-sm ${
+                    pathname === url ? "font-bold" : "font-normal"
+                  }`}
+                >
+                  {label}
+                </span>
               </Link>
             </li>
           ))}
