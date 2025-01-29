@@ -3,12 +3,24 @@
 import FilterIcon from "@/icons/FilterIcon";
 import SearchIcon from "@/icons/SearchIcon";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function ProductFilter() {
   const [showFilter, setShowFilter] = useState(false);
+  const [searchName, setSearchName] = useState("");
+  const router = useRouter();
 
   const toggleFilter = () => {
-    setShowFilter((showFilter) => !showFilter);
+    setShowFilter((prev) => !prev);
+  };
+
+  const handleSearch = () => {
+    if (searchName === "" || searchName === null || searchName === undefined) {
+      router.push("/products");
+    }
+    if (searchName.trim()) {
+      router.push(`/products?name=${encodeURIComponent(searchName.trim())}`);
+    }
   };
 
   return (
@@ -22,8 +34,14 @@ function ProductFilter() {
           <input
             type="text"
             className="flex-1 p-2 bg-white border border-gray-400 rounded-xl"
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
-          <SearchIcon className="cursor-pointer size-5 text-primaryColor" />
+          <SearchIcon
+            className="cursor-pointer size-5 text-primaryColor"
+            onClick={handleSearch}
+          />
         </div>
       </div>
       <div
