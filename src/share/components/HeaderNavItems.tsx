@@ -53,7 +53,13 @@ const navItems = [
   },
 ];
 
-function HeaderNavItems({ showNav }: { showNav: boolean }) {
+function HeaderNavItems({
+  showNav,
+  setShowNav,
+}: {
+  showNav: boolean;
+  setShowNav: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { isAuthenticated, initializeAuth } = useAuthStore();
   const [loading, setLoading] = useState(true);
 
@@ -81,6 +87,7 @@ function HeaderNavItems({ showNav }: { showNav: boolean }) {
         <Link
           href={"/"}
           className="flex items-center justify-between gap-10 text-left whitespace-nowrap sm:gap-0 sm:px-5 sm:rounded-xl sm:bg-gray-900 sm:text-white sm:py-1"
+          onClick={() => setShowNav(!showNav)}
         >
           <HomeIcon className="size-3 sm:hidden" />
           <span>Inicio</span>
@@ -90,12 +97,13 @@ function HeaderNavItems({ showNav }: { showNav: boolean }) {
         <Link
           href={"/"}
           className="flex items-center justify-between gap-10 text-left whitespace-nowrap sm:gap-0 sm:px-5 sm:rounded-xl sm:bg-secondaryColor sm:text-black sm:py-1"
+          onClick={() => setShowNav(!showNav)}
         >
           <BoxesIcon className="size-3 sm:hidden" />
           <span>Productos</span>
         </Link>
       </li>
-      {isAuthenticated && <HeaderProfileNavItem />}
+      {isAuthenticated && <HeaderProfileNavItem showNav={showNav} setShowNav={setShowNav} />}
       {loading ? (
         <HeaderNavItemsSkeleton />
       ) : (
@@ -114,6 +122,7 @@ function HeaderNavItems({ showNav }: { showNav: boolean }) {
               <Link
                 href={href}
                 className={`flex justify-between items-center text-left gap-10 whitespace-nowrap text-gray-700 ${contendorClass}`}
+                onClick={() => setShowNav(!showNav)}
               >
                 {icon}
                 <span className={`${textClass}`}>{label}</span>

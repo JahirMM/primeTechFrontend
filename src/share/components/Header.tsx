@@ -30,7 +30,7 @@ function Header() {
             />
           )}
         </span>
-        <HeaderNavItems showNav={showNav} />
+        <HeaderNavItems showNav={showNav} setShowNav={setShowNav}/>
       </nav>
     </header>
   );

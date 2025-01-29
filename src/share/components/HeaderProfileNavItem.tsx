@@ -5,18 +5,29 @@ import UserIcon from "@/icons/UserIcon";
 
 import { useGetUserInformation } from "@/share/hook/useGetUserInformation";
 
-function HeaderProfileNavItem() {
+function HeaderProfileNavItem({
+  showNav,
+  setShowNav,
+}: {
+  showNav: boolean;
+  setShowNav: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { data: userInformation, isLoading } = useGetUserInformation();
 
   return (
     <li className="relative group">
-      <div className="flex items-center justify-between gap-10 text-left text-gray-700 whitespace-nowrap sm:gap-0 sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black">
+      <Link
+        href="/profile"
+        className="flex items-center justify-between gap-10 text-left text-gray-700 whitespace-nowrap sm:gap-0 sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black"
+        onClick={() => setShowNav(!showNav)}
+      >
         <UserIcon className="size-3" />
         <span className="sm:hidden">Perfil</span>
-      </div>
+      </Link>
+
       <div className="absolute hidden mt-1 bg-white border border-gray-400 rounded-xl w-44 sm:group-hover:block sm:right-0 sm:origin-top-right">
         {isLoading ? (
-          <p>Cargando...</p>
+          <p className="px-4 py-2">Cargando...</p>
         ) : (
           <ul className="py-4 space-y-4">
             <li>
