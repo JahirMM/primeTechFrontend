@@ -8,22 +8,29 @@ interface ProductRequest {
 }
 
 const useRecentProducts = () => {
-  const addProductToRecent = (product: ProductRequest) => {
-    let listRecentProducts = JSON.parse(
-      localStorage.getItem("recentProducts") || "[]"
-    );
+  const addProductToRecent = async (product: ProductRequest): Promise<void> => {
+    return new Promise((resolve) => {
+      let listRecentProducts = JSON.parse(
+        localStorage.getItem("recentProducts") || "[]"
+      );
 
-    listRecentProducts = listRecentProducts.filter(
-      (p: ProductRequest) => p.productId !== product.productId
-    );
+      listRecentProducts = listRecentProducts.filter(
+        (p: ProductRequest) => p.productId !== product.productId
+      );
 
-    listRecentProducts.unshift(product);
+      listRecentProducts.unshift(product);
 
-    if (listRecentProducts.length > 20) {
-      listRecentProducts.pop();
-    }
+      if (listRecentProducts.length > 20) {
+        listRecentProducts.pop();
+      }
 
-    localStorage.setItem("recentProducts", JSON.stringify(listRecentProducts));
+      localStorage.setItem(
+        "recentProducts",
+        JSON.stringify(listRecentProducts)
+      );
+
+      resolve();
+    });
   };
 
   return { addProductToRecent };

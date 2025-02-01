@@ -6,6 +6,7 @@ import { splitPrice } from "@/share/utils/precioUtils";
 
 import StarIcon from "@/icons/StarIcon";
 import BoxIcon from "@/icons/BoxIcon";
+import { useRouter } from "next/navigation";
 
 interface ProductItemInterface {
   isFavorite: boolean;
@@ -28,11 +29,14 @@ const ProductItem = ({
   classContainer,
   product,
 }: ProductItemInterface) => {
+  const router = useRouter();
+
   const { integerNumber, decimalNumber } = splitPrice(product.price);
   const { addProductToRecent } = useRecentProducts();
 
-  const handleViewProductDetails = () => {
-    addProductToRecent(product);
+  const handleViewProductDetails = async () => {
+    await addProductToRecent(product);
+    router.push(`/products/${product.productId}`);
   };
 
   return (
