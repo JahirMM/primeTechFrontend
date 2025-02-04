@@ -1,19 +1,16 @@
 "use client";
 
-import { useParams } from "next/navigation";
-
 import { useGetProductDetails } from "@/productDetails/hook/useGetProductDetails";
 import { useGetAverageRating } from "@/share/hook/useGetAverageRating";
 
 import ProductDetailsImages from "@/productDetails/components/ProductDetailsImages";
 
+import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
+
 import StarIcon from "@/icons/StarIcon";
 
 function ProductDetails() {
-  const params = useParams();
-  const productId = Array.isArray(params.productId)
-    ? params.productId[0]
-    : params.productId;
+  const productId = getProductIdFromUrl();
 
   if (!productId) {
     return <div>No se encontro un productId</div>;
@@ -32,7 +29,7 @@ function ProductDetails() {
   } = useGetAverageRating(productId);
 
   return (
-    <section className="mt-[58px] min-h-[calc(100vh-58px)] md:grid md:grid-cols-4 md:justify-center">
+    <section className="mt-[58px] min-h-[calc(100vh-58px)] md:grid md:grid-cols-4 md:justify-center md:w-[95%] md:mx-auto">
       <ProductDetailsImages productId={productId} />
 
       {productDetailsData && isProductLoading ? (

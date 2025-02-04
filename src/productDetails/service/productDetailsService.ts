@@ -1,4 +1,4 @@
-import { GetProductDetailsResponseInterface } from "@/productDetails/interfaces/ProductDetailsResponseInterface";
+import { GetProductDetailsResponseInterface } from "@/productDetails/interfaces/getProductDetailsResponseInterface";
 import { getInitialApi } from "@/share/hook/useInitialApi";
 
 const initialApi = getInitialApi();

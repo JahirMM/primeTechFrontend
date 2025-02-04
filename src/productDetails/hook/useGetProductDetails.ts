@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { GetProductDetailsResponseInterface } from "@/productDetails/interfaces/ProductDetailsResponseInterface";
+import { GetProductDetailsResponseInterface } from "@/productDetails/interfaces/getProductDetailsResponseInterface";
 
 import { getProductDetails } from "@/productDetails/service/productDetailsService";
 

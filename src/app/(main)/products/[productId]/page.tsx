@@ -1,4 +1,4 @@
-import ProductFeatures from "@/productDetails/components/ProductFeatures";
+import ProductFeatures from "@/productDetails/components/features/ProductFeatures";
 import ProductDetails from "@/productDetails/components/ProductDetails";
 
 function page() {
