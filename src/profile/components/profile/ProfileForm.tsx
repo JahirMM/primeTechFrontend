@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import ForwardedCustomInputField from "@/share/components/CustomInputField";
 import { handleTextInput } from "@/share/utils/sanitizeTextInput";
@@ -25,28 +25,40 @@ function ProfileForm({
   const emailRef = useRef<HTMLInputElement | null>(null);
 
   const mutationUserInformation = useUpdateUserInformation();
+  // Estado para guardar los datos originales
+  const [originalUserData, setOriginalUserData] = useState({
+    firstName: "",
+    middleName: "",
+    paternalSurname: "",
+    maternalSurname: "",
+    email: "",
+  });
 
   useEffect(() => {
     if (userInformation) {
-      if (firstNameRef.current) {
-        firstNameRef.current.value = userInformation.user.firstName || "";
-      }
-      if (middleNameRef.current) {
-        middleNameRef.current.value = userInformation.user.middleName || "";
-      }
-      if (paternalSurnameRef.current) {
-        paternalSurnameRef.current.value =
-          userInformation.user.paternalSurname || "";
-      }
-      if (maternalSurnameRef.current) {
-        maternalSurnameRef.current.value =
-          userInformation.user.maternalSurname || "";
-      }
-      if (emailRef.current) {
-        emailRef.current.value = userInformation.user.email || "";
-      }
+      setOriginalUserData({
+        firstName: userInformation.user.firstName || "",
+        middleName: userInformation.user.middleName || "",
+        paternalSurname: userInformation.user.paternalSurname || "",
+        maternalSurname: userInformation.user.maternalSurname || "",
+        email: userInformation.user.email || "",
+      });
     }
   }, [userInformation]);
+
+  useEffect(() => {
+    if (isDisabled) {
+      if (firstNameRef.current)
+        firstNameRef.current.value = originalUserData.firstName;
+      if (middleNameRef.current)
+        middleNameRef.current.value = originalUserData.middleName;
+      if (paternalSurnameRef.current)
+        paternalSurnameRef.current.value = originalUserData.paternalSurname;
+      if (maternalSurnameRef.current)
+        maternalSurnameRef.current.value = originalUserData.maternalSurname;
+      if (emailRef.current) emailRef.current.value = originalUserData.email;
+    }
+  }, [isDisabled, originalUserData]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
