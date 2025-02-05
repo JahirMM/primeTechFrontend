@@ -1,6 +1,7 @@
 import { PurchasedProductInterface } from "@/profile/interfaces/purchasedProductInterface";
 import { splitPrice } from "@/share/utils/precioUtils";
 import BoxIcon from "@/icons/BoxIcon";
+import Link from "next/link";
 
 const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
 
@@ -37,15 +38,18 @@ function PurchasedProduct({ product }: { product: PurchasedProductInterface }) {
           <span className="text-xs text-gray-800 uppercase">
             {product.sellerName}
           </span>
-          <span className="text-xs font-bold cursor-pointer text-primaryColor">
+          <Link
+            href={`/products?sellerId=${product.sellerId}`}
+            className="text-xs font-bold cursor-pointer text-primaryColor"
+          >
             Sus productos
-          </span>
+          </Link>
         </div>
-        <div className="">
+        <Link href={`/products/${product.productId}`}>
           <button className="px-3 py-2 text-xs text-white rounded-lg bg-primaryColor">
             Volver a comprar
           </button>
-        </div>
+        </Link>
       </div>
     </div>
   );
