@@ -3,7 +3,6 @@ import { Product } from "@/share/interfaces/productInterface";
 export interface ProductDetailsInterface
   extends Omit<
     Product,
-    | "sellerId"
     | "image"
     | "categoryName"
     | "averageRating"

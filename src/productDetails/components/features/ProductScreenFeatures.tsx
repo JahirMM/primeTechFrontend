@@ -1,10 +1,11 @@
+import FeatureTableSkeleton from "@/productDetails/skeletons/FeatureTableSkeleton";
 import FeatureTable from "@/productDetails/components/features/FeatureTable";
 import { useGetScreen } from "@/share/hook/useGetScreen";
 
 function ProductScreenFeatures({ productId }: { productId: string }) {
   const { data, isLoading, isError } = useGetScreen(productId);
 
-  if (isLoading) return <div>Cargando ...</div>;
+  if (isLoading) return <FeatureTableSkeleton />;
   if (isError) return <div>Error</div>;
 
   const screen = data?.screen[0];

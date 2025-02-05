@@ -1,10 +1,11 @@
+import FeatureTableSkeleton from "@/productDetails/skeletons/FeatureTableSkeleton";
 import FeatureTable from "@/productDetails/components/features/FeatureTable";
 import { useGetBattery } from "@/share/hook/useGetBattery";
 
 function ProductBatteryFeatures({ productId }: { productId: string }) {
   const { data, isLoading, isError } = useGetBattery(productId);
 
-  if (isLoading) return <div>Cargando ...</div>;
+  if (isLoading) return <FeatureTableSkeleton/>;
   if (isError) return <div>Error</div>;
 
   const battery = data?.battery[0];

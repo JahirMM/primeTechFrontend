@@ -1,10 +1,11 @@
-import { useGetCameras } from "@/share/hook/useGetCameras";
+import FeatureTableSkeleton from "@/productDetails/skeletons/FeatureTableSkeleton";
 import FeatureTable from "@/productDetails/components/features/FeatureTable";
+import { useGetCameras } from "@/share/hook/useGetCameras";
 
 function ProductCameraFeatures({ productId }: { productId: string }) {
   const { data, isLoading, isError } = useGetCameras(productId);
 
-  if (isLoading) return <div>Cargando ...</div>;
+  if (isLoading) return <FeatureTableSkeleton/>;
   if (isError) return <div>Error</div>;
 
   if (!data?.camera || data.camera.length === 0) {

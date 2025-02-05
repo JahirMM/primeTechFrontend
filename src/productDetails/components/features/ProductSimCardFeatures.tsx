@@ -1,10 +1,11 @@
+import FeatureTableSkeleton from "@/productDetails/skeletons/FeatureTableSkeleton";
 import FeatureTable from "@/productDetails/components/features/FeatureTable";
 import { useGetSimCard } from "@/share/hook/useGetSimCard";
 
 function ProductSimCardFeatures({ productId }: { productId: string }) {
   const { data, isLoading, isError } = useGetSimCard(productId);
 
-  if (isLoading) return <div>Cargando ...</div>;
+  if (isLoading) return <FeatureTableSkeleton/>;
   if (isError) return <div>Error</div>;
 
   const simCard = data?.simCard[0];

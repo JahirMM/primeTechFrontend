@@ -1,4 +1,4 @@
-function ProductDetailsSellerInfo() {
+function ProductDetailsSellerInfo({ sellerId }: { sellerId: string }) {
   return (
     <div className="flex px-5 gap-x-2 md:mt-0 md:py-5">
       <img

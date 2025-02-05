@@ -1,3 +1,4 @@
+import ProductDetailsImagesSkeleton from "@/productDetails/skeletons/ProductDetailsImagesSkeleton";
 import { useGetProductImages } from "@/share/hook/useGetProductImages";
 
 import BoxIcon from "@/icons/BoxIcon";
@@ -9,7 +10,7 @@ function ProductDetailsImages({ productId }: { productId: string }) {
     isError: hasProductImagesError,
   } = useGetProductImages(productId);
 
-  if (isProductImagesLoading) return <div>Cargando imágenes...</div>;
+  if (isProductImagesLoading) return <ProductDetailsImagesSkeleton />;
   if (hasProductImagesError) return <div>Error en la carga de imágenes</div>;
 
   const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
@@ -32,7 +33,6 @@ function ProductDetailsImages({ productId }: { productId: string }) {
         )}
       </div>
 
-      {/* Imágenes secundarias */}
       {secondaryImages.length > 0 && (
         <div className="flex justify-between gap-2 sm:order-1 sm:flex-col">
           {secondaryImages.map(({ productImageId, imageUrl }) => (

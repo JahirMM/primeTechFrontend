@@ -1,3 +1,4 @@
+import FeatureTableSkeleton from "@/productDetails/skeletons/FeatureTableSkeleton";
 import FeatureTable from "@/productDetails/components/features/FeatureTable";
 
 import { FeatureData } from "@/productDetails/interfaces/featureDataInterface";
@@ -63,7 +64,9 @@ function ProductGeneralFeatures({
     <div>
       <p className="mb-4 text-lg font-semibold">Características generales</p>
 
-      {isAdditionalLoading && <p>Cargando información adicional...</p>}
+      {isAdditionalLoading && (
+        <FeatureTableSkeleton/>
+      )}
       {hasAdditionalError && <p>Error al obtener la información adicional</p>}
 
       {additionalData && (

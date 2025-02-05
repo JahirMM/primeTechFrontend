@@ -8,6 +8,8 @@ import ProductDetailsCartControls from "@/productDetails/components/ProductDetai
 import ProductDetailsSellerInfo from "@/productDetails/components/ProductDetailsSellerInfo";
 import ProductDetailsImages from "@/productDetails/components/ProductDetailsImages";
 
+import ProductDetailsSkeleton from "@/productDetails/skeletons/ProductDetailsSkeleton";
+
 import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
 
 function ProductDetails() {
@@ -29,41 +31,43 @@ function ProductDetails() {
     isError: hasAverageRatingError,
   } = useGetAverageRating(productId);
 
-  if (isProductLoading && isAverageRatingLoading) {
-    return <div>Cargando...</div>;
-  }
-
-  if (hasProductError && !productDetailsData?.product) {
-    return <div>Error cargando los detalles del producto</div>;
-  }
-
-  if (!productDetailsData?.product) {
-    return <div>El producto no fue encontrado</div>;
-  }
-
   return (
     <section className="mt-[58px] min-h-[calc(100vh-58px)] md:grid md:grid-cols-4 md:justify-center md:w-[95%] md:mx-auto">
       <ProductDetailsImages productId={productId} />
 
       <div className="md:col-start-3 md:col-end-5 md:grid md:grid-cols-1 md:content-center md:gap-y-5 md:max-w-[85%]">
-        <ProductDetailsNameAndRating
-          averageRating={
-            hasAverageRatingError ? 0 : averageRatingData?.averageRating || 0
-          }
-          deviceType={productDetailsData.product.deviceType}
-          productName={productDetailsData.product.name}
-          productPrice={productDetailsData.product.price}
-        />
+        {isAverageRatingLoading && isProductLoading ? (
+          <ProductDetailsSkeleton />
+        ) : hasProductError ? (
+          <div>Error en la carga de los detalles del producto</div>
+        ) : (
+          productDetailsData && (
+            <>
+              <ProductDetailsNameAndRating
+                averageRating={
+                  hasAverageRatingError
+                    ? 0
+                    : averageRatingData?.averageRating || 0
+                }
+                deviceType={productDetailsData.product.deviceType}
+                productName={productDetailsData.product.name}
+                productPrice={productDetailsData.product.price}
+              />
 
-        <ProductDetailsSellerInfo />
-        <ProductDetailsCartControls
-          productId={productId}
-          stock={productDetailsData.product.stock}
-        />
+              <ProductDetailsSellerInfo
+                sellerId={productDetailsData.product.sellerId}
+              />
+              <ProductDetailsCartControls
+                productId={productId}
+                stock={productDetailsData.product.stock}
+              />
 
-        <div className="px-5 mt-5 text-sm text-pretty md:mt-0 md:row-start-2 md:row-end-3">
-          {productDetailsData.product.description}
-        </div>
+              <div className="px-5 mt-5 text-sm text-pretty md:mt-0 md:row-start-2 md:row-end-3">
+                {productDetailsData.product.description}
+              </div>
+            </>
+          )
+        )}
       </div>
     </section>
   );
