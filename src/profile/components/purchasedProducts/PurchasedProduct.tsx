@@ -21,7 +21,11 @@ function PurchasedProduct({ product }: { product: PurchasedProductInterface }) {
           <BoxIcon className="text-gray-400 border border-gray-300 max-w-20 max-h-20 min-w-20 min-h-20" />
         )}
         <div>
-          <p className="text-sm font-bold">{product.productName}</p>
+          <p className="text-sm font-bold">
+            <Link href={`/products/${product.productId}`}>
+              {product.productName}
+            </Link>
+          </p>
           <span className="block mt-2 text-xs text-gray-500">
             ${price.integerNumber || 0}.{price.decimalNumber || 0}
           </span>

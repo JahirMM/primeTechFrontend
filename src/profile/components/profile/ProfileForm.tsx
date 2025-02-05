@@ -25,7 +25,7 @@ function ProfileForm({
   const emailRef = useRef<HTMLInputElement | null>(null);
 
   const mutationUserInformation = useUpdateUserInformation();
-  // Estado para guardar los datos originales
+
   const [originalUserData, setOriginalUserData] = useState({
     firstName: "",
     middleName: "",
