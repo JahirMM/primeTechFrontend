@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 
 import { CategoryItemsInterface } from "@/share/interfaces/categoryItemsInterface";
 
+import BrandAndPriceFilterSkeleton from "@/products/skeletons/BrandAndPriceFilterSkeleton";
+import CategoryFilterSkeleton from "@/products/skeletons/CategoryFilterSkeleton";
+
 import RatingFilter from "@/products/components/filter/RatingFilter";
 import BrandFilter from "@/products/components/filter/BrandFilter";
 import PriceFilter from "@/products/components/filter/Pricefilter";
@@ -25,6 +28,7 @@ function ProductFilter() {
     isLoading: isCategoryLoading,
     isError: isCategoryError,
   } = useCategories();
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -139,9 +143,12 @@ function ProductFilter() {
           <span className="block text-base font-bold uppercase">Filtros</span>
 
           {isCategoryLoading ? (
-            <div>Cargando...</div>
+            <CategoryFilterSkeleton />
           ) : isCategoryError ? (
-            <div>Error</div>
+            <FilterError
+              containerClass="pb-5 mt-3 border-b border-b-gray-400"
+              title="Categorías"
+            />
           ) : (
             <CategoryFilter
               categoryItems={categoryItems}
@@ -150,25 +157,36 @@ function ProductFilter() {
             />
           )}
           {isFilterLoading ? (
-            <div>Cargando...</div>
+            <BrandAndPriceFilterSkeleton />
           ) : isFilterError ? (
-            <div>Error</div>
-          ) : (
             <>
-              <BrandFilter
-                brands={filterData?.brands || []}
-                searchBrand={searchBrand}
-                setSearchBrand={setSearchBrand}
+              <FilterError
+                containerClass="pb-5 mt-5 border-b border-b-gray-400"
+                title="Marca"
               />
-              <PriceFilter
-                minPrice={filterData?.minPrice || 0}
-                maxPrice={filterData?.maxPrice || 0}
-                minValue={minValue}
-                maxValue={maxValue}
-                setMinValue={setMinValue}
-                setMaxValue={setMaxValue}
+              <FilterError
+                containerClass="w-full p-3 mt-5 bg-white rounded-xl"
+                title="Price"
               />
             </>
+          ) : (
+            filterData && (
+              <>
+                <BrandFilter
+                  brands={filterData.brands || []}
+                  searchBrand={searchBrand}
+                  setSearchBrand={setSearchBrand}
+                />
+                <PriceFilter
+                  minPrice={filterData.minPrice || 0}
+                  maxPrice={filterData.maxPrice || 0}
+                  minValue={minValue}
+                  maxValue={maxValue}
+                  setMinValue={setMinValue}
+                  setMaxValue={setMaxValue}
+                />
+              </>
+            )
           )}
           <RatingFilter minRating={minRating} setMinRating={setMinRating} />
           <button
