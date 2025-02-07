@@ -4,7 +4,7 @@ import { GetShoppingCartResponseInterface } from "@/share/interfaces/getShopping
 
 import { getProductsFromTheShoppingCart } from "@/share/services/shoppingCartService";
 
-export const useProductsFromShoppingCart = () => {
+export const useGetProductsFromShoppingCart = () => {
   return useQuery<GetShoppingCartResponseInterface, Error>({
     queryKey: ["productFromShoppingCart"],
     queryFn: () => getProductsFromTheShoppingCart(),

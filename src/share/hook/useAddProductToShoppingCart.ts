@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 
@@ -7,6 +7,8 @@ import { ErrorResponseInterface } from "@/auth/interfaces/errorResponseInterface
 import { addProductToShoppingCart } from "@/share/services/shoppingCartService";
 
 export function useAddProductToShoppingCart() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: addProductToShoppingCart,
     onSuccess: () => {
@@ -14,6 +16,7 @@ export function useAddProductToShoppingCart() {
         duration: 2000,
         style: { backgroundColor: "#1F5A54", color: "white" },
       });
+      queryClient.invalidateQueries({ queryKey: ["productFromShoppingCart"] });
     },
     onError: (error: AxiosError<ErrorResponseInterface>) => {
       if (error.response?.status === 409) {

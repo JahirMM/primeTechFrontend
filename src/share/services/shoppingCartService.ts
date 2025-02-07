@@ -3,6 +3,7 @@ import { AddToCartResponseInterface } from "@/share/interfaces/AddToCartResponse
 import { ResponseMessageInterface } from "@/share/interfaces/ResponseMessageInterface";
 
 import { getInitialApi } from "@/share/hook/useInitialApi";
+import { UpdateProductQuantityResponseInterface } from "../interfaces/updateProductFromShoppingCartInterface";
 
 const initialApi = getInitialApi();
 
@@ -29,5 +30,21 @@ export const deleteProductsFromTheShoppingCart = async (
   productId: string
 ): Promise<ResponseMessageInterface> => {
   const response = await initialApi.delete(`/shopping-cart/${productId}`);
+  return response.data;
+};
+
+export const updateProductToShoppingCart = async ({
+  productId,
+  shoppingCartId,
+  quantity,
+}: {
+  productId: string;
+  shoppingCartId: string;
+  quantity: number;
+}): Promise<UpdateProductQuantityResponseInterface> => {
+  const response = await initialApi.put(`/shopping-cart/${productId}`, {
+    shoppingCartId: shoppingCartId,
+    quantity: quantity,
+  });
   return response.data;
 };
