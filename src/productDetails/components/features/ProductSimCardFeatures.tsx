@@ -5,7 +5,7 @@ import { useGetSimCard } from "@/share/hook/useGetSimCard";
 function ProductSimCardFeatures({ productId }: { productId: string }) {
   const { data, isLoading, isError } = useGetSimCard(productId);
 
-  if (isLoading) return <FeatureTableSkeleton/>;
+  if (isLoading) return <FeatureTableSkeleton />;
   if (isError) return <div>Error</div>;
 
   const simCard = data?.simCard[0];
@@ -16,16 +16,12 @@ function ProductSimCardFeatures({ productId }: { productId: string }) {
     "Tipo de SIM": simCard ? simCard.simType : "N/A",
   };
 
-  return (
+  return data && data.simCard && data.simCard.length > 0 ? (
     <div>
       <p className="mb-4 text-lg font-semibold">Tarjeta Sim</p>
-      {data && data.simCard && data.simCard.length > 0 ? (
-        <FeatureTable headers={Object.keys(simCardData)} data={simCardData} />
-      ) : (
-        <div>No se encontró información</div>
-      )}
+      <FeatureTable headers={Object.keys(simCardData)} data={simCardData} />
     </div>
-  );
+  ) : null;
 }
 
 export default ProductSimCardFeatures;

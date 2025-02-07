@@ -9,7 +9,7 @@ function ProductCameraFeatures({ productId }: { productId: string }) {
   if (isError) return <div>Error</div>;
 
   if (!data?.camera || data.camera.length === 0) {
-    return <div>No se encontraron cámaras</div>;
+    return null;
   }
 
   return (

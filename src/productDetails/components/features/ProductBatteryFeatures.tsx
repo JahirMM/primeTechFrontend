@@ -5,7 +5,7 @@ import { useGetBattery } from "@/share/hook/useGetBattery";
 function ProductBatteryFeatures({ productId }: { productId: string }) {
   const { data, isLoading, isError } = useGetBattery(productId);
 
-  if (isLoading) return <FeatureTableSkeleton/>;
+  if (isLoading) return <FeatureTableSkeleton />;
   if (isError) return <div>Error</div>;
 
   const battery = data?.battery[0];
@@ -23,16 +23,12 @@ function ProductBatteryFeatures({ productId }: { productId: string }) {
       : "N/A",
   };
 
-  return (
+  return data && data.battery && data.battery.length > 0 ? (
     <div>
       <p className="mb-4 text-lg font-semibold">Batería</p>
-      {data && data.battery && data.battery.length > 0 ? (
-        <FeatureTable headers={Object.keys(batteryData)} data={batteryData} />
-      ) : (
-        <div>No se encontró información</div>
-      )}
+      <FeatureTable headers={Object.keys(batteryData)} data={batteryData} />
     </div>
-  );
+  ) : null;
 }
 
 export default ProductBatteryFeatures;

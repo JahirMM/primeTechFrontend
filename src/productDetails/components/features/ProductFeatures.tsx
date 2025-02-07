@@ -51,9 +51,9 @@ function ProductFeatures() {
         className={`flex items-center gap-3 px-5 mt-3 ${showFeatures ? "hidden" : "mb-3"}`}
         onClick={() => setShowFeatures(!showFeatures)}
       >
-        <span className="text-sm font-bold text-primaryColor">Ver todas las características</span>
+        <span className="text-sm font-bold cursor-pointer text-primaryColor">Ver todas las características</span>
         <ChevronIcon
-          className={`size-3 transition-transform duration-700 ease-linear ${
+          className={`size-3 transition-transform duration-700 ease-linear cursor-pointer ${
             showFeatures ? "rotate-90" : " rotate-0"
           }`}
         />

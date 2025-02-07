@@ -17,16 +17,12 @@ function ProductScreenFeatures({ productId }: { productId: string }) {
     "Tamaño de pantalla": screen ? `${screen.screenSize} pulgadas` : "N/A",
   };
 
-  return (
+  return data && data.screen.length > 0 ? (
     <div>
       <p className="mb-4 text-lg font-semibold">Pantalla</p>
-      {data && data.screen && data.screen.length > 0 ? (
-        <FeatureTable headers={Object.keys(screenData)} data={screenData} />
-      ) : (
-        <div>No se encontró información</div>
-      )}
+      <FeatureTable headers={Object.keys(screenData)} data={screenData} />
     </div>
-  );
+  ) : null;
 }
 
 export default ProductScreenFeatures;

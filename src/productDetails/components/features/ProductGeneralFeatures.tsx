@@ -60,21 +60,25 @@ function ProductGeneralFeatures({
     }
   }
 
+  if (isAdditionalLoading) {
+    return <FeatureTableSkeleton />;
+  }
+
+  if (hasAdditionalError) {
+    return <p>Error al obtener la información adicional</p>;
+  }
+
+  if (!additionalData) {
+    return null;
+  }
+
   return (
     <div>
       <p className="mb-4 text-lg font-semibold">Características generales</p>
-
-      {isAdditionalLoading && (
-        <FeatureTableSkeleton/>
-      )}
-      {hasAdditionalError && <p>Error al obtener la información adicional</p>}
-
-      {additionalData && (
-        <FeatureTable
-          headers={Object.keys(additionalData)}
-          data={additionalData}
-        />
-      )}
+      <FeatureTable
+        headers={Object.keys(additionalData)}
+        data={additionalData}
+      />
     </div>
   );
 }
