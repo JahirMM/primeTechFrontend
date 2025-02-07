@@ -7,6 +7,7 @@ import AddCartIcon from "@/icons/AddCartIcon";
 import { useDeleteFavoriteProduct } from "@/share/hook/useDeleteFavoriteProduct";
 import { useFavoriteProduct } from "@/share/hook/useAddFavoriteProduct";
 import { useAuthStore } from "@/share/hook/store/useAuth";
+import { useAddProductToShoppingCart } from "../hook/useAddProductToShoppingCart";
 
 function ProductActionButtons({
   favoriteProductId,
@@ -19,6 +20,7 @@ function ProductActionButtons({
 }) {
   const mutationFavoriteProduct = useFavoriteProduct();
   const mutationDeleteFavoriteProduct = useDeleteFavoriteProduct();
+  const mutationShoppingCart = useAddProductToShoppingCart();
 
   const { initializeAuth } = useAuthStore();
   const router = useRouter();
@@ -46,6 +48,7 @@ function ProductActionButtons({
 
   const handleAddToCart = (event: React.MouseEvent) => {
     event.stopPropagation();
+    mutationShoppingCart.mutate({ productId: productId, quantity: 1 });
   };
 
   return (
