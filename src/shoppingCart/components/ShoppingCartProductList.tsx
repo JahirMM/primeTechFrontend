@@ -44,6 +44,7 @@ function ShoppingCartProductList({
             productId={product.productId}
             shoppingCartId={shoppingCartId}
             quantity={product.quantity}
+            stock={product.stock}
           />
         </article>
       ))}

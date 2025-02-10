@@ -1,16 +1,19 @@
 import { useDeleteProductFromShoppingCart } from "@/shoppingCart/hook/useDeleteProductFromShoppingCart";
 import { useUpdateProductToShoppingCart } from "@/shoppingCart/hook/useUpdateProductToShoppingCart";
+import { toast } from "sonner";
 
 interface ProductQuantityControlsProps {
   productId: string;
   shoppingCartId: string;
   quantity: number;
+  stock: number;
 }
 
 function ProductQuantityControls({
   productId,
   shoppingCartId,
   quantity,
+  stock,
 }: ProductQuantityControlsProps) {
   const mutationDeleteProductFromShoppingCart =
     useDeleteProductFromShoppingCart();
@@ -26,6 +29,13 @@ function ProductQuantityControls({
     shoppingCartId: string,
     quantity: number
   ) => {
+    if (quantity > stock) {
+      toast.error("Stock insuficiente", {
+        duration: 5000,
+        style: { backgroundColor: "#FF5353", color: "white" },
+      });
+      return;
+    }
     if (quantity < 1) return;
     mutationUpdateProductFromShoppingCart.mutate({
       productId,
