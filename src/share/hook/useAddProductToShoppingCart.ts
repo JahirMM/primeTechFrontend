@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 import { ErrorResponseInterface } from "@/auth/interfaces/errorResponseInterface";
 
-import { addProductToShoppingCart } from "@/share/services/shoppingCartService";
+import { addProductToShoppingCart } from "@/shoppingCart/services/shoppingCartService";
 
 export function useAddProductToShoppingCart() {
   const queryClient = useQueryClient();

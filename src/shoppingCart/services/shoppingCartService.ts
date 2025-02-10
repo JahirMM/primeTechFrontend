@@ -1,9 +1,10 @@
-import { GetShoppingCartResponseInterface } from "@/share/interfaces/getShoppingCartResponseInterface";
-import { AddToCartResponseInterface } from "@/share/interfaces/AddToCartResponseInterface";
+import { GetShoppingCartResponseInterface } from "@/shoppingCart/interfaces/getShoppingCartResponseInterface";
 import { ResponseMessageInterface } from "@/share/interfaces/ResponseMessageInterface";
 
+import { UpdateProductQuantityResponseInterface } from "@/shoppingCart/interfaces/updateProductFromShoppingCartInterface";
+import { AddToCartResponseInterface } from "@/shoppingCart/interfaces/addToCartResponseInterface";
+
 import { getInitialApi } from "@/share/hook/useInitialApi";
-import { UpdateProductQuantityResponseInterface } from "../interfaces/updateProductFromShoppingCartInterface";
 
 const initialApi = getInitialApi();
 

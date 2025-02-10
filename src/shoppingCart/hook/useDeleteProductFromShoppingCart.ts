@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 import { ErrorResponseInterface } from "@/auth/interfaces/errorResponseInterface";
 
-import { deleteProductsFromTheShoppingCart } from "@/share/services/shoppingCartService";
+import { deleteProductsFromTheShoppingCart } from "@/shoppingCart/services/shoppingCartService";
 
 export function useDeleteProductFromShoppingCart() {
   const queryClient = useQueryClient();

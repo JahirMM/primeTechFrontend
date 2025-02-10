@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { GetShoppingCartResponseInterface } from "@/share/interfaces/getShoppingCartResponseInterface";
+import { GetShoppingCartResponseInterface } from "@/shoppingCart/interfaces/getShoppingCartResponseInterface";
 
-import { getProductsFromTheShoppingCart } from "@/share/services/shoppingCartService";
+import { getProductsFromTheShoppingCart } from "@/shoppingCart/services/shoppingCartService";
 
 export const useGetProductsFromShoppingCart = () => {
   return useQuery<GetShoppingCartResponseInterface, Error>({

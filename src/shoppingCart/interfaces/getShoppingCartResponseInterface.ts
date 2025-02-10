@@ -1,4 +1,4 @@
-import { ProductInCart } from "./ProductInCardInterface";
+import { ProductInCart } from "@/shoppingCart/interfaces/ProductInCardInterface";
 
 export interface ShoppingCartWithProductsInterface {
   shoppingCartId: string;

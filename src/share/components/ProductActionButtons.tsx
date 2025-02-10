@@ -4,10 +4,10 @@ import HeartXmarkIcon from "@/icons/HeartXmarkIcon";
 import HeartPlusIcon from "@/icons/HeartPlusIcon";
 import AddCartIcon from "@/icons/AddCartIcon";
 
+import { useAddProductToShoppingCart } from "@/share/hook/useAddProductToShoppingCart";
 import { useDeleteFavoriteProduct } from "@/share/hook/useDeleteFavoriteProduct";
 import { useFavoriteProduct } from "@/share/hook/useAddFavoriteProduct";
 import { useAuthStore } from "@/share/hook/store/useAuth";
-import { useAddProductToShoppingCart } from "../hook/useAddProductToShoppingCart";
 
 function ProductActionButtons({
   favoriteProductId,

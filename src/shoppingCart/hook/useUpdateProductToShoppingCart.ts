@@ -6,7 +6,7 @@ import { ErrorResponseInterface } from "@/auth/interfaces/errorResponseInterface
 
 import {
   updateProductToShoppingCart,
-} from "@/share/services/shoppingCartService";
+} from "@/shoppingCart/services/shoppingCartService";
 
 export function useUpdateProductToShoppingCart() {
   const queryClient = useQueryClient();

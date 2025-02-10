@@ -1,4 +1,4 @@
-import { Product } from "./productInterface";
+import { Product } from "@/share/interfaces/productInterface";
 
 export interface ProductInCart
   extends Omit<
