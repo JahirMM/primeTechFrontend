@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { useAuthStore } from "@/share/hook/store/useAuth";
+import { uselogout } from "@/share/hook/useLogout";
 
 import CartShoppingIcon from "@/icons/CartShoppingIcon";
 import BoxesIcon from "@/icons/BoxesIcon";
@@ -16,8 +17,8 @@ import HeaderNavItemsSkeleton from "@/share/skeletons/HeaderNavItemsSkeleton";
 
 const navItems = [
   {
-    label: "Iniciar sesion",
-    icon: <BoxesIcon className="size-3 sm:hidden" />,
+    label: "Iniciar sesión",
+    icon: null,
     textClass: "",
     contendorClass:
       "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:bg-primaryColor sm:text-white sm:py-1",
@@ -26,7 +27,7 @@ const navItems = [
   },
   {
     label: "Regístrate",
-    icon: <BoxesIcon className="size-3 sm:hidden" />,
+    icon: null,
     textClass: "",
     contendorClass:
       "sm:gap-0 sm:px-5 sm:py-0 sm:rounded-xl sm:border sm:border-gray-900 sm:text-black sm:py-1",
@@ -60,8 +61,14 @@ function HeaderNavItems({
   showNav: boolean;
   setShowNav: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const mutationLogout = uselogout();
+
   const { isAuthenticated, initializeAuth } = useAuthStore();
   const [loading, setLoading] = useState(true);
+
+  const handleLogout = () => {
+    mutationLogout.mutate();
+  };
 
   useEffect(() => {
     const initialize = async () => {
@@ -103,7 +110,9 @@ function HeaderNavItems({
           <span>Productos</span>
         </Link>
       </li>
-      {isAuthenticated && <HeaderProfileNavItem showNav={showNav} setShowNav={setShowNav} />}
+      {isAuthenticated && (
+        <HeaderProfileNavItem showNav={showNav} setShowNav={setShowNav} />
+      )}
       {loading ? (
         <HeaderNavItemsSkeleton />
       ) : (
@@ -124,12 +133,25 @@ function HeaderNavItems({
                 className={`flex justify-between items-center text-left gap-10 whitespace-nowrap text-gray-700 ${contendorClass}`}
                 onClick={() => setShowNav(!showNav)}
               >
-                {icon}
+                {icon ? icon : <div className="sm:hidden"></div>}
                 <span className={`${textClass}`}>{label}</span>
               </Link>
             </li>
           )
         )
+      )}
+      {isAuthenticated && (
+        <li className="sm:hidden">
+          <span className="flex items-center justify-between gap-10 text-left whitespace-nowrap sm:gap-0 sm:px-5 sm:rounded-xl sm:bg-gray-900 sm:text-white sm:py-1">
+            <div></div>
+            <span
+              className="font-semibold cursor-pointer text-primaryColor"
+              onClick={handleLogout}
+            >
+              Cerrar sesión
+            </span>
+          </span>
+        </li>
       )}
     </ul>
   );

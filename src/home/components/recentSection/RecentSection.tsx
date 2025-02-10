@@ -4,13 +4,12 @@ import { useEffect, useRef, useState } from "react";
 
 import { Product } from "@/share/interfaces/productInterface";
 
+import CarouselContainer from "@/home/components/CarouselContainer";
 import ProductItem from "@/share/components/ProductItem";
 import Marquee from "@/home/components/Marquee";
 
 import ProductListSkeleton from "@/home/skeletons/ProductListSkeleton";
 
-import PlayArrowIcon from "@/icons/PlayArrowIcon";
-import CarouselContainer from "../CarouselContainer";
 
 function RecentSection() {
   const [listRecentProducts, setListRecentProducts] = useState<Product[]>([]);

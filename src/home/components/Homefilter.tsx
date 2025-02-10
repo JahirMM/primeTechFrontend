@@ -30,7 +30,7 @@ function HomeFilter() {
       <input
         ref={inputRef}
         type="text"
-        className="flex-1 px-1 outline-none bg-secondaryColor"
+        className="flex-1 px-1 outline-none bg-secondaryColor placeholder:text-sm"
         onKeyDown={handleKeyDown}
         placeholder="Buscar productos..."
       />
