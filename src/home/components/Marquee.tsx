@@ -1,4 +1,7 @@
+'use client'
+
 import ArrowIcon from "@/icons/ArrowIcon";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 function createItems() {
@@ -7,8 +10,8 @@ function createItems() {
     items.push(
       <React.Fragment key={index}>
         <span className="text-lg font-bold text-black">TODO - AQUÍ</span>
-        <span className="bg-primaryColor p-2 rounded-full">
-          <ArrowIcon className="size-3 -rotate-12 text-white" />
+        <span className="p-2 rounded-full bg-primaryColor">
+          <ArrowIcon className="text-white size-3 -rotate-12" />
         </span>
       </React.Fragment>
     );
@@ -17,11 +20,12 @@ function createItems() {
 }
 
 function Marquee() {
+  const router = useRouter()
   const items = createItems();
 
   return (
     <div className="overflow-hidden">
-      <div className="flex gap-2 whitespace-nowrap marquee">
+      <div className="flex gap-2 cursor-pointer whitespace-nowrap marquee" onClick={() => router.push("/products")}>
         {items}
       </div>
     </div>

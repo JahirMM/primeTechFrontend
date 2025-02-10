@@ -17,10 +17,10 @@ function Categories() {
   }
 
   const categoryMap: Record<string, { displayName: string; href: string }> = {
-    cellular: { displayName: "Celulares", href: "/" },
-    tablet: { displayName: "Tablets", href: "/" },
-    laptop: { displayName: "Laptops", href: "/" },
-    other: { displayName: "Otros", href: "/" },
+    cellular: { displayName: "Celulares", href: "/products" },
+    tablet: { displayName: "Tablets", href: "/products" },
+    laptop: { displayName: "Laptops", href: "/products" },
+    other: { displayName: "Otros", href: "/products" },
   };
 
   const categoryItems: CategoryItemsInterface[] =
@@ -29,7 +29,7 @@ function Categories() {
       .map((category) => ({
         ...category,
         categoryName: categoryMap[category.categoryName].displayName,
-        href: categoryMap[category.categoryName].href,
+        href: categoryMap[category.categoryName].href + "?categoryId=" + category.categoryId,
       })) || [];
 
   return (
@@ -38,7 +38,7 @@ function Categories() {
       {categoryItems.map(({ categoryName, href }) => (
         <Link
           key={categoryName}
-          href={href}
+          href={href ?? "/"}
           className="px-4 py-2 text-xs text-center rounded-lg bg-primaryColor text-md text-white/90"
         >
           {categoryName}

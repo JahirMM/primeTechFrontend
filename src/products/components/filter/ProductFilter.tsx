@@ -6,6 +6,7 @@ import { CategoryItemsInterface } from "@/share/interfaces/categoryItemsInterfac
 import BrandAndPriceFilterSkeleton from "@/products/skeletons/BrandAndPriceFilterSkeleton";
 import CategoryFilterSkeleton from "@/products/skeletons/CategoryFilterSkeleton";
 
+import CategoryFilter from "@/products/components/filter/CategoryFilter";
 import RatingFilter from "@/products/components/filter/RatingFilter";
 import BrandFilter from "@/products/components/filter/BrandFilter";
 import PriceFilter from "@/products/components/filter/Pricefilter";
@@ -15,7 +16,7 @@ import { useCategories } from "@/share/hook/useGetCategories";
 
 import FilterIcon from "@/icons/FilterIcon";
 import SearchIcon from "@/icons/SearchIcon";
-import CategoryFilter from "./CategoryFilter";
+import XmarkIcon from "@/icons/XmarkIcon";
 
 function ProductFilter() {
   const {
@@ -48,7 +49,7 @@ function ProductFilter() {
     Number(searchParams.get("maxPrice")) || 0
   );
   const [minRating, setMinRating] = useState(() => {
-    const rating = Number(searchParams.get("minRating"));
+    const rating = Number(searchParams.get("minRating") || 0);
     return isNaN(rating) ? 0 : rating;
   });
 
@@ -58,6 +59,10 @@ function ProductFilter() {
       setMaxValue(filterData.maxPrice || 0);
     }
   }, [filterData]);
+
+  useEffect(() => {
+    setMinRating(Number(searchParams.get("minRating") || 0));
+  }, [searchParams]);
 
   const toggleFilter = () => {
     setShowFilter((prev) => !prev);
@@ -109,10 +114,17 @@ function ProductFilter() {
     <>
       <div className="bg-white px-5 fixed flex items-center z-[70] w-full h-[52px] md:px-40 lg:px-60">
         <div className="flex items-center w-full gap-x-4">
-          <FilterIcon
-            className="cursor-pointer text-primaryColor size-5"
-            onClick={toggleFilter}
-          />
+          {showFilter ? (
+            <XmarkIcon
+              className="cursor-pointer text-primaryColor size-6 lg:hidden"
+              onClick={toggleFilter}
+            />
+          ) : (
+            <FilterIcon
+              className="cursor-pointer text-primaryColor size-5 lg:hidden"
+              onClick={toggleFilter}
+            />
+          )}
           <input
             type="text"
             className="flex-1 p-2 bg-white border border-gray-400 rounded-xl"

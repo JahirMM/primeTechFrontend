@@ -21,7 +21,7 @@ function RecentSection() {
   }, []);
 
   return (
-    <section className="py-10 mt-20 bg-sectionColor">
+    <section className="py-10 mt-20 bg-sectionColor" id="recentSection">
       <Marquee />
       <div className="px-10 mt-10">
         <header className="flex items-center gap-3">
