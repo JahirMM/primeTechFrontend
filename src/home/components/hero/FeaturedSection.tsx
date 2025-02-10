@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 
-import SearchIcon from "@/icons/SearchIcon";
 import ArrowIcon from "@/icons/ArrowIcon";
+import Homefilter from "../Homefilter";
 
 function FeaturedSection() {
   const router = useRouter();
@@ -17,10 +17,7 @@ function FeaturedSection() {
       lg:py-11 lg:px-10
       xl:w-[65%]"
     >
-      <div className="flex items-center gap-2 p-2 bg-secondaryColor rounded-xl">
-        <SearchIcon className="size-4" />
-        <input type="text" className="flex-1 px-1 bg-secondaryColor" />
-      </div>
+      <Homefilter />
       <div className="grid grid-cols-6 gap-3 mt-4 text-sm md:mt-10 md:grid-cols-11">
         <a
           href="#recentSection"
