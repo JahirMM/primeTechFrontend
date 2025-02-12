@@ -19,6 +19,7 @@ const filterKeys = [
   "size",
   "onSale",
   "minRating",
+  "onSale"
 ];
 
 function ProductsPage() {

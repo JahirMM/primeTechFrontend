@@ -40,7 +40,10 @@ function FeaturedSection() {
             <ArrowIcon className="size-4" />
           </span>
         </div>
-        <div className="flex flex-col items-center justify-center col-start-1 col-end-4 gap-3 px-3 py-6 text-center bg-white cursor-pointer rounded-xl md:col-start-6 md:col-end-10 md:py-10 md:flex-row xl:py-16">
+        <div
+          className="flex flex-col items-center justify-center col-start-1 col-end-4 gap-3 px-3 py-6 text-center bg-white cursor-pointer rounded-xl md:col-start-6 md:col-end-10 md:py-10 md:flex-row xl:py-16"
+          onClick={() => router.push("/products?onSale=true")}
+        >
           <span>Ofertas especiales</span>
           <span className="p-3 rounded-full bg-secondaryColor">
             <ArrowIcon className="size-4" />

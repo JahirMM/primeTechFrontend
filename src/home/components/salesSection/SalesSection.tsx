@@ -1,8 +1,12 @@
+'use client'
+
 import HomeProductList from "@/home/components/HomeProductList";
 
 import ArrowIcon from "@/icons/ArrowIcon";
+import { useRouter } from "next/navigation";
 
 function SalesSection() {
+  const router = useRouter();
   return (
     <section className="p-10 mb-10 mt-10 bg-white flex flex-col gap-5 md:flex-row md:items-center">
       <header className="md:w-[50%]">
@@ -11,7 +15,10 @@ function SalesSection() {
           Descuentos increibles en tecnología. No pierdas la oportunidad de
           llevarte lo mejor en tecnología a precios inigualables
         </p>
-        <button className="bg-primaryColor flex items-center gap-5 px-3 py-1 rounded-xl">
+        <button
+          className="bg-primaryColor flex items-center gap-5 px-3 py-1 rounded-xl"
+          onClick={() => router.push("/products?onSale=true")}
+        >
           <span className="text-sm text-white">Ver todos</span>
           <ArrowIcon className="size-4 text-white" />
         </button>
