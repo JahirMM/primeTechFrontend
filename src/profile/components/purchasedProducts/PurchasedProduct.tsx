@@ -1,5 +1,5 @@
 import { PurchasedProductInterface } from "@/profile/interfaces/purchasedProductInterface";
-import { splitPrice } from "@/share/utils/precioUtils";
+import { splitPrice } from "@/share/utils/priceUtils";
 import BoxIcon from "@/icons/BoxIcon";
 import Link from "next/link";
 
@@ -27,7 +27,7 @@ function PurchasedProduct({ product }: { product: PurchasedProductInterface }) {
             </Link>
           </p>
           <span className="block mt-2 text-xs text-gray-500">
-            ${price.integerNumber || 0}.{price.decimalNumber || 0}
+            ${price.integerNumber || 0},{price.decimalNumber || 0}
           </span>
           <span className="inline-block mb-5 text-xs text-gray-500">
             {product.purchaseQuantity} Unidad

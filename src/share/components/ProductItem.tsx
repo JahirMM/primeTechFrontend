@@ -1,12 +1,14 @@
+import { useRouter } from "next/navigation";
+
 import useRecentProducts from "@/share/hook/useRecentProducts";
 
-import ProductActionButtons from "./ProductActionButtons";
+import ProductActionButtons from "@/share/components/ProductActionButtons";
 
-import { splitPrice } from "@/share/utils/precioUtils";
+import { calculateDiscountedPrice } from "@/share/utils/calculateDiscountedPrice";
+import { splitPrice } from "@/share/utils/priceUtils";
 
 import StarIcon from "@/icons/StarIcon";
 import BoxIcon from "@/icons/BoxIcon";
-import { useRouter } from "next/navigation";
 
 interface ProductItemInterface {
   isFavorite: boolean;
@@ -19,6 +21,8 @@ interface ProductItemInterface {
     price: number;
     image: string;
     averageRating: number;
+    activeOffer: boolean;
+    discountPercentage: number;
   };
 }
 
@@ -31,13 +35,19 @@ const ProductItem = ({
 }: ProductItemInterface) => {
   const router = useRouter();
 
-  const { integerNumber, decimalNumber } = splitPrice(product.price);
   const { addProductToRecent } = useRecentProducts();
 
   const handleViewProductDetails = async () => {
     await addProductToRecent(product);
     router.push(`/products/${product.productId}`);
   };
+
+  const discountedPrice = product.activeOffer
+    ? calculateDiscountedPrice(product.price, product.discountPercentage)
+    : product.price;
+
+  const priceData = splitPrice(discountedPrice);
+  const originalPriceData = splitPrice(product.price);
 
   return (
     <article
@@ -80,11 +90,34 @@ const ProductItem = ({
         >
           {product.name}
         </h3>
-        <div className="mt-4">
-          <span>${integerNumber || 0}</span>.
-          <span className="text-xs">{decimalNumber || "00"}</span>
-        </div>
+        {product.activeOffer ? (
+          <div className="flex mt-4 gap-x-3">
+            <div>
+              <span className="text-base">${priceData.integerNumber}</span>,
+              <span className="text-xs">{priceData.decimalNumber}</span>
+            </div>
+            <div>
+              <span className="text-xs text-gray-600 line-through align-middle">
+                ${originalPriceData.integerNumber}
+              </span>
+              ,
+              <span className="text-xs text-gray-600 line-through align-middle">
+                {originalPriceData.decimalNumber}
+              </span>
+            </div>
+          </div>
+        ) : (
+          <div className="mt-4">
+            <span>${priceData.integerNumber}</span>,
+            <span className="text-xs">{priceData.decimalNumber}</span>
+          </div>
+        )}
       </div>
+      {product.activeOffer && (
+        <div className="absolute left-0 w-full text-sm text-center -rotate-45 -translate-x-[84px] bg-primaryColor top-2 font-bold text-white">
+          -{product.discountPercentage}%
+        </div>
+      )}
       <ProductActionButtons
         favoriteProductId={
           product.favoriteProductId ? product.favoriteProductId : ""

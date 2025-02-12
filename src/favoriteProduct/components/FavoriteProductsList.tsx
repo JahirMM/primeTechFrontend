@@ -1,6 +1,7 @@
 "use client";
 
 import FavoriteProductsListSkeleton from "@/favoriteProduct/skeletons/FavoriteProductsListSkeleton";
+
 import ProductItem from "@/share/components/ProductItem";
 import MessageBox from "@/share/components/MessageBox";
 
