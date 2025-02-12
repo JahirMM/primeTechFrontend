@@ -1,3 +1,4 @@
+import { useCartPriceStore } from "@/share/hook/store/useShoppingCart";
 import { ProductInCart } from "@/shoppingCart/interfaces/ProductInCardInterface";
 
 interface PurchaseSummaryProps {
@@ -9,15 +10,12 @@ function PurchaseSummary({
   cartIsEmpty,
   productsInCart,
 }: PurchaseSummaryProps) {
+  const {getTotalPrice} = useCartPriceStore();
+
   const shippingCost = 3000;
-
-  const totalProductPrice = productsInCart.reduce(
-    (total, product) => total + product.price * product.quantity,
-    0
-  );
-
-  const totalPrice = totalProductPrice + shippingCost;
-
+  const totalPrice = getTotalPrice() + shippingCost;
+  
+  
   return (
     <article className="p-3 bg-white shadow-md rounded-xl lg:col-start-3 lg:col-end-4 lg:max-h-[240px]">
       <p className="py-4 text-sm font-semibold border-b border-gray-300">
@@ -31,7 +29,7 @@ function PurchaseSummary({
         <div className="mt-4 space-y-2 text-sm">
           <div className="flex justify-between">
             <span>Productos ({productsInCart.length})</span>
-            <span>${totalProductPrice.toFixed(2)}</span>
+            <span>${getTotalPrice().toFixed(2)}</span>
           </div>
           <div className="flex justify-between">
             <span>Envío</span>
