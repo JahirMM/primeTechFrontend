@@ -7,6 +7,7 @@ import ProductFilter from "@/products/components/filter/ProductFilter";
 import ProductsList from "@/products/components/ProductsList";
 
 import { useProducts } from "@/share/hook/useGetProducts";
+import Pagination from "./Pagination";
 
 const filterKeys = [
   "brand",
@@ -48,7 +49,14 @@ function ProductsPage() {
       ) : isError ? (
         <div>Error</div>
       ) : (
-        data && <ProductsList productList={data} />
+        data && (
+          <>
+            <ProductsList productList={data} />
+            {data.page.totalPages > 1 && (
+              <Pagination data={data} filters={filters} />
+            )}
+          </>
+        )
       )}
     </div>
   );

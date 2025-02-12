@@ -108,7 +108,7 @@ function ProductFilter() {
     }
 
     const queryString = params.toString();
-    router.push(`/products${queryString ? `?${queryString}` : ""}`);
+    router.push(`/products${queryString ? `?${queryString}` : ""}&page=0`);
     setShowFilter(false);
   }, [
     router,
