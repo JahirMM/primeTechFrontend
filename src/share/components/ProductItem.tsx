@@ -114,7 +114,7 @@ const ProductItem = ({
         )}
       </div>
       {product.activeOffer && (
-        <div className="absolute left-0 w-full text-sm text-center -rotate-45 -translate-x-[84px] bg-primaryColor top-2 font-bold text-white">
+        <div className="absolute w-full text-xs text-center -rotate-45 top-[4%] left-0 -translate-x-[38%] bg-primaryColor font-bold text-white sm:left-0 sm:top-2 sm:-translate-x-[84px]">
           -{product.discountPercentage}%
         </div>
       )}
