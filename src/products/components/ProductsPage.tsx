@@ -41,7 +41,7 @@ function ProductsPage() {
   );
 
   return (
-    <section className="mt-[58px] grid grid-cols-1 relative">
+    <div className="mt-[58px] grid grid-cols-1 relative">
       <ProductFilter />
       {isLoading ? (
         <div>cargando...</div>
@@ -52,7 +52,7 @@ function ProductsPage() {
       ) : (
         <div>No se encontraron productosddd</div>
       )}
-    </section>
+    </div>
   );
 }
 

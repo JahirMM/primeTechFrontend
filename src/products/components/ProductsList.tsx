@@ -4,7 +4,7 @@ import ProductItem from "@/share/components/ProductItem";
 function ProductsList({ productList }: { productList: ProductsResponse }) {
 
   return (
-    <div className="mt-[56px] pb-3 grid grid-cols-2 gap-x-5 gap-y-3 justify-items-center sm:grid-cols-3 px-5 md:px-16 lg:ml-60">
+    <section className="mt-[56px] pb-3 grid grid-cols-2 gap-x-5 gap-y-3 justify-items-center sm:grid-cols-3 px-5 md:px-16 lg:ml-60">
       {productList &&
       productList.products &&
       productList.products.length > 0 ? (
@@ -19,7 +19,7 @@ function ProductsList({ productList }: { productList: ProductsResponse }) {
       ) : (
         <div>No se encontraron productos</div>
       )}
-    </div>
+    </section>
   );
 }
 

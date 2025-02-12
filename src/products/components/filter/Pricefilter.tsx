@@ -85,12 +85,12 @@ function PriceFilter({
   };
 
   return (
-    <div className="w-full p-3 mt-5 bg-white rounded-xl">
+    <div className="w-full p-2 mt-5 bg-white rounded-xl">
       <span className="block mb-2 text-xs">Precio</span>
       <div className="flex items-center w-full gap-1">
         <input
           type="number"
-          className="w-[95%] inline p-1 text-center border border-gray-300 rounded text-sm"
+          className="w-[95%] inline p-1 text-center border border-gray-300 rounded text-xs"
           value={minValue === 0 ? "" : minValue}
           min={minPrice}
           max={maxValue - priceGap}
@@ -101,7 +101,7 @@ function PriceFilter({
         <span className="text-lg w-[10%] block">-</span>
         <input
           type="number"
-          className="w-[95%] p-1 text-center border border-gray-300 rounded text-sm"
+          className="w-[95%] p-1 text-center border border-gray-300 rounded text-xs"
           value={maxValue === 0 ? "" : maxValue}
           min={minValue + priceGap}
           max={maxPrice}
