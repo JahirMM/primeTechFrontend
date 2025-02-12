@@ -103,7 +103,7 @@ function ProductFilter() {
     if (selectedCategory) {
       params.set("categoryId", selectedCategory);
     }
-    if (onSale) {
+    if (onSale !== null) {
       params.set("onSale", onSale.toString());
     }
 
