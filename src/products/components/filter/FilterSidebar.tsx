@@ -67,7 +67,6 @@ function FilterSidebar({
         mt-[48px] 
         overflow-auto no-scrollbar max-h-[calc(100vh-58px-52px)] w-60 
         bg-white
-        shadow-xl
         transition-transform duration-500 ease-in
         ${showFilter ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0

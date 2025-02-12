@@ -142,7 +142,7 @@ function ProductFilter() {
         setSearchBrand={setSearchBrand}
         minValue={minValue}
         maxValue={maxValue}
-        setMinValue={setMinRating}
+        setMinValue={setMinValue}
         setMaxValue={setMaxValue}
         minRating={minRating}
         setMinRating={setMinRating}

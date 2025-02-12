@@ -19,7 +19,7 @@ const filterKeys = [
   "size",
   "onSale",
   "minRating",
-  "onSale"
+  "onSale",
 ];
 
 function ProductsPage() {
@@ -47,10 +47,8 @@ function ProductsPage() {
         <div>cargando...</div>
       ) : isError ? (
         <div>Error</div>
-      ) : data ? (
-        <ProductsList productList={data} />
       ) : (
-        <div>No se encontraron productosddd</div>
+        data && <ProductsList productList={data} />
       )}
     </div>
   );
