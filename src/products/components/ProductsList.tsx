@@ -6,7 +6,7 @@ import ProductItem from "@/share/components/ProductItem";
 function ProductsList({ productList }: { productList: ProductsResponse }) {
   const router = useRouter();
   return (
-    <section className="min-h-[calc(100vh-58px-52px)] mt-[56px] pb-3 pt-5 grid grid-cols-2 gap-x-5 gap-y-3 justify-items-center sm:grid-cols-3 px-5 md:px-16 lg:ml-60 ">
+    <section className="min-h-[calc(100vh-58px-52px)] mt-[56px] pb-3 pt-5 grid grid-cols-2 gap-x-5 gap-y-3 justify-items-center sm:grid-cols-3 px-5 md:px-16 lg:ml-60">
       {productList &&
       productList.products &&
       productList.products.length > 0 ? (

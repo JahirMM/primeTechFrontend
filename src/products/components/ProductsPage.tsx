@@ -3,11 +3,13 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import ProductListSkeleton from "@/products/skeletons/ProductListSkeleton";
+
 import ProductFilter from "@/products/components/filter/ProductFilter";
 import ProductsList from "@/products/components/ProductsList";
+import Pagination from "@/products/components/Pagination";
 
 import { useProducts } from "@/share/hook/useGetProducts";
-import Pagination from "./Pagination";
 
 const filterKeys = [
   "brand",
@@ -45,7 +47,7 @@ function ProductsPage() {
     <div className="mt-[58px] grid grid-cols-1 relative">
       <ProductFilter />
       {isLoading ? (
-        <div>cargando...</div>
+        <ProductListSkeleton />
       ) : isError ? (
         <div>Error</div>
       ) : (
