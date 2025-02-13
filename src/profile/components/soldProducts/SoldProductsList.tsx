@@ -7,9 +7,10 @@ import EmptyStateMessage from "@/profile/components/EmptyStateMessage";
 import NotSellerMessage from "@/profile/components/NotSellerMessage";
 import ErrorMessage from "@/profile/components/ErrorMessage";
 
-import { useSoldProduct } from "@/profile/hook/useSoldProduct";
-import { formatDate } from "@/share/utils/formatDate";
 import { useGetUserInformation } from "@/share/hook/useGetUserInformation";
+import { useSoldProduct } from "@/profile/hook/useSoldProduct";
+
+import { formatDate } from "@/share/utils/formatDate";
 
 function SoldProductsList() {
   const { data: userInformation } = useGetUserInformation();

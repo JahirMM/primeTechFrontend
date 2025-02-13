@@ -1,5 +1,6 @@
-import BoxIcon from "@/icons/BoxIcon";
 import { UserProductInterface } from "@/profile/interfaces/userProductInterface";
+import { formatDate } from "@/share/utils/formatDate";
+import BoxIcon from "@/icons/BoxIcon";
 
 const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
 
@@ -49,11 +50,12 @@ function UserProduct({ product }: { product: UserProductInterface }) {
 
         <div className="p-2 mt-4 bg-gray-100 rounded-md">
           <span className="block text-xs text-gray-600">
-            <strong>Publicado:</strong> {product.createdAt}
+            <strong>Publicado:</strong> {formatDate(product.createdAt)}
           </span>
           {product.updatedAt && (
             <span className="block mt-1 text-xs text-gray-600">
-              <strong>Última actualización:</strong> {product.updatedAt}
+              <strong>Última actualización:</strong>{" "}
+              {formatDate(product.updatedAt)}
             </span>
           )}
         </div>
