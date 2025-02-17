@@ -15,6 +15,7 @@ const menuItems = [
   { url: "/profile/purchases", label: "Compras", Icon: BagShoppingIcon },
   { url: "/profile/sales", label: "Ventas", Icon: SaleIcon },
   { url: "/profile/my-products", label: "Mis productos", Icon: BoxIcon },
+  { url: "/profile/add-product", label: "Agregar producto", Icon: BoxIcon },
 ];
 
 function ProfileNav() {

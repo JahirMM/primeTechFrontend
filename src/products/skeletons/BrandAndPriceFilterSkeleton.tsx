@@ -6,7 +6,7 @@ function BrandAndPriceFilterSkeleton() {
         <div className="w-full h-8 mb-2 rounded-lg bg-skeletonBackground animate-pulse"></div>
       </div>
       <div className="w-full p-3 mt-5 bg-white rounded-xl">
-        <div className="mb-2 text-xs">Marca</div>
+        <div className="mb-2 text-xs">Precio</div>
         <div className="w-full h-16 mb-2 rounded-lg bg-skeletonBackground animate-pulse"></div>
       </div>
     </>
