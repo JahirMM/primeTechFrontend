@@ -1,4 +1,4 @@
-interface MobileDeviceInterface {
+export interface MobileDeviceInterface {
   mobileDeviceid: string;
   internalMemory: number;
   internalMemoryType: string;

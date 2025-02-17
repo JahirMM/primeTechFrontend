@@ -12,6 +12,7 @@ import { useAddProduct } from "@/addProduct/hook/useAddProduct";
 
 interface ProductFormProps {
   deviceType: "mobile" | "laptop" | "other" | "";
+  productId: string | null;
   setProductId: React.Dispatch<SetStateAction<string | null>>;
   setDeviceType: React.Dispatch<
     SetStateAction<"mobile" | "laptop" | "other" | "">
@@ -20,6 +21,7 @@ interface ProductFormProps {
 
 function ProductForm({
   deviceType,
+  productId,
   setDeviceType,
   setProductId,
 }: ProductFormProps) {
@@ -79,7 +81,7 @@ function ProductForm({
         )
       );
     } catch (error) {
-      return
+      return;
     }
   };
 
@@ -92,12 +94,14 @@ function ProductForm({
         deviceType={deviceType}
         setDeviceType={setDeviceType}
       />
-      <button
-        onClick={handleSaveProduct}
-        className="px-4 py-2 mt-4 text-sm text-white rounded-lg bg-primaryColor"
-      >
-        Crear producto
-      </button>
+      {productId === null && (
+        <button
+          onClick={handleSaveProduct}
+          className="px-4 py-2 mt-4 text-sm text-white rounded-lg bg-primaryColor"
+        >
+          Crear producto
+        </button>
+      )}
     </div>
   );
 }

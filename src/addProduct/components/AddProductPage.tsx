@@ -4,15 +4,7 @@ import { useState } from "react";
 
 import AddProductFeatures from "@/addProduct/components/AddProductFeatures";
 import ProductForm from "@/addProduct/components/ProductForm";
-
-interface ProductData {
-  name: string;
-  description: string;
-  brand: string;
-  stock: number;
-  price: number;
-  category: string;
-}
+import ArrowIcon from "@/icons/ArrowIcon";
 
 function AddProductPage() {
   const [deviceType, setDeviceType] = useState<
@@ -22,16 +14,30 @@ function AddProductPage() {
   const [showFeatures, setShowFeatures] = useState(false);
 
   return (
-    <div>
+    <>
       <ProductForm
         deviceType={deviceType}
+        productId={productId || null}
         setDeviceType={setDeviceType}
         setProductId={setProductId}
       />
-      {showFeatures && deviceType && (
-        <AddProductFeatures deviceType={deviceType} />
+
+      {deviceType && productId && showFeatures === false && (
+        <div className="py-5">
+          <button
+            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-primaryColor"
+            onClick={() => setShowFeatures(true)}
+          >
+            <span className="text-sm text-white">Agregar característica</span>
+            <ArrowIcon className="text-white size-3" />
+          </button>
+        </div>
       )}
-    </div>
+
+      {showFeatures && deviceType && productId && (
+        <AddProductFeatures deviceType={deviceType} productId={productId} />
+      )}
+    </>
   );
 }
 

@@ -1,4 +1,4 @@
-interface LaptopInterface {
+export interface LaptopInterface {
   laptopId: string;
   ram: number;
   color: string;

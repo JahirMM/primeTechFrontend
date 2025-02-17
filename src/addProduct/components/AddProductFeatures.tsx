@@ -1,26 +1,26 @@
-import AddMobileDevice from "./addFeatures/AddMobileDevice";
-import AddSimCard from "./addFeatures/AddSimCard";
-import AddBattery from "./addFeatures/AddBattery";
-import AddCamera from "./addFeatures/AddCamera";
-import AddScreen from "./addFeatures/AddScreen";
-import AddLaptop from "./addFeatures/AddLaptop";
+import AddMobileDevice from "@/addProduct/components/addFeatures/AddMobileDevice";
+import AddBattery from "@/addProduct/components/addFeatures/AddBattery";
+import AddSimCard from "@/addProduct/components/addFeatures/AddSimCard";
+import AddCamera from "@/addProduct/components/addFeatures/AddCamera";
+import AddScreen from "@/addProduct/components/addFeatures/AddScreen";
+import AddLaptop from "@/addProduct/components/addFeatures/AddLaptop";
+import AddGeneralFeatures from "./addFeatures/AddGeneralFeatures";
 
-function AddProductFeatures({ deviceType }: { deviceType: string }) {
+function AddProductFeatures({
+  deviceType,
+  productId,
+}: {
+  deviceType: "mobile" | "laptop" | "other" | "";
+  productId: string;
+}) {
   return (
-    <div className="grid grid-cols-1 gap-3 bg-green-300 sm:grid-cols-2">
-      <AddScreen />
-      <AddBattery />
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <AddScreen productId={productId} />
+      <AddBattery productId={productId} />
 
-      <div>
-        <h2 className="mt-6 text-lg font-semibold">
-          Características Generales
-        </h2>
-        {deviceType === "laptop" ? <AddLaptop /> : <AddMobileDevice />}
-      </div>
+      <AddGeneralFeatures deviceType={deviceType} productId={productId} />
 
-      {deviceType === "mobile" && <AddSimCard />}
-
-      <AddCamera />
+      <AddCamera productId={productId} />
     </div>
   );
 }
