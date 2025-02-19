@@ -1,65 +1,83 @@
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
-import AddFeatureTable from "@/addProduct/components/addFeatures/AddFeatureTable";
+import { AddMobileDeviceInterface } from "@/addProduct/interfaces/addMobileDeviceInterface";
 
 import { useAddMobileDevice } from "@/addProduct/hook/useAddMobileDevice";
+
+import FeatureTable from "@/share/components/FeatureTable";
+import { validateNonNegativeNumber } from "@/share/utils/validateNonNegativeNumber";
+import { removeNumericCharacters } from "@/share/utils/removeNumericCharacters";
+
+interface MobileDeviceField {
+  label: string;
+  key: string;
+  type: "text" | "number" | "checkbox";
+  validation?: (value: string) => string;
+}
+const mobileDeviceFields: MobileDeviceField[] = [
+  { label: "Memoria Interna (GB)", key: "internalMemory", type: "number", validation: (value) => validateNonNegativeNumber(value) },
+  { label: "Tipo de Memoria Interna", key: "internalMemoryType", type: "text", validation: (value) => removeNumericCharacters(value) },
+  { label: "RAM (GB)", key: "ram", type: "number", validation: (value) => validateNonNegativeNumber(value)  },
+  { label: "Color", key: "color", type: "text", validation: (value) => removeNumericCharacters(value) },
+  { label: "Procesador", key: "processor", type: "text" },
+  { label: "Sistema Operativo", key: "operatingSystem", type: "text" },
+  { label: "Clasificación IP", key: "ipRating", type: "text" },
+  { label: "Resistente a Salpicaduras", key: "splashResistant", type: "checkbox" },
+  { label: "Resistente al Polvo", key: "dustResistant", type: "checkbox" },
+  { label: "Resistente al Agua", key: "waterResistant", type: "checkbox" },
+];
 
 function AddMobileDevice({
   productId,
   setMobileDeviceId,
 }: {
   productId: string;
-  setMobileDeviceId: React.Dispatch<SetStateAction<string | null>>;
+  setMobileDeviceId: React.Dispatch<React.SetStateAction<string | null>>;
 }) {
   const mutationAddMobileDevice = useAddMobileDevice();
 
   const [isDisabled, setIsDisabled] = useState(false);
-  const [mobileDevice, setMobileDevice] = useState({
-    "Memoria Interna": "",
-    "Tipo de Memoria Interna": "",
-    RAM: "",
-    Color: "",
-    Procesador: "",
-    "Sistema Operativo": "",
-    "Clasificación IP": "",
-    "Resistente a Salpicaduras": false,
-    "Resistente al Polvo": false,
-    "Resistente al Agua": false,
-  });
+
+  const [mobileDevice, setMobileDevice] = useState(() =>
+    mobileDeviceFields.reduce((acc, field) => {
+      acc[field.key] = field.type === "checkbox" ? false : "";
+      return acc;
+    }, {} as Record<string, string | boolean>)
+  );
 
   const addMobileDevice = async () => {
     if (
-      !mobileDevice.RAM ||
-      !mobileDevice.Color ||
-      !mobileDevice.Procesador ||
-      !mobileDevice["Sistema Operativo"] ||
-      !mobileDevice["Memoria Interna"] ||
-      !mobileDevice["Tipo de Memoria Interna"]
+      !mobileDevice.internalMemory ||
+      !mobileDevice.internalMemoryType ||
+      !mobileDevice.ram ||
+      !mobileDevice.color ||
+      !mobileDevice.processor ||
+      !mobileDevice.operatingSystem
     ) {
-      toast.error("Ingresar toda la información", {
+      toast.error("Ingresar toda la información obligatoria", {
         duration: 5000,
         style: { backgroundColor: "#FF5353", color: "white" },
       });
       return;
     }
 
-    const mobileDeviceRequest = {
-      internalMemory: Number(mobileDevice["Memoria Interna"]),
-      internalMemoryType: mobileDevice["Tipo de Memoria Interna"],
-      ram: Number(mobileDevice.RAM),
-      color: mobileDevice.Color,
-      processor: mobileDevice.Procesador,
-      operatingSystem: mobileDevice["Sistema Operativo"],
-      ipRating: mobileDevice["Clasificación IP"],
-      splashResistant: mobileDevice["Resistente a Salpicaduras"],
-      dustResistant: mobileDevice["Resistente al Polvo"],
-      waterResistant: mobileDevice["Resistente al Agua"],
+    const mobileDeviceRequest: AddMobileDeviceInterface = {
+      internalMemory: Number(mobileDevice.internalMemory),
+      internalMemoryType: mobileDevice.internalMemoryType.toString(),
+      ram: Number(mobileDevice.ram),
+      color: mobileDevice.color.toString(),
+      processor: mobileDevice.processor.toString(),
+      operatingSystem: mobileDevice.operatingSystem.toString(),
+      ipRating: mobileDevice.ipRating.toString(),
+      splashResistant: Boolean(mobileDevice.splashResistant),
+      dustResistant: Boolean(mobileDevice.dustResistant),
+      waterResistant: Boolean(mobileDevice.waterResistant),
     };
 
     try {
       const mobileDeviceResponse = await mutationAddMobileDevice.mutateAsync({
-        productId: productId,
+        productId,
         mobileDeviceData: mobileDeviceRequest,
       });
       setMobileDeviceId(mobileDeviceResponse.mobileDevice.mobileDeviceid);
@@ -70,22 +88,15 @@ function AddMobileDevice({
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-between my-6">
-        <h2 className="text-lg font-semibold">Características Generales</h2>
-        <button
-          className="px-2 py-1 text-xs text-white rounded-lg bg-primaryColor"
-          onClick={addMobileDevice}
-        >
-          Agregar
-        </button>
-      </div>
-      <AddFeatureTable
-        data={mobileDevice}
-        setData={setMobileDevice}
-        isDisabled={isDisabled}
-      />
-    </div>
+    <FeatureTable
+      data={mobileDevice}
+      setData={setMobileDevice}
+      isDisabled={isDisabled}
+      fields={mobileDeviceFields}
+      title="Características Generales"
+      manageFeature={addMobileDevice}
+      buttonText="addMobileDevice"
+    />
   );
 }
 

@@ -1,22 +1,43 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
-import AddFeatureTable from "@/addProduct/components/addFeatures/AddFeatureTable";
+import { validateNonNegativeNumber } from "@/share/utils/validateNonNegativeNumber";
+import { removeNumericCharacters } from "@/share/utils/removeNumericCharacters";
+
+import { AddSimCardInterface } from "@/addProduct/interfaces/addSimCardInterface";
+
 import { useAddSimCard } from "@/addProduct/hook/useAddSimCard";
+
+import FeatureTable from "@/share/components/FeatureTable";
+
+interface SimCardField {
+  label: string;
+  key: string;
+  type: "text" | "number" | "checkbox";
+  validation?: (value: string) => string;
+}
+
+const simCardFields: SimCardField[] = [
+  { label: "Doble SIM", key: "isDualSim", type: "checkbox" },
+  { label: "Ranuras SIM", key: "simSlots", type: "number", validation: (value) => validateNonNegativeNumber(value) },
+  { label: "eSIM", key: "esim", type: "checkbox" },
+  { label: "Tipo de SIM", key: "simType", type: "text", validation: (value) => removeNumericCharacters(value)}
+];
 
 function AddSimCard({ mobileDeviceId }: { mobileDeviceId: string }) {
   const mutationAddSimCard = useAddSimCard();
 
   const [isDisabled, setIsDisabled] = useState(false);
-  const [simCard, setSimCard] = useState({
-    "Doble SIM": false,
-    "Ranuras SIM": "",
-    eSIM: false,
-    "Tipo de SIM": "",
-  });
+
+  const [simCard, setSimCard] = useState(() =>
+    simCardFields.reduce((acc, field) => {
+      acc[field.key] = field.type === "checkbox" ? false : "";
+      return acc;
+    }, {} as Record<string, string | boolean>)
+  );
 
   const addSimCard = async () => {
-    if (!simCard["Ranuras SIM"] || !simCard["Tipo de SIM"]) {
+    if (!simCard.simSlots || !simCard.simType) {
       toast.error("Ingresar toda la información obligatoria", {
         duration: 5000,
         style: { backgroundColor: "#FF5353", color: "white" },
@@ -24,16 +45,16 @@ function AddSimCard({ mobileDeviceId }: { mobileDeviceId: string }) {
       return;
     }
 
-    const simCardRequest = {
-      isDualSim: simCard["Doble SIM"],
-      simSlots: Number(simCard["Ranuras SIM"]),
-      esim: simCard.eSIM,
-      simType: simCard["Tipo de SIM"],
+    const simCardRequest: AddSimCardInterface = {
+      isDualSim: Boolean(simCard.isDualSim),
+      simSlots: Number(simCard.simSlots),
+      esim: Boolean(simCard.esim),
+      simType: simCard.simType.toString(),
     };
 
     try {
       await mutationAddSimCard.mutateAsync({
-        mobileDeviceId: mobileDeviceId,
+        mobileDeviceId,
         simCardData: simCardRequest,
       });
       setIsDisabled(true);
@@ -43,22 +64,15 @@ function AddSimCard({ mobileDeviceId }: { mobileDeviceId: string }) {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-between my-6">
-        <h2 className="text-lg font-semibold">Sim Card</h2>
-        <button
-          className="px-2 py-1 text-xs text-white rounded-lg bg-primaryColor"
-          onClick={addSimCard}
-        >
-          Agregar
-        </button>
-      </div>
-      <AddFeatureTable
-        data={simCard}
-        setData={setSimCard}
-        isDisabled={isDisabled}
-      />
-    </div>
+    <FeatureTable
+      data={simCard}
+      setData={setSimCard}
+      isDisabled={isDisabled}
+      fields={simCardFields}
+      title="Sim Card"
+      manageFeature={addSimCard}
+      buttonText="addSimCard"
+    />
   );
 }
 

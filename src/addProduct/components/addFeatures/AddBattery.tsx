@@ -1,45 +1,62 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
-import AddFeatureTable from "@/addProduct/components/addFeatures/AddFeatureTable";
+import { AddBatteryInterface } from "@/addProduct/interfaces/addBatteryInterface";
+
+import { validateNonNegativeNumber } from "@/share/utils/validateNonNegativeNumber";
+import { removeNumericCharacters } from "@/share/utils/removeNumericCharacters";
+
 import { useAddBattery } from "@/addProduct/hook/useAddBattery";
+
+import FeatureTable from "@/share/components/FeatureTable";
+
+interface BatteryField {
+  label: string;
+  key: string;
+  type: "text" | "number" | "checkbox";
+  validation?: (value: string) => string;
+}
+
+const batteryFields: BatteryField[] = [
+  { label: "Capacidad (mAh)", key: "capacity", type: "number", validation: (value) => validateNonNegativeNumber(value) },
+  { label: "Tipo de batería", key: "type", type: "text", validation: (value) => removeNumericCharacters(value) },
+  { label: "Carga inalámbrica", key: "wirelessCharging", type: "checkbox" },
+  { label: "Carga rápida", key: "fastCharging", type: "checkbox" },
+  { label: "Duración máxima (h)", key: "maxBatteryDuration", type: "number", validation: (value) => validateNonNegativeNumber(value) },
+];
 
 function AddBattery({ productId }: { productId: string }) {
   const mutationAddBattery = useAddBattery();
 
   const [isDisabled, setIsDisabled] = useState(false);
-  const [battery, setBattery] = useState({
-    Capacidad: "",
-    "Tipo de batería": "",
-    "Carga inalámbrica": false,
-    "Carga rápida": false,
-    "Duración máxima": "",
-  });
+
+  const [battery, setBattery] = useState(() =>
+    batteryFields.reduce((acc, field) => {
+      acc[field.key] = field.type === "checkbox" ? false : "";
+      return acc;
+    }, {} as Record<string, string | boolean>)
+  );
 
   const addBattery = async () => {
-    if (
-      !battery.Capacidad ||
-      !battery["Tipo de batería"] ||
-      !battery["Duración máxima"]
-    ) {
-      toast.error("Ingresar toda la información", {
+    if (!battery.capacity || !battery.type || !battery.maxBatteryDuration) {
+      toast.error("Ingresar toda la información obligatoria", {
         duration: 5000,
         style: { backgroundColor: "#FF5353", color: "white" },
       });
       return;
     }
 
-    const batteryRequest = {
-      capacity: battery.Capacidad + "mAh",
-      type: battery["Tipo de batería"],
-      wirelessCharging: battery["Carga inalámbrica"],
-      fastCharging: battery["Carga rápida"],
-      maxBatteryDuration: Number(battery["Duración máxima"]),
+    const batteryRequest: AddBatteryInterface = {
+      capacity: battery.capacity.toString() + "mAh",
+      type: battery.type.toString(),
+      wirelessCharging: battery.wirelessCharging as boolean,
+      fastCharging: battery.fastCharging as boolean,
+      maxBatteryDuration: Number(battery.maxBatteryDuration),
     };
 
     try {
       await mutationAddBattery.mutateAsync({
-        productId: productId,
+        productId,
         batteryData: batteryRequest,
       });
       setIsDisabled(true);
@@ -49,22 +66,15 @@ function AddBattery({ productId }: { productId: string }) {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-between my-6">
-        <h2 className="text-lg font-semibold">Batería</h2>
-        <button
-          className="px-2 py-1 text-xs text-white rounded-lg bg-primaryColor"
-          onClick={addBattery}
-        >
-          Agregar
-        </button>
-      </div>
-      <AddFeatureTable
-        data={battery}
-        setData={setBattery}
-        isDisabled={isDisabled}
-      />
-    </div>
+    <FeatureTable
+      data={battery}
+      setData={setBattery}
+      isDisabled={isDisabled}
+      fields={batteryFields}
+      title="Batería"
+      manageFeature={addBattery}
+      buttonText="addBattery"
+    />
   );
 }
 

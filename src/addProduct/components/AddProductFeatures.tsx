@@ -1,10 +1,7 @@
-import AddMobileDevice from "@/addProduct/components/addFeatures/AddMobileDevice";
+import AddGeneralFeatures from "@/addProduct/components/addFeatures/AddGeneralFeatures";
 import AddBattery from "@/addProduct/components/addFeatures/AddBattery";
-import AddSimCard from "@/addProduct/components/addFeatures/AddSimCard";
 import AddCamera from "@/addProduct/components/addFeatures/AddCamera";
 import AddScreen from "@/addProduct/components/addFeatures/AddScreen";
-import AddLaptop from "@/addProduct/components/addFeatures/AddLaptop";
-import AddGeneralFeatures from "./addFeatures/AddGeneralFeatures";
 
 function AddProductFeatures({
   deviceType,

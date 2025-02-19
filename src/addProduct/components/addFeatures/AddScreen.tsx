@@ -1,47 +1,82 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
-import AddFeatureTable from "@/addProduct/components/addFeatures/AddFeatureTable";
+import { AddScreenInterface } from "@/addProduct/interfaces/addScreenInterface";
+
+import { validateNonNegativeNumber } from "@/share/utils/validateNonNegativeNumber";
+
 import { useAddScreen } from "@/addProduct/hook/useAddScreen";
+
+import FeatureTable from "@/share/components/FeatureTable";
+
+interface ScreenField {
+  label: string;
+  key: string;
+  type: "text" | "number" | "checkbox";
+  validation?: (value: string) => string;
+}
+
+const screenFields: ScreenField[] = [
+  { label: "Resolución", key: "resolution", type: "text" },
+  {
+    label: "Densidad de píxeles (ppi)",
+    key: "pixelDensity",
+    type: "number",
+    validation: (value) => validateNonNegativeNumber(value)
+  },
+  {
+    label: "Tasa de refresco (Hz)",
+    key: "refreshRate",
+    type: "number",
+    validation: (value) => validateNonNegativeNumber(value)
+  },
+  { label: "Tipo de pantalla", key: "screenType", type: "text" },
+  {
+    label: "Tamaño de pantalla",
+    key: "screenSize",
+    type: "number",
+    validation: (value) => validateNonNegativeNumber(value),
+  },
+];
 
 function AddScreen({ productId }: { productId: string }) {
   const mutationAddScreen = useAddScreen();
 
   const [isDisabled, setIsDisabled] = useState(false);
-  const [screen, setScreen] = useState({
-    Resolución: "",
-    "Densidad de píxeles (ppi)": "",
-    "Tasa de refresco (Hz)": "",
-    "Tipo de pantalla": "",
-    "Tamaño de pantalla": "",
-  });
+
+  const [screen, setScreen] = useState(() =>
+    screenFields.reduce((acc, field) => {
+      acc[field.key] = field.type === "checkbox" ? false : "";
+      return acc;
+    }, {} as Record<string, string | boolean>)
+  );
 
   const addScreen = async () => {
     if (
-      !screen.Resolución ||
-      !screen["Densidad de píxeles (ppi)"] ||
-      !screen["Tasa de refresco (Hz)"] ||
-      !screen["Tipo de pantalla"] ||
-      !screen["Tamaño de pantalla"]
+      !screen.resolution ||
+      !screen.pixelDensity ||
+      !screen.refreshRate ||
+      !screen.screenType ||
+      !screen.screenSize
     ) {
-      toast.error("Ingresar toda la información", {
+      toast.error("Ingresar toda la información obligatoria", {
         duration: 5000,
         style: { backgroundColor: "#FF5353", color: "white" },
       });
       return;
     }
 
-    const screenRequest = {
-      resolution: screen.Resolución,
-      pixelDensity: screen["Densidad de píxeles (ppi)"] + "ppi",
-      refreshRate: screen["Tasa de refresco (Hz)"] + "Hz",
-      screenType: screen["Tipo de pantalla"],
-      screenSize: Number(screen["Tamaño de pantalla"]),
+    const screenRequest: AddScreenInterface = {
+      resolution: screen.resolution.toString(),
+      pixelDensity: screen.pixelDensity.toString() + " ppi",
+      refreshRate: screen.refreshRate.toString() + " Hz",
+      screenType: screen.screenType.toString(),
+      screenSize: Number(screen.screenSize),
     };
 
     try {
       await mutationAddScreen.mutateAsync({
-        productId: productId,
+        productId,
         screenData: screenRequest,
       });
       setIsDisabled(true);
@@ -51,22 +86,15 @@ function AddScreen({ productId }: { productId: string }) {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-between my-6">
-        <h2 className="text-lg font-semibold">Pantalla</h2>
-        <button
-          className="px-2 py-1 text-xs text-white rounded-lg bg-primaryColor"
-          onClick={addScreen}
-        >
-          Agregar
-        </button>
-      </div>
-      <AddFeatureTable
-        data={screen}
-        setData={setScreen}
-        isDisabled={isDisabled}
-      />
-    </div>
+    <FeatureTable
+      data={screen}
+      setData={setScreen}
+      isDisabled={isDisabled}
+      fields={screenFields}
+      title="Pantalla"
+      manageFeature={addScreen}
+      buttonText="addScreen"
+    />
   );
 }
 

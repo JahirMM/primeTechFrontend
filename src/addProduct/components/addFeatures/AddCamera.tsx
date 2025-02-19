@@ -1,24 +1,44 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
-import AddFeatureTable from "@/addProduct/components/addFeatures/AddFeatureTable";
+import { removeNumericCharacters } from "@/share/utils/removeNumericCharacters";
+
+import { AddCameraInterface } from "@/addProduct/interfaces/addCameraInterface";
+
 import { useAddCamera } from "@/addProduct/hook/useAddCamera";
+
+import FeatureTable from "@/share/components/FeatureTable";
+
+interface CameraField {
+  label: string;
+  key: string;
+  type: "text" | "number" | "checkbox";
+  validation?: (value: string) => string;
+}
+
+const cameraFields: CameraField[] = [
+  { label: "Tipo", key: "type", type: "text", validation: (value) => removeNumericCharacters(value) },
+  { label: "Resolución (MP)", key: "resolution", type: "text", validation: (value) => removeNumericCharacters(value) },
+  { label: "Apertura", key: "aperture", type: "text" },
+  { label: "Zoom óptico", key: "opticalZoom", type: "text" },
+  { label: "Zoom digital", key: "digitalZoom", type: "text" },
+  { label: "Características", key: "feature", type: "text" },
+];
 
 function AddCamera({ productId }: { productId: string }) {
   const mutationAddCamera = useAddCamera();
 
   const [isDisabled, setIsDisabled] = useState(false);
-  const [camera, setCamera] = useState({
-    Tipo: "",
-    Resolución: "",
-    Apertura: "",
-    "Zoom óptico": "",
-    "Zoom digital": "",
-    Características: "",
-  });
+
+  const [camera, setCamera] = useState(() =>
+    cameraFields.reduce((acc, field) => {
+      acc[field.key] = "";
+      return acc;
+    }, {} as Record<string, string | boolean>)
+  );
 
   const addCamera = async () => {
-    if (!camera.Tipo || !camera.Resolución || !camera.Apertura) {
+    if (!camera.type || !camera.resolution || !camera.aperture) {
       toast.error("Ingresar toda la información obligatoria", {
         duration: 5000,
         style: { backgroundColor: "#FF5353", color: "white" },
@@ -26,7 +46,7 @@ function AddCamera({ productId }: { productId: string }) {
       return;
     }
 
-    if (camera.Tipo !== "front" && camera.Tipo !== "rear") {
+    if (camera.type !== "front" && camera.type !== "rear") {
       toast.error("El tipo de cámara solo puede ser 'front' o 'rear'", {
         duration: 5000,
         style: { backgroundColor: "#ac9a4b", color: "black" },
@@ -34,18 +54,18 @@ function AddCamera({ productId }: { productId: string }) {
       return;
     }
 
-    const cameraRequest = {
-      type: camera.Tipo,
-      resolution: camera.Resolución + " MP",
-      aperture: camera.Apertura,
-      opticalZoom: camera["Zoom óptico"] || "N/A",
-      digitalZoom: camera["Zoom digital"] || "N/A",
-      feature: camera.Características,
+    const cameraRequest: AddCameraInterface = {
+      type: camera.type,
+      resolution: camera.resolution + " MP",
+      aperture: camera.aperture.toString(),
+      opticalZoom: camera.opticalZoom.toString() || "N/A",
+      digitalZoom: camera.digitalZoom.toString() || "N/A",
+      feature: camera.feature.toString(),
     };
 
     try {
       await mutationAddCamera.mutateAsync({
-        productId: productId,
+        productId,
         cameraData: cameraRequest,
       });
       setIsDisabled(true);
@@ -55,22 +75,15 @@ function AddCamera({ productId }: { productId: string }) {
   };
 
   return (
-    <div className="sm:col-start-1 sm:col-end-3">
-      <div className="flex items-center justify-between my-6">
-        <h2 className="text-lg font-semibold">Cámaras</h2>
-        <button
-          className="px-2 py-1 text-xs text-white rounded-lg bg-primaryColor"
-          onClick={addCamera}
-        >
-          Agregar
-        </button>
-      </div>
-      <AddFeatureTable
-        data={camera}
-        setData={setCamera}
-        isDisabled={isDisabled}
-      />
-    </div>
+    <FeatureTable
+      data={camera}
+      setData={setCamera}
+      isDisabled={isDisabled}
+      fields={cameraFields}
+      title="Cámaras"
+      manageFeature={addCamera}
+      buttonText="addCamera"
+    />
   );
 }
 
