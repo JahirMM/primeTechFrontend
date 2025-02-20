@@ -48,9 +48,9 @@ function FeatureTable({
     let newValue: string | boolean = value;
 
     if (type === "checkbox") {
-      newValue = (value as unknown as string) === "on";
+      newValue = Boolean(value);
     } else if (type === "number") {
-      newValue = value ? value.toString() : "";
+      newValue = value === "" ? "" : String(value);
     }
 
     handleChange(key, newValue);
@@ -82,11 +82,15 @@ function FeatureTable({
                       type === "checkbox" ? undefined : String(data[key] ?? "")
                     }
                     checked={
-                      type === "checkbox" ? (data[key] as boolean) : undefined
+                      type === "checkbox" ? Boolean(data[key]) : undefined
                     }
                     className="w-full p-1 border border-gray-300 rounded"
                     onChange={(e) =>
-                      handleInputChange(key, type, e.target.value)
+                      handleInputChange(
+                        key,
+                        type,
+                        type === "checkbox" ? e.target.checked : e.target.value
+                      )
                     }
                     disabled={isDisabled}
                   />

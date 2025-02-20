@@ -73,7 +73,7 @@ function AddBattery({ productId }: { productId: string }) {
       fields={batteryFields}
       title="Batería"
       manageFeature={addBattery}
-      buttonText="addBattery"
+      buttonText="agregar"
     />
   );
 }

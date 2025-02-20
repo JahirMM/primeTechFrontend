@@ -69,7 +69,7 @@ function AddScreen({ productId }: { productId: string }) {
     const screenRequest: AddScreenInterface = {
       resolution: screen.resolution.toString(),
       pixelDensity: screen.pixelDensity.toString() + " ppi",
-      refreshRate: screen.refreshRate.toString() + " Hz",
+      refreshRate: screen.refreshRate.toString() + "Hz",
       screenType: screen.screenType.toString(),
       screenSize: Number(screen.screenSize),
     };
@@ -93,7 +93,7 @@ function AddScreen({ productId }: { productId: string }) {
       fields={screenFields}
       title="Pantalla"
       manageFeature={addScreen}
-      buttonText="addScreen"
+      buttonText="agregar"
     />
   );
 }

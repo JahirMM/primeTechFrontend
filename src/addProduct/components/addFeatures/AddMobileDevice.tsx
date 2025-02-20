@@ -21,8 +21,8 @@ const mobileDeviceFields: MobileDeviceField[] = [
   { label: "RAM (GB)", key: "ram", type: "number", validation: (value) => validateNonNegativeNumber(value)  },
   { label: "Color", key: "color", type: "text", validation: (value) => removeNumericCharacters(value) },
   { label: "Procesador", key: "processor", type: "text" },
-  { label: "Sistema Operativo", key: "operatingSystem", type: "text" },
-  { label: "Clasificación IP", key: "ipRating", type: "text" },
+  { label: "Sistema Operativo", key: "operatingSystem", type: "text", validation: (value) => validateNonNegativeNumber(value) },
+  { label: "Clasificación IP", key: "ipRating", type: "number",  },
   { label: "Resistente a Salpicaduras", key: "splashResistant", type: "checkbox" },
   { label: "Resistente al Polvo", key: "dustResistant", type: "checkbox" },
   { label: "Resistente al Agua", key: "waterResistant", type: "checkbox" },
@@ -67,7 +67,7 @@ function AddMobileDevice({
       internalMemoryType: mobileDevice.internalMemoryType.toString(),
       ram: Number(mobileDevice.ram),
       color: mobileDevice.color.toString(),
-      processor: mobileDevice.processor.toString(),
+      processor: "IP"+mobileDevice.processor.toString(),
       operatingSystem: mobileDevice.operatingSystem.toString(),
       ipRating: mobileDevice.ipRating.toString(),
       splashResistant: Boolean(mobileDevice.splashResistant),
@@ -95,7 +95,7 @@ function AddMobileDevice({
       fields={mobileDeviceFields}
       title="Características Generales"
       manageFeature={addMobileDevice}
-      buttonText="addMobileDevice"
+      buttonText="agregar"
     />
   );
 }

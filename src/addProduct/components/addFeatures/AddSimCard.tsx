@@ -71,7 +71,7 @@ function AddSimCard({ mobileDeviceId }: { mobileDeviceId: string }) {
       fields={simCardFields}
       title="Sim Card"
       manageFeature={addSimCard}
-      buttonText="addSimCard"
+      buttonText="agregar"
     />
   );
 }

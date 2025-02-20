@@ -103,7 +103,7 @@ function AddLaptop({ productId }: { productId: string }) {
       fields={laptopFields}
       title="Características Generales"
       manageFeature={addLaptop}
-      buttonText="addLaptop"
+      buttonText="agregar"
     />
   );
 }

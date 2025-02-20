@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { validateNonNegativeNumber } from "@/share/utils/validateNonNegativeNumber";
 import { removeNumericCharacters } from "@/share/utils/removeNumericCharacters";
 
 import { AddCameraInterface } from "@/addProduct/interfaces/addCameraInterface";
@@ -18,7 +19,7 @@ interface CameraField {
 
 const cameraFields: CameraField[] = [
   { label: "Tipo", key: "type", type: "text", validation: (value) => removeNumericCharacters(value) },
-  { label: "Resolución (MP)", key: "resolution", type: "text", validation: (value) => removeNumericCharacters(value) },
+  { label: "Resolución (MP)", key: "resolution", type: "text", validation: (value) => validateNonNegativeNumber(value) },
   { label: "Apertura", key: "aperture", type: "text" },
   { label: "Zoom óptico", key: "opticalZoom", type: "text" },
   { label: "Zoom digital", key: "digitalZoom", type: "text" },
@@ -82,7 +83,7 @@ function AddCamera({ productId }: { productId: string }) {
       fields={cameraFields}
       title="Cámaras"
       manageFeature={addCamera}
-      buttonText="addCamera"
+      buttonText="agregar"
     />
   );
 }
