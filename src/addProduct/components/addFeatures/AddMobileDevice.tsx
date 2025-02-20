@@ -3,11 +3,13 @@ import { toast } from "sonner";
 
 import { AddMobileDeviceInterface } from "@/addProduct/interfaces/addMobileDeviceInterface";
 
+import { validateNonNegativeNumber } from "@/share/utils/validateNonNegativeNumber";
+import { removeNumericCharacters } from "@/share/utils/removeNumericCharacters";
+
 import { useAddMobileDevice } from "@/addProduct/hook/useAddMobileDevice";
 
 import FeatureTable from "@/share/components/FeatureTable";
-import { validateNonNegativeNumber } from "@/share/utils/validateNonNegativeNumber";
-import { removeNumericCharacters } from "@/share/utils/removeNumericCharacters";
+
 
 interface MobileDeviceField {
   label: string;
@@ -16,14 +18,43 @@ interface MobileDeviceField {
   validation?: (value: string) => string;
 }
 const mobileDeviceFields: MobileDeviceField[] = [
-  { label: "Memoria Interna (GB)", key: "internalMemory", type: "number", validation: (value) => validateNonNegativeNumber(value) },
-  { label: "Tipo de Memoria Interna", key: "internalMemoryType", type: "text", validation: (value) => removeNumericCharacters(value) },
-  { label: "RAM (GB)", key: "ram", type: "number", validation: (value) => validateNonNegativeNumber(value)  },
-  { label: "Color", key: "color", type: "text", validation: (value) => removeNumericCharacters(value) },
+  {
+    label: "Memoria Interna (GB)",
+    key: "internalMemory",
+    type: "number",
+    validation: (value) => validateNonNegativeNumber(value),
+  },
+  {
+    label: "Tipo de Memoria Interna",
+    key: "internalMemoryType",
+    type: "text",
+    validation: (value) => removeNumericCharacters(value),
+  },
+  {
+    label: "RAM (GB)",
+    key: "ram",
+    type: "number",
+    validation: (value) => validateNonNegativeNumber(value),
+  },
+  {
+    label: "Color",
+    key: "color",
+    type: "text",
+    validation: (value) => removeNumericCharacters(value),
+  },
   { label: "Procesador", key: "processor", type: "text" },
-  { label: "Sistema Operativo", key: "operatingSystem", type: "text", validation: (value) => validateNonNegativeNumber(value) },
-  { label: "Clasificación IP", key: "ipRating", type: "number",  },
-  { label: "Resistente a Salpicaduras", key: "splashResistant", type: "checkbox" },
+  { label: "Sistema Operativo", key: "operatingSystem", type: "text" },
+  {
+    label: "Clasificación IP",
+    key: "ipRating",
+    type: "number",
+    validation: (value) => validateNonNegativeNumber(value),
+  },
+  {
+    label: "Resistente a Salpicaduras",
+    key: "splashResistant",
+    type: "checkbox",
+  },
   { label: "Resistente al Polvo", key: "dustResistant", type: "checkbox" },
   { label: "Resistente al Agua", key: "waterResistant", type: "checkbox" },
 ];
@@ -67,9 +98,9 @@ function AddMobileDevice({
       internalMemoryType: mobileDevice.internalMemoryType.toString(),
       ram: Number(mobileDevice.ram),
       color: mobileDevice.color.toString(),
-      processor: "IP"+mobileDevice.processor.toString(),
+      processor: mobileDevice.processor.toString(),
       operatingSystem: mobileDevice.operatingSystem.toString(),
-      ipRating: mobileDevice.ipRating.toString(),
+      ipRating: "IP" + mobileDevice.ipRating.toString(),
       splashResistant: Boolean(mobileDevice.splashResistant),
       dustResistant: Boolean(mobileDevice.dustResistant),
       waterResistant: Boolean(mobileDevice.waterResistant),

@@ -17,7 +17,7 @@ function AddProductFeatures({
 
       <AddGeneralFeatures deviceType={deviceType} productId={productId} />
 
-      <AddCamera productId={productId} />
+      <AddCamera productId={productId} deviceType={deviceType}/>
     </div>
   );
 }
