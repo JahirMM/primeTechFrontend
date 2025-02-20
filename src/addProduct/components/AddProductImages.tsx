@@ -46,6 +46,16 @@ function AddProductImages({ images, setImages }: AddProductImagesProps) {
     }
   };
 
+  const handleRemoveImage = (index: number) => {
+    const updatedImages = images.filter((_, i) => i !== index);
+
+    if (images[index].isMain && updatedImages.length > 0) {
+      updatedImages[0] = { ...updatedImages[0], isMain: true };
+    }
+
+    setImages(updatedImages);
+  };
+
   return (
     <div>
       {/* Imagen principal */}
@@ -54,11 +64,25 @@ function AddProductImages({ images, setImages }: AddProductImagesProps) {
         onClick={() => fileInputRef.current?.click()}
       >
         {mainImage ? (
-          <img
-            src={URL.createObjectURL(mainImage.img)}
-            alt="Imagen Principal"
-            className="w-64 h-64 bg-gray-100 object-contain border border-gray-500 rounded-xl md:w-full md:h-[360px]"
-          />
+          <div
+            className="relative w-64 h-64 md:w-full md:h-[360px] cursor-pointer"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <img
+              src={URL.createObjectURL(mainImage.img)}
+              alt="Imagen Principal"
+              className="w-full h-full bg-gray-100 object-contain border border-gray-500 rounded-xl"
+            />
+            <button
+              onClick={(event) => {
+                event.stopPropagation();
+                handleRemoveImage(images.indexOf(mainImage));
+              }}
+              className="absolute top-2 right-2 bg-red-500 text-white text-xs rounded-full px-2 py-1"
+            >
+              ✕
+            </button>
+          </div>
         ) : (
           <div className="w-64 h-64 bg-gray-100 flex items-center justify-center text-gray-500 border border-gray-500 rounded-xl md:w-full md:h-[360px]">
             Click para subir imagen principal
@@ -77,14 +101,21 @@ function AddProductImages({ images, setImages }: AddProductImagesProps) {
       <div className="flex justify-around mt-4 gap-x-2">
         {images
           .filter((img) => !img.isMain)
-          .map((imgObj, index) => (
-            <img
-              key={index}
-              src={URL.createObjectURL(imgObj.img)}
-              alt={`Imagen ${index + 1}`}
-              className="border border-gray-500 rounded-lg cursor-pointer size-14"
-              onClick={() => swapMainImage(index + 1)}
-            />
+          .map((imgObj) => (
+            <div key={images.indexOf(imgObj)} className="relative">
+              <img
+                src={URL.createObjectURL(imgObj.img)}
+                alt="Imagen Adicional"
+                className="border border-gray-500 rounded-lg cursor-pointer size-14"
+                onClick={() => swapMainImage(images.indexOf(imgObj))}
+              />
+              <button
+                onClick={() => handleRemoveImage(images.indexOf(imgObj))}
+                className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1"
+              >
+                ✕
+              </button>
+            </div>
           ))}
 
         {images.length < 5 && (
