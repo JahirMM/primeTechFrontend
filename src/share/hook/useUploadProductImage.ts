@@ -27,10 +27,17 @@ export function useUploadProductImage() {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: (error: AxiosError<ErrorResponseInterface>) => {
-      toast.error(error.message, {
-        duration: 5000,
-        style: { backgroundColor: "#FF5353", color: "white" },
-      });
+      if (error.response?.status === 400) {
+        toast.error("Por favor, ingresa una imagen menor a 1048576 bytes", {
+          duration: 5000,
+          style: { backgroundColor: "#a49248", color: "white" },
+        });
+      } else {
+        toast.error(error.message, {
+          duration: 5000,
+          style: { backgroundColor: "#FF5353", color: "white" },
+        });
+      }
     },
   });
 }

@@ -44,19 +44,16 @@ function ProductImageManager({
     if (images.length + loadedImages.length >= 5) {
       toast.error("Solo puedes agregar hasta 5 imágenes", {
         duration: 5000,
-        style: { backgroundColor: "#FF5353", color: "white" },
+        style: { backgroundColor: "#a49248", color: "white" },
       });
       return;
     }
 
     if (productId) {
-      console.log(isMain);
-
-      mutationUpload.mutateAsync({
+      mutationUpload.mutate({
         productId: productId,
         imageData: { file, isMain },
       });
-      console.log({ productId: productId, imageData: { file, isMain } });
     } else {
       setImages([...images, { img: file, isMain }]);
     }
@@ -119,7 +116,7 @@ function ProductImageManager({
                 />
                 <button
                   onClick={() => handleDeleteMainImage(null, image.img)}
-                  className="absolute top-0 right-0 p-1 text-white bg-red-500 rounded-full"
+                  className="absolute text-sm text-white bg-red-500 rounded-full right-1 top-1 size-8"
                 >
                   X
                 </button>
@@ -144,7 +141,7 @@ function ProductImageManager({
       />
 
       {/* Lista de imágenes adicionales */}
-      <div className="flex flex-wrap gap-2 justify-around">
+      <div className="flex flex-wrap justify-around gap-2">
         {loadedImages
           .filter((img) => !img.main)
           .map((image) => (
