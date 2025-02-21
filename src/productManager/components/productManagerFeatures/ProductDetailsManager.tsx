@@ -16,34 +16,53 @@ function ProductDetailsManager({
   productData,
   setProductData,
 }: ProductDetailsManagerProps) {
+  const handleNameChange = (value: string) => {
+    if (value.length <= 100) {
+      setProductData((prev) => ({ ...prev, name: value }));
+    }
+  };
+
+  const handleDescriptionChange = (value: string) => {
+    if (value.length <= 700) {
+      setProductData((prev) => ({ ...prev, description: value }));
+    }
+  };
   return (
     <>
       <div className="mt-5">
         <label htmlFor="" className="block mb-3 text-sm">
           Nombre del producto
         </label>
-        <input
-          type="text"
-          className="w-full px-3 py-2 text-sm border border-black rounded-lg"
-          value={productData.name}
-          onChange={(e) =>
-            setProductData((prev) => ({ ...prev, name: e.target.value }))
-          }
-        />
+        <div>
+          <input
+            type="text"
+            className="w-full px-3 py-2 text-sm border border-black rounded-lg"
+            value={productData.name}
+            onChange={(e) => handleNameChange(e.target.value)}
+          />
+          <span className="block text-sm text-right text-gray-400">
+            {" "}
+            caracteres {productData.name.length}/100
+          </span>
+        </div>
       </div>
       <div className="mt-5">
         <label htmlFor="" className="block mb-3 text-sm">
           Descripcion
         </label>
-        <textarea
-          name=""
-          id=""
-          className="w-full h-32 px-3 py-2 text-sm border border-black rounded-lg resize-none"
-          value={productData.description}
-          onChange={(e) =>
-            setProductData((prev) => ({ ...prev, description: e.target.value }))
-          }
-        ></textarea>
+        <div className="">
+          <textarea
+            name=""
+            id=""
+            className="w-full h-40 px-3 py-2 text-sm border border-black rounded-lg resize-none"
+            value={productData.description}
+            onChange={(e) => handleDescriptionChange(e.target.value)}
+          ></textarea>
+          <span className="block text-sm text-right text-gray-400">
+            {" "}
+            caracteres {productData.description.length}/700
+          </span>
+        </div>
       </div>
     </>
   );

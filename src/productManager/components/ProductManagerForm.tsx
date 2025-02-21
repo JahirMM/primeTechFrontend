@@ -1,4 +1,5 @@
 import { SetStateAction, useState } from "react";
+import { toast } from "sonner";
 
 import { GetProductDetailsResponseInterface } from "@/productDetails/interfaces/getProductDetailsResponseInterface";
 import { ProductRequestInterface } from "@/addProduct/interfaces/productRequestInterface";
@@ -45,6 +46,21 @@ function ProductManagerForm({
   });
 
   const handleSaveProduct = async () => {
+    if (
+      !productData.name ||
+      !productData.description ||
+      !productData.brand ||
+      !productData.stock ||
+      !productData.price ||
+      !productData.category
+    ) {
+      toast.error("Ingresar toda la información obligatoria", {
+        duration: 5000,
+        style: { backgroundColor: "#FF5353", color: "white" },
+      });
+      return;
+    }
+
     const categoryMap: Record<string, string> = {
       celular: "cellular",
       otro: "other",

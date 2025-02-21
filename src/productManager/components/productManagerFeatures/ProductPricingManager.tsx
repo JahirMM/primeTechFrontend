@@ -38,6 +38,11 @@ function ProductPricingManager({
     },
     [setProductData]
   );
+  const handleBrandChange = (value: string) => {
+    if (value.length <= 50) {
+      setProductData((prev) => ({ ...prev, brand: value }));
+    }
+  };
 
   const handleDeviceTypeChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -90,12 +95,15 @@ function ProductPricingManager({
 
       <div className="flex flex-col col-start-1 col-end-3 gap-2 md:col-start-3 md:col-end-4">
         <label className="text-sm">Marca</label>
-        <input
-          type="text"
-          className="px-3 py-2 text-sm border border-black rounded-lg"
-          value={productData.brand}
-          onChange={(e) => onUpdate("brand", e.target.value)}
-        />
+        <div>
+          <input
+            type="text"
+            className="w-full px-3 py-2 text-sm border border-black rounded-lg"
+            value={productData.brand}
+            onChange={(e) => handleBrandChange(e.target.value)}
+          />
+          <span className="block text-sm text-right text-gray-400">caracteres {productData.brand.length}/50</span>
+        </div>
       </div>
 
       <div className="flex flex-col gap-2">
