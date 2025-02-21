@@ -9,6 +9,7 @@ import ProfileProductListSkeleton from "@/profile/skeletons/ProfileProductListSk
 import { useGetUserProducts } from "@/profile/hook/useGetUserProducts";
 
 import { useGetUserInformation } from "@/share/hook/useGetUserInformation";
+import Link from "next/link";
 
 function UserProductsList() {
   const { data: userInformation } = useGetUserInformation();
@@ -43,10 +44,16 @@ function UserProductsList() {
       {data && data.product && data.product.length > 0 ? (
         data.product.map((product) => (
           <article
-            className="p-4 border border-gray-300 rounded-xl"
+            className="flex flex-col gap-5 p-4 border border-gray-300 sm:items-center rounded-xl sm:flex-row sm:justify-between"
             key={product.productId}
           >
             <UserProduct product={product} />
+            <Link
+              href={`/profile/my-products/${product.productId}`}
+              className="px-3 py-2 text-xs text-center text-white rounded-lg bg-primaryColor"
+            >
+              Editar información
+            </Link>
           </article>
         ))
       ) : (

@@ -19,12 +19,26 @@ interface SimCardField {
 
 const simCardFields: SimCardField[] = [
   { label: "Doble SIM", key: "isDualSim", type: "checkbox" },
-  { label: "Ranuras SIM", key: "simSlots", type: "number", validation: (value) => validateNonNegativeNumber(value) },
+  {
+    label: "Ranuras SIM",
+    key: "simSlots",
+    type: "number",
+    validation: (value) => validateNonNegativeNumber(value),
+  },
   { label: "eSIM", key: "esim", type: "checkbox" },
-  { label: "Tipo de SIM", key: "simType", type: "text", validation: (value) => removeNumericCharacters(value)}
+  {
+    label: "Tipo de SIM",
+    key: "simType",
+    type: "text",
+    validation: (value) => removeNumericCharacters(value),
+  },
 ];
 
-function AddSimCard({ mobileDeviceId }: { mobileDeviceId: string }) {
+function SimCardFeaturesManager({
+  mobileDeviceId,
+}: {
+  mobileDeviceId: string;
+}) {
   const mutationAddSimCard = useAddSimCard();
 
   const [isDisabled, setIsDisabled] = useState(false);
@@ -76,4 +90,4 @@ function AddSimCard({ mobileDeviceId }: { mobileDeviceId: string }) {
   );
 }
 
-export default AddSimCard;
+export default SimCardFeaturesManager;

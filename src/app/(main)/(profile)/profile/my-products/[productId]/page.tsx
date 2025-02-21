@@ -1,7 +1,7 @@
 import ProductManagerPage from "@/productManager/components/ProductManagerPage";
 
-function Page() {
+function page() {
   return <ProductManagerPage />;
 }
 
-export default Page;
+export default page;

@@ -10,7 +10,7 @@ import { useAddCamera } from "@/addProduct/hook/useAddCamera";
 
 import FeatureTable from "@/share/components/FeatureTable";
 
-interface AddCameraProps {
+interface CameraFeaturesManagerProps {
   productId: string;
   deviceType: "mobile" | "laptop" | "other" | "";
 }
@@ -51,7 +51,7 @@ const cameraFields: CameraFields[] = [
   { label: "Características", key: "feature", type: "text" },
 ];
 
-function AddCamera({ productId, deviceType }: AddCameraProps) {
+function CameraFeaturesManager({ productId, deviceType }: CameraFeaturesManagerProps) {
   const mutationAddCamera = useAddCamera();
   const maxCameras = deviceType === "mobile" ? 5 : 1;
 
@@ -153,4 +153,4 @@ function AddCamera({ productId, deviceType }: AddCameraProps) {
   );
 }
 
-export default AddCamera;
+export default CameraFeaturesManager;

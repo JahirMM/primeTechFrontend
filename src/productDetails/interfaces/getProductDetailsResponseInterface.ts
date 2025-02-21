@@ -1,4 +1,4 @@
-import { ProductDetailsInterface } from "@/productDetails/interfaces/ProductDetailsInterface";
+import { ProductDetailsInterface } from "@/productDetails/interfaces/productDetailsInterface";
 
 export interface GetProductDetailsResponseInterface {
   product: ProductDetailsInterface;

@@ -39,7 +39,7 @@ const screenFields: ScreenField[] = [
   },
 ];
 
-function AddScreen({ productId }: { productId: string }) {
+function ScreenFeaturesManager({ productId }: { productId: string }) {
   const mutationAddScreen = useAddScreen();
 
   const [isDisabled, setIsDisabled] = useState(false);
@@ -98,4 +98,4 @@ function AddScreen({ productId }: { productId: string }) {
   );
 }
 
-export default AddScreen;
+export default ScreenFeaturesManager;

@@ -6,7 +6,7 @@ const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
 
 function UserProduct({ product }: { product: UserProductInterface }) {
   return (
-    <div className="flex flex-col sm:flex-row sm:gap-x-3">
+    <div className="flex flex-col flex-1 sm:flex-row sm:gap-x-3">
       {product.image ? (
         <img
           src={backendDomain + product.image}

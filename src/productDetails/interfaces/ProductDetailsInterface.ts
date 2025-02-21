@@ -8,4 +8,6 @@ export interface ProductDetailsInterface
     | "averageRating"
     | "discountPercentage"
     | "activeOffer"
-  > {}
+  > {
+  category: string;
+}

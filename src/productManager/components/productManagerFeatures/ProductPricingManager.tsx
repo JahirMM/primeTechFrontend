@@ -1,40 +1,54 @@
-import { SetStateAction } from "react";
+import { useCallback } from "react";
 
-import { ProductRequestInterface } from "@/addProduct/interfaces/productRequestInterface";
+interface ProductData {
+  name: string;
+  description: string;
+  brand: string;
+  stock: number;
+  price: number;
+  category: string;
+}
 
-interface AddProductPricingProps {
-  onUpdate: <K extends keyof ProductRequestInterface>(
-    field: K,
-    value: ProductRequestInterface[K]
-  ) => void;
+interface ProductPricingManagerProps {
+  productData: ProductData;
+  setProductData: React.Dispatch<React.SetStateAction<ProductData>>;
   deviceType: "mobile" | "laptop" | "other" | "";
   setDeviceType: React.Dispatch<
-    SetStateAction<"mobile" | "laptop" | "other" | "">
+    React.SetStateAction<"mobile" | "laptop" | "other" | "">
   >;
 }
 
-function AddProductPricing({
-  onUpdate,
+function ProductPricingManager({
+  productData,
+  setProductData,
   deviceType,
   setDeviceType,
-}: AddProductPricingProps) {
+}: ProductPricingManagerProps) {
+  const onUpdate = useCallback(
+    (field: keyof ProductData, value: string | number) => {
+      setProductData((prev) => ({
+        ...prev,
+        [field]:
+          field === "price" || field === "stock"
+            ? value === ""
+              ? ""
+              : Number(value)
+            : value,
+      }));
+    },
+    [setProductData]
+  );
+
   const handleDeviceTypeChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const selectedDevice = event.target.value as "mobile" | "laptop" | "other";
     setDeviceType(selectedDevice);
 
-    if (selectedDevice === "laptop" || selectedDevice === "other") {
-      onUpdate("category", selectedDevice);
-    } else {
-      onUpdate("category", "celular");
-    }
-  };
-
-  const handleCategoryChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    onUpdate("category", event.target.value);
+    onUpdate(
+      "category",
+      selectedDevice === "mobile" ? "celular" : selectedDevice
+    );
   };
 
   return (
@@ -58,7 +72,8 @@ function AddProductPricing({
         {deviceType === "mobile" ? (
           <select
             className="p-1 border border-black rounded-lg"
-            onChange={handleCategoryChange}
+            value={productData.category}
+            onChange={(e) => onUpdate("category", e.target.value)}
           >
             <option value="celular">Celular</option>
             <option value="tablet">Tablet</option>
@@ -72,11 +87,13 @@ function AddProductPricing({
           />
         )}
       </div>
+
       <div className="flex flex-col col-start-1 col-end-3 gap-2 md:col-start-3 md:col-end-4">
         <label className="text-sm">Marca</label>
         <input
           type="text"
           className="px-3 py-2 text-sm border border-black rounded-lg"
+          value={productData.brand}
           onChange={(e) => onUpdate("brand", e.target.value)}
         />
       </div>
@@ -86,20 +103,23 @@ function AddProductPricing({
         <input
           type="number"
           className="px-3 py-2 text-sm border border-black rounded-lg"
-          onChange={(e) => onUpdate("price", Number(e.target.value))}
+          value={productData.price === 0 ? "" : productData.price}
+          onChange={(e) => onUpdate("price", e.target.value)}
         />
       </div>
 
       <div className="flex flex-col gap-2">
         <label className="text-sm">Stock</label>
+
         <input
           type="number"
           className="px-3 py-2 text-sm border border-black rounded-lg"
-          onChange={(e) => onUpdate("stock", Number(e.target.value))}
+          value={productData.stock === 0 ? "" : productData.stock}
+          onChange={(e) => onUpdate("stock", e.target.value)}
         />
       </div>
     </div>
   );
 }
 
-export default AddProductPricing;
+export default ProductPricingManager;

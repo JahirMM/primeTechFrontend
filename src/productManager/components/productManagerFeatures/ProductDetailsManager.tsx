@@ -7,14 +7,15 @@ interface ProductData {
   category: string;
 }
 
-interface AddProductDetailsProps {
-  onUpdate: <K extends keyof ProductData>(
-    field: K,
-    value: ProductData[K]
-  ) => void;
+interface ProductDetailsManagerProps {
+  productData: ProductData;
+  setProductData: React.Dispatch<React.SetStateAction<ProductData>>;
 }
 
-function AddProductDetails({ onUpdate }: AddProductDetailsProps) {
+function ProductDetailsManager({
+  productData,
+  setProductData,
+}: ProductDetailsManagerProps) {
   return (
     <>
       <div className="mt-5">
@@ -24,7 +25,10 @@ function AddProductDetails({ onUpdate }: AddProductDetailsProps) {
         <input
           type="text"
           className="w-full px-3 py-2 text-sm border border-black rounded-lg"
-          onChange={(e) => onUpdate("name", e.target.value)}
+          value={productData.name}
+          onChange={(e) =>
+            setProductData((prev) => ({ ...prev, name: e.target.value }))
+          }
         />
       </div>
       <div className="mt-5">
@@ -35,11 +39,14 @@ function AddProductDetails({ onUpdate }: AddProductDetailsProps) {
           name=""
           id=""
           className="w-full h-32 px-3 py-2 text-sm border border-black rounded-lg resize-none"
-          onChange={(e) => onUpdate("description", e.target.value)}
+          value={productData.description}
+          onChange={(e) =>
+            setProductData((prev) => ({ ...prev, description: e.target.value }))
+          }
         ></textarea>
       </div>
     </>
   );
 }
 
-export default AddProductDetails;
+export default ProductDetailsManager;

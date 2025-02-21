@@ -59,7 +59,7 @@ const mobileDeviceFields: MobileDeviceField[] = [
   { label: "Resistente al Agua", key: "waterResistant", type: "checkbox" },
 ];
 
-function AddMobileDevice({
+function MobileDeviceFeaturesManager({
   productId,
   setMobileDeviceId,
 }: {
@@ -131,4 +131,4 @@ function AddMobileDevice({
   );
 }
 
-export default AddMobileDevice;
+export default MobileDeviceFeaturesManager;

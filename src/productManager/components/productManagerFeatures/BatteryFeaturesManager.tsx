@@ -25,7 +25,7 @@ const batteryFields: BatteryField[] = [
   { label: "Duración máxima (h)", key: "maxBatteryDuration", type: "number", validation: (value) => validateNonNegativeNumber(value) },
 ];
 
-function AddBattery({ productId }: { productId: string }) {
+function BatteryFeaturesManager({ productId }: { productId: string }) {
   const mutationAddBattery = useAddBattery();
 
   const [isDisabled, setIsDisabled] = useState(false);
@@ -78,4 +78,4 @@ function AddBattery({ productId }: { productId: string }) {
   );
 }
 
-export default AddBattery;
+export default BatteryFeaturesManager;

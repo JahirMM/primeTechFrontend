@@ -36,7 +36,7 @@ const laptopFields: {
   { label: "Micrófono", key: "microphone", type: "number", validation: (value) => validateNonNegativeNumber(value) },
 ];
 
-function AddLaptop({ productId }: { productId: string }) {
+function LaptopFeaturesManager({ productId }: { productId: string }) {
   const mutationAddLaptop = useAddLaptop();
 
   const [isDisabled, setIsDisabled] = useState(false);
@@ -108,4 +108,4 @@ function AddLaptop({ productId }: { productId: string }) {
   );
 }
 
-export default AddLaptop;
+export default LaptopFeaturesManager;
