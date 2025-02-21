@@ -3,6 +3,8 @@ import { useUploadProductImage } from "@/share/hook/useUploadProductImage";
 import { ImageObjectInterface } from "@/addProduct/interfaces/imageObjectInterface";
 import { ProductImageInterface } from "@/share/interfaces/productImageInterface";
 import { useGetProductImages } from "@/share/hook/useGetProductImages";
+import { useDeleteProductImage } from "../hook/useDeleteProductImage";
+import { toast } from "sonner";
 
 interface ProductImageManagerProps {
   productId?: string;
@@ -18,6 +20,7 @@ function ProductImageManager({
   setImages,
 }: ProductImageManagerProps) {
   const mutationUpload = useUploadProductImage();
+  const mutationDeleteProductImage = useDeleteProductImage();
   const productImagesResponse = useGetProductImages(productId);
   const productImages = productImagesResponse?.data ?? null;
 
@@ -39,12 +42,21 @@ function ProductImageManager({
     if (!file) return;
 
     if (images.length + loadedImages.length >= 5) {
-      alert("Solo puedes agregar hasta 5 imágenes.");
+      toast.error("Solo puedes agregar hasta 5 imágenes", {
+        duration: 5000,
+        style: { backgroundColor: "#FF5353", color: "white" },
+      });
       return;
     }
 
     if (productId) {
-      mutationUpload.mutateAsync({ productId, imageData: { file, isMain } });
+      console.log(isMain);
+
+      mutationUpload.mutateAsync({
+        productId: productId,
+        imageData: { file, isMain },
+      });
+      console.log({ productId: productId, imageData: { file, isMain } });
     } else {
       setImages([...images, { img: file, isMain }]);
     }
@@ -55,7 +67,7 @@ function ProductImageManager({
     imageFila: File | null
   ) => {
     if (productId && imageId) {
-      console.log("EJECUTAMOS SERVICIO PARA BORRAR LA IMAGEN");
+      mutationDeleteProductImage.mutate({ imageId: imageId });
       return;
     }
     setImages(images.filter((img) => img.img !== imageFila));
@@ -73,7 +85,7 @@ function ProductImageManager({
   return (
     <div>
       {/* Imagen principal */}
-      <div className="flex justify-center m-auto mb-3 cursor-pointer">
+      <div className="flex justify-center m-auto mb-10 cursor-pointer">
         {loadedImages.length > 0 &&
           loadedImages
             .filter((img) => img.main === true)
@@ -132,7 +144,7 @@ function ProductImageManager({
       />
 
       {/* Lista de imágenes adicionales */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 justify-around">
         {loadedImages
           .filter((img) => !img.main)
           .map((image) => (

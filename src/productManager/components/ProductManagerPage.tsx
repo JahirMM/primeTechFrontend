@@ -43,7 +43,7 @@ function ProductManagerPage() {
           className="px-3 py-2 mb-3 text-xs text-white rounded-md bg-primaryColor"
           onClick={() => router.push("/profile/my-products")}
         >
-          {productIdFromUrl ? "Cancelar edición" : "Volver"}
+          Volver
         </button>
       </div>
 

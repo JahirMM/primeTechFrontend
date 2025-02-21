@@ -17,7 +17,13 @@ export function useUploadProductImage() {
       productId: string;
       imageData: { file: File; isMain: boolean };
     }) => uploadProductImage(productId, imageData),
-    onSuccess: () => {
+    onSuccess: (_, { productId }) => {
+      toast.success("Imagen agregada", {
+        duration: 2000,
+        style: { backgroundColor: "#1F5A54", color: "white" },
+      });
+      queryClient.invalidateQueries({ queryKey: ["productImages", productId] });
+
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: (error: AxiosError<ErrorResponseInterface>) => {

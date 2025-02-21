@@ -2,29 +2,22 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 
-import { UpdateProductInterface } from "@/updateProduct/interfaces/updateProductInterface";
 import { ErrorResponseInterface } from "@/auth/interfaces/errorResponseInterface";
 
-import { updateProduct } from "@/updateProduct/services/updateProductService";
+import { deleteProductImage } from "@/productManager/services/deleteProductImage";
 
-export function useUpdateProduct() {
+export function useDeleteProductImage() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      productId,
-      productData,
-    }: {
-      productId: string;
-      productData: UpdateProductInterface;
-    }) => updateProduct(productId, productData),
+    mutationFn: ({ imageId }: { imageId: string }) =>
+      deleteProductImage(imageId),
     onSuccess: () => {
       toast.success("Información actualizada", {
         duration: 2000,
         style: { backgroundColor: "#1F5A54", color: "white" },
       });
-      queryClient.invalidateQueries({ queryKey: ["productDetails"] });
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["productImages"] });
     },
     onError: (error: AxiosError<ErrorResponseInterface>) => {
       toast.error(error.message, {
