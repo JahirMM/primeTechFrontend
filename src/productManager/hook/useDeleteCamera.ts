@@ -3,23 +3,16 @@ import { AxiosError } from "axios";
 import { toast } from "sonner";
 
 import { ErrorResponseInterface } from "@/auth/interfaces/errorResponseInterface";
-import { AddCameraInterface } from "@/addProduct/interfaces/addCameraInterface";
 
-import { addCamera } from "@/addProduct/service/addCameraService";
+import { deleteCamera } from "@/productManager/services/deleteCamera";
 
-export function useAddCamera() {
+export function useDeleteCamera() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      productId,
-      cameraData,
-    }: {
-      productId: string;
-      cameraData: AddCameraInterface;
-    }) => addCamera(productId, cameraData),
+    mutationFn: ({ cameraId }: { cameraId: string }) => deleteCamera(cameraId),
     onSuccess: () => {
-      toast.success("Información agregada", {
+      toast.success("Camara eliminada", {
         duration: 2000,
         style: { backgroundColor: "#1F5A54", color: "white" },
       });

@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { GetScreenResponseInterface } from "@/share/interfaces/getScreenResponseInterface";
 import { AddScreenInterface } from "@/addProduct/interfaces/addScreenInterface";
+import { ScreenInterface } from "@/share/interfaces/screenInterface";
 
 import { validateNonNegativeNumber } from "@/share/utils/validateNonNegativeNumber";
 
+import { useUpdateScreen } from "@/updateProduct/hook/useUpdateScreen";
 import { useAddScreen } from "@/addProduct/hook/useAddScreen";
 
 import FeatureTable from "@/share/components/FeatureTable";
+import { useGetScreen } from "@/share/hook/useGetScreen";
 
 interface ScreenField {
   label: string;
@@ -22,13 +26,13 @@ const screenFields: ScreenField[] = [
     label: "Densidad de píxeles (ppi)",
     key: "pixelDensity",
     type: "number",
-    validation: (value) => validateNonNegativeNumber(value)
+    validation: (value) => validateNonNegativeNumber(value),
   },
   {
     label: "Tasa de refresco (Hz)",
     key: "refreshRate",
     type: "number",
-    validation: (value) => validateNonNegativeNumber(value)
+    validation: (value) => validateNonNegativeNumber(value),
   },
   { label: "Tipo de pantalla", key: "screenType", type: "text" },
   {
@@ -40,18 +44,55 @@ const screenFields: ScreenField[] = [
 ];
 
 function ScreenFeaturesManager({ productId }: { productId: string }) {
+  const screenResponse = productId ? useGetScreen(productId) : null;
   const mutationAddScreen = useAddScreen();
+  const mutationUpdateScreen = useUpdateScreen();
 
-  const [isDisabled, setIsDisabled] = useState(false);
+  const screenDataResponse = screenResponse?.data ?? null;
 
-  const [screen, setScreen] = useState(() =>
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const [screen, setScreen] = useState<Record<string, string | boolean>>(() =>
     screenFields.reduce((acc, field) => {
       acc[field.key] = field.type === "checkbox" ? false : "";
       return acc;
     }, {} as Record<string, string | boolean>)
   );
 
-  const addScreen = async () => {
+  const parseScreenData = (screenData?: GetScreenResponseInterface | null) => {
+    return screenFields.reduce((acc, field) => {
+      let value = screenData?.screen[0]?.[field.key as keyof ScreenInterface];
+
+      if (value !== undefined) {
+        if (field.type === "checkbox") {
+          acc[field.key] = Boolean(value);
+        } else if (field.type === "number") {
+          acc[field.key] = String(value).replace(/[^\d.]/g, "");
+        } else {
+          acc[field.key] = String(value);
+        }
+      } else {
+        acc[field.key] = field.type === "checkbox" ? false : "";
+      }
+
+      return acc;
+    }, {} as Record<string, string | boolean>);
+  };
+
+  useEffect(() => {
+    if (productId && screenDataResponse) {
+      setScreen(parseScreenData(screenDataResponse));
+    }
+  }, [productId, screenDataResponse]);
+
+  const handleCancel = useCallback(() => {
+    if (screenResponse?.data) {
+      setScreen(parseScreenData(screenResponse.data));
+    }
+    setIsDisabled(true);
+  }, [screenResponse, setScreen, setIsDisabled]);
+
+  const screenManager = async () => {
     if (
       !screen.resolution ||
       !screen.pixelDensity ||
@@ -74,26 +115,44 @@ function ScreenFeaturesManager({ productId }: { productId: string }) {
       screenSize: Number(screen.screenSize),
     };
 
-    try {
-      await mutationAddScreen.mutateAsync({
-        productId,
-        screenData: screenRequest,
-      });
-      setIsDisabled(true);
-    } catch (error) {
-      return;
+    if (!productId && screenDataResponse === null) {
+      try {
+        await mutationAddScreen.mutateAsync({
+          productId,
+          screenData: screenRequest,
+        });
+        setIsDisabled(true);
+        return;
+      } catch (error) {
+        return;
+      }
+    }
+
+    if (productId && screenDataResponse !== null) {
+      try {
+        await mutationUpdateScreen.mutateAsync({
+          screenId: screenDataResponse.screen[0].screenId,
+          screenData: screenRequest,
+        });
+        setIsDisabled(true);
+        return
+      } catch (error) {
+        return;
+      }
     }
   };
 
   return (
     <FeatureTable
+      setDisabled={setIsDisabled}
       data={screen}
       setData={setScreen}
       isDisabled={isDisabled}
       fields={screenFields}
       title="Pantalla"
-      manageFeature={addScreen}
-      buttonText="agregar"
+      manageFeature={screenManager}
+      buttonText={"hacer cambios"}
+      handleCancel={handleCancel}
     />
   );
 }

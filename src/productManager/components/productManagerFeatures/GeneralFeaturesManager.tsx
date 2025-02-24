@@ -26,7 +26,7 @@ function GeneralFeaturesManager({
       )}
 
       {deviceType === "mobile" && mobileDeviceId && (
-        <SimCardFeaturesManager mobileDeviceId={mobileDeviceId} />
+        <SimCardFeaturesManager mobileDeviceId={mobileDeviceId} productId={productId} />
       )}
     </>
   );

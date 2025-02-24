@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { AddMobileDeviceInterface } from "@/addProduct/interfaces/addMobileDeviceInterface";
@@ -9,7 +9,10 @@ import { removeNumericCharacters } from "@/share/utils/removeNumericCharacters";
 import { useAddMobileDevice } from "@/addProduct/hook/useAddMobileDevice";
 
 import FeatureTable from "@/share/components/FeatureTable";
-
+import { useUpdateMobileDevice } from "@/updateProduct/hook/useUpdateMobileDevice";
+import { useGetMobileDevice } from "@/share/hook/useGetMobileDevice";
+import { GetMobileDeviceResponseInterface } from "@/share/interfaces/getMobileDeviceResponseInterface";
+import { MobileDeviceInterface } from "@/share/interfaces/mobileDeviceInterface";
 
 interface MobileDeviceField {
   label: string;
@@ -66,9 +69,13 @@ function MobileDeviceFeaturesManager({
   productId: string;
   setMobileDeviceId: React.Dispatch<React.SetStateAction<string | null>>;
 }) {
+  const mobileDeviceResponse = productId ? useGetMobileDevice(productId) : null;
   const mutationAddMobileDevice = useAddMobileDevice();
+  const mutationUpdateMobileDevice = useUpdateMobileDevice();
 
-  const [isDisabled, setIsDisabled] = useState(false);
+  const mobileDeviceDataResponse = mobileDeviceResponse?.data ?? null;
+
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [mobileDevice, setMobileDevice] = useState(() =>
     mobileDeviceFields.reduce((acc, field) => {
@@ -76,6 +83,50 @@ function MobileDeviceFeaturesManager({
       return acc;
     }, {} as Record<string, string | boolean>)
   );
+
+  const parseMobileDeviceData = (
+    mobileDeviceData?: GetMobileDeviceResponseInterface | null
+  ) => {
+    return mobileDeviceFields.reduce((acc, field) => {
+      let value =
+        mobileDeviceData?.mobileDevice[0]?.[
+          field.key as keyof MobileDeviceInterface
+        ];
+
+      if (value !== undefined) {
+        if (field.type === "checkbox") {
+          acc[field.key] = Boolean(value);
+        } else if (field.type === "number") {
+          acc[field.key] = String(value).replace(/[^\d.]/g, "");
+        } else {
+          acc[field.key] = String(value);
+        }
+      } else {
+        acc[field.key] = field.type === "checkbox" ? false : "";
+      }
+
+      return acc;
+    }, {} as Record<string, string | boolean>);
+  };
+
+  useEffect(() => {
+    if (productId && mobileDeviceDataResponse) {
+      if (mobileDeviceDataResponse.mobileDevice?.length > 0) {
+        setMobileDevice(parseMobileDeviceData(mobileDeviceDataResponse));
+        setMobileDeviceId(mobileDeviceDataResponse.mobileDevice[0].mobileDeviceid);
+      } else {
+        setMobileDeviceId(null);
+      }
+    }
+  }, [productId, mobileDeviceDataResponse]);
+  
+
+  const handleCancel = useCallback(() => {
+    if (mobileDeviceResponse?.data) {
+      setMobileDevice(parseMobileDeviceData(mobileDeviceResponse.data));
+    }
+    setIsDisabled(true);
+  }, [mobileDeviceResponse, setMobileDevice, setIsDisabled]);
 
   const addMobileDevice = async () => {
     if (
@@ -106,27 +157,44 @@ function MobileDeviceFeaturesManager({
       waterResistant: Boolean(mobileDevice.waterResistant),
     };
 
-    try {
-      const mobileDeviceResponse = await mutationAddMobileDevice.mutateAsync({
-        productId,
-        mobileDeviceData: mobileDeviceRequest,
-      });
-      setMobileDeviceId(mobileDeviceResponse.mobileDevice.mobileDeviceid);
-      setIsDisabled(true);
-    } catch (error) {
-      return;
+    if (!productId && mobileDeviceResponse === null) {
+      try {
+        const mobileDeviceResponse = await mutationAddMobileDevice.mutateAsync({
+          productId,
+          mobileDeviceData: mobileDeviceRequest,
+        });
+        setMobileDeviceId(mobileDeviceResponse.mobileDevice.mobileDeviceid);
+        setIsDisabled(true);
+      } catch (error) {
+        return;
+      }
+    }
+
+    if (productId && mobileDeviceDataResponse !== null) {
+      try {
+        await mutationUpdateMobileDevice.mutateAsync({
+          mobileDeviceId:
+            mobileDeviceDataResponse.mobileDevice[0].mobileDeviceid,
+          mobileDeviceData: mobileDeviceRequest,
+        });
+        setIsDisabled(true);
+      } catch (error) {
+        return;
+      }
     }
   };
 
   return (
     <FeatureTable
+      setDisabled={setIsDisabled}
       data={mobileDevice}
       setData={setMobileDevice}
       isDisabled={isDisabled}
       fields={mobileDeviceFields}
       title="Características Generales"
       manageFeature={addMobileDevice}
-      buttonText="agregar"
+      buttonText="hacer cambios"
+      handleCancel={handleCancel}
     />
   );
 }

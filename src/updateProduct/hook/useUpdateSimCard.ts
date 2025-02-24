@@ -7,7 +7,7 @@ import { ErrorResponseInterface } from "@/auth/interfaces/errorResponseInterface
 
 import { updateSimCard } from "@/updateProduct/services/updateSimCardService";
 
-export function useSimCard() {
+export function useUpdateSimCard() {
   const queryClient = useQueryClient();
 
   return useMutation({

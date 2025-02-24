@@ -6,6 +6,7 @@ interface FeatureTableProps {
     ) => Record<string, string | boolean>
   ) => void;
   isDisabled: boolean;
+  setDisabled: React.Dispatch<React.SetStateAction<boolean>>;
   fields: {
     label: string;
     key: string;
@@ -15,16 +16,19 @@ interface FeatureTableProps {
   title: string;
   manageFeature: () => void;
   buttonText: string;
+  handleCancel: () => void;
 }
 
 function FeatureTable({
   data,
   setData,
   isDisabled,
+  setDisabled,
   fields,
   title,
   manageFeature,
   buttonText,
+  handleCancel,
 }: FeatureTableProps) {
   const handleChange = (key: string, value: string | boolean) => {
     const field = fields.find((f) => f.key === key);
@@ -57,13 +61,29 @@ function FeatureTable({
   };
 
   return (
-    <div>
+    <section>
       <div className="flex items-center justify-between my-6">
         <h2 className="text-lg font-semibold">{title}</h2>
         {!isDisabled && (
+          <div className="flex items-center gap-4">
+            <button
+              className="px-2 py-1 text-xs text-white rounded-lg bg-primaryColor"
+              onClick={manageFeature}
+            >
+              confirmar cambios
+            </button>
+            <button
+              className="px-2 py-1 text-xs transition duration-200 border border-gray-500 rounded-lg hover:border-primaryColor hover:text-white hover:bg-primaryColor"
+              onClick={() => handleCancel()}
+            >
+              cancelar
+            </button>
+          </div>
+        )}
+        {isDisabled && (
           <button
             className="px-2 py-1 text-xs text-white rounded-lg bg-primaryColor"
-            onClick={manageFeature}
+            onClick={() => setDisabled(false)}
           >
             {buttonText}
           </button>
@@ -100,7 +120,7 @@ function FeatureTable({
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
   );
 }
 
