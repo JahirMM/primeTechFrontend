@@ -115,7 +115,7 @@ function ScreenFeaturesManager({ productId }: { productId: string }) {
       screenSize: Number(screen.screenSize),
     };
 
-    if (!productId && screenDataResponse === null) {
+    if (screenDataResponse?.screen.length === 0) {
       try {
         await mutationAddScreen.mutateAsync({
           productId,
@@ -128,7 +128,7 @@ function ScreenFeaturesManager({ productId }: { productId: string }) {
       }
     }
 
-    if (productId && screenDataResponse !== null) {
+    if (screenDataResponse && screenDataResponse.screen.length > 0) {
       try {
         await mutationUpdateScreen.mutateAsync({
           screenId: screenDataResponse.screen[0].screenId,

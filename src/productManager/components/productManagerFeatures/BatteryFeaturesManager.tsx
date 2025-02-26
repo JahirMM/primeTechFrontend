@@ -113,7 +113,7 @@ function BatteryFeaturesManager({ productId }: { productId: string }) {
       maxBatteryDuration: Number(battery.maxBatteryDuration),
     };
 
-    if (!productId && batteryDataResponse === null) {
+    if (batteryDataResponse?.battery.length === 0) {
       try {
         await mutationAddBattery.mutateAsync({
           productId,
@@ -125,7 +125,7 @@ function BatteryFeaturesManager({ productId }: { productId: string }) {
       }
     }
 
-    if (productId && batteryDataResponse !== null) {
+    if (batteryDataResponse && batteryDataResponse?.battery.length > 0) {
       try {
         await mutationUpdateBattery.mutateAsync({
           batteryId: batteryDataResponse.battery[0].batteryId,

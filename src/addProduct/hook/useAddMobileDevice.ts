@@ -23,7 +23,7 @@ export function useAddMobileDevice() {
         duration: 2000,
         style: { backgroundColor: "#1F5A54", color: "white" },
       });
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["mobileDeviceInformation"] });
     },
     onError: (error: AxiosError<ErrorResponseInterface>) => {
       toast.error(error.message, {

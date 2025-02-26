@@ -172,7 +172,7 @@ function LaptopFeaturesManager({ productId }: { productId: string }) {
       microphone: Number(laptop.microphone),
     };
 
-    if (!productId && laptopDataResponse === null) {
+    if (laptopDataResponse?.laptop.length === 0) {
       try {
         await mutationAddLaptop.mutateAsync({
           productId,
@@ -184,7 +184,7 @@ function LaptopFeaturesManager({ productId }: { productId: string }) {
       }
     }
 
-    if (productId && laptopDataResponse !== null) {
+    if (laptopDataResponse && laptopDataResponse?.laptop.length > 0) {
       try {
         await mutationUpdateLaptop.mutateAsync({
           laptopId: laptopDataResponse.laptop[0].laptopId,

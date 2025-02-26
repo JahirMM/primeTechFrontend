@@ -157,7 +157,7 @@ function MobileDeviceFeaturesManager({
       waterResistant: Boolean(mobileDevice.waterResistant),
     };
 
-    if (!productId && mobileDeviceResponse === null) {
+    if (mobileDeviceResponse?.data?.mobileDevice.length === 0) {
       try {
         const mobileDeviceResponse = await mutationAddMobileDevice.mutateAsync({
           productId,
@@ -170,16 +170,18 @@ function MobileDeviceFeaturesManager({
       }
     }
 
-    if (productId && mobileDeviceDataResponse !== null) {
-      try {
-        await mutationUpdateMobileDevice.mutateAsync({
-          mobileDeviceId:
-            mobileDeviceDataResponse.mobileDevice[0].mobileDeviceid,
-          mobileDeviceData: mobileDeviceRequest,
-        });
-        setIsDisabled(true);
-      } catch (error) {
-        return;
+    if (mobileDeviceDataResponse && mobileDeviceResponse?.data?.mobileDevice) {
+      if (mobileDeviceResponse.data.mobileDevice.length > 0) {
+        try {
+          await mutationUpdateMobileDevice.mutateAsync({
+            mobileDeviceId:
+              mobileDeviceDataResponse.mobileDevice[0].mobileDeviceid,
+            mobileDeviceData: mobileDeviceRequest,
+          });
+          setIsDisabled(true);
+        } catch (error) {
+          return;
+        }
       }
     }
   };

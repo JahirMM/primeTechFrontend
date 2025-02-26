@@ -115,9 +115,6 @@ function SimCardFeaturesManager({
       simType: simCard.simType.toString(),
     };
 
-    console.log("VOY A ENTRAR EN UNOS DE LOS IF CON :");
-    console.log(mobileDeviceId);
-
     if (!simCardDataResponse || !simCardDataResponse.simCard?.length) {
       try {
         await mutationAddSimCard.mutateAsync({
@@ -126,7 +123,6 @@ function SimCardFeaturesManager({
         });
         return;
       } catch (error) {
-        console.error("Error al agregar SIM Card:", error);
         return;
       }
     }
