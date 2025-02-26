@@ -70,6 +70,9 @@ function HeaderProfileNavItem({
             <li className="px-4 py-1 text-sm text-left hover:bg-gray-200">
               <Link href={"/profile/my-products"}>Mis productos</Link>
             </li>
+            <li className="px-4 py-1 text-sm text-left hover:bg-gray-200">
+              <Link href={"/profile/add-product"}>Agregar product</Link>
+            </li>
             <li className="px-4 py-1 text-left">
               <span
                 className="px-3 py-2 text-xs text-black transition-colors duration-200 ease-in border rounded-lg cursor-pointer border-primaryColor hover:bg-primaryColor hover:text-white"
