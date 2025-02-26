@@ -28,6 +28,7 @@ function CameraFeaturesManager({
   const cameraDataResponse = cameraResponse?.data ?? null;
 
   const [cameras, setCameras] = useState<CameraInterfa[]>([]);
+  const [originalCameras, setOriginalCameras] = useState<CameraInterfa[]>([]);
   const [editingCameras, setEditingCameras] = useState<Record<string, boolean>>(
     {}
   );
@@ -44,17 +45,31 @@ function CameraFeaturesManager({
       }));
 
       setCameras(formattedCameras);
+      setOriginalCameras(formattedCameras);
       setEditingCameras(
         Object.fromEntries(formattedCameras.map((cam) => [cam.cameraId, false]))
       );
     }
   }, [cameraDataResponse]);
 
+  const numericFields = ["resolution", "opticalZoom", "digitalZoom"];
+
   const handleChange = (
     cameraId: string,
     field: keyof CameraInterfa,
-    value: string | number
+    value: string
   ) => {
+    if (numericFields.includes(field) && Number(value) < 0) {
+      console.log("PERRO");
+
+      setCameras((prevCameras) =>
+        prevCameras.map((cam) =>
+          cam.cameraId === cameraId ? { ...cam, [field]: "" } : cam
+        )
+      );
+      return;
+    }
+
     setCameras((prevCameras) =>
       prevCameras.map((cam) =>
         cam.cameraId === cameraId ? { ...cam, [field]: value } : cam
@@ -62,10 +77,24 @@ function CameraFeaturesManager({
     );
   };
 
+  const handleCancelEdit = (cameraId: string) => {
+    const originalCamera = originalCameras.find(
+      (cam) => cam.cameraId === cameraId
+    );
+    if (originalCamera) {
+      setCameras((prevCameras) =>
+        prevCameras.map((cam) =>
+          cam.cameraId === cameraId ? { ...originalCamera } : cam
+        )
+      );
+    }
+    setEditingCameras((prev) => ({ ...prev, [cameraId]: false }));
+  };
+
   const handleAddCamera = () => {
     const newCamera: CameraInterfa = {
       cameraId: uuidv4(),
-      type: "",
+      type: "front",
       resolution: "",
       aperture: "",
       opticalZoom: "",
@@ -148,55 +177,48 @@ function CameraFeaturesManager({
                   <span className="text-sm">Camara {index + 1}</span>
                   <div className="flex items-center gap-2">
                     {!editingCameras[camera.cameraId] ? (
-                    <button
-                      className="px-3 py-2 text-xs text-white rounded-lg bg-primaryColor"
-                      onClick={() =>
-                        setEditingCameras((prev) => ({
-                          ...prev,
-                          [camera.cameraId]: true,
-                        }))
-                      }
-                    >
-                      Hacer cambios
-                    </button>
-                  ) : (
-                    <>
                       <button
                         className="px-3 py-2 text-xs text-white rounded-lg bg-primaryColor"
-                        onClick={() => saveCamera(camera)}
-                      >
-                        Confirmar
-                      </button>
-                      <button
-                        className="px-3 py-2 text-xs text-black border border-black rounded-lg hover:text-white hover:bg-primaryColor hover:border-primaryColor"
                         onClick={() =>
                           setEditingCameras((prev) => ({
                             ...prev,
-                            [camera.cameraId]: false,
+                            [camera.cameraId]: true,
                           }))
                         }
                       >
-                        Cancelar
+                        Hacer cambios
                       </button>
-                    </>
-                  )}
-                  {!editingCameras[camera.cameraId] && (
-                    <TrashIcon
-                      className="text-red-500 cursor-pointer size-4"
-                      onClick={() => deleteCamera(camera.cameraId)}
-                    />
-                  )}
+                    ) : (
+                      <>
+                        <button
+                          className="px-3 py-2 text-xs text-white rounded-lg bg-primaryColor"
+                          onClick={() => saveCamera(camera)}
+                        >
+                          Confirmar
+                        </button>
+                        <button
+                          className="px-3 py-2 text-xs text-black border border-black rounded-lg hover:text-white hover:bg-primaryColor hover:border-primaryColor"
+                          onClick={() => handleCancelEdit(camera.cameraId)}
+                        >
+                          Cancelar
+                        </button>
+                      </>
+                    )}
+                    {!editingCameras[camera.cameraId] && (
+                      <TrashIcon
+                        className="text-red-500 cursor-pointer size-4"
+                        onClick={() => deleteCamera(camera.cameraId)}
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm border border-gray-200 rounded-lg">
                     <tbody>
-                      <tr className="even:bg-gray-100 odd:bg-white">
+                      <tr>
                         <th className="p-3 font-medium text-left">Tipo</th>
                         <td className="p-3">
-                          <input
-                            type="text"
-                            name="type"
+                          <select
                             className="w-full p-1 border border-gray-300 rounded"
                             disabled={!editingCameras[camera.cameraId]}
                             value={camera.type}
@@ -207,7 +229,10 @@ function CameraFeaturesManager({
                                 e.target.value
                               )
                             }
-                          />
+                          >
+                            <option value="front">Frontal</option>
+                            <option value="rear">Trasera</option>
+                          </select>
                         </td>
                       </tr>
                       <tr className="even:bg-gray-100 odd:bg-white">
@@ -216,7 +241,7 @@ function CameraFeaturesManager({
                         </th>
                         <td className="p-3">
                           <input
-                            type="text"
+                            type="number"
                             name="resolution"
                             className="w-full p-1 border border-gray-300 rounded"
                             disabled={!editingCameras[camera.cameraId]}
@@ -265,7 +290,7 @@ function CameraFeaturesManager({
                               handleChange(
                                 camera.cameraId,
                                 "opticalZoom",
-                                Number(e.target.value)
+                                e.target.value
                               )
                             }
                           />
@@ -286,7 +311,7 @@ function CameraFeaturesManager({
                               handleChange(
                                 camera.cameraId,
                                 "digitalZoom",
-                                Number(e.target.value)
+                                e.target.value
                               )
                             }
                           />
