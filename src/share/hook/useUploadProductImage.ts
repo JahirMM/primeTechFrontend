@@ -24,7 +24,7 @@ export function useUploadProductImage() {
       });
       queryClient.invalidateQueries({ queryKey: ["productImages", productId] });
 
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["products"], exact: false });
     },
     onError: (error: AxiosError<ErrorResponseInterface>) => {
       if (error.response?.status === 400) {
