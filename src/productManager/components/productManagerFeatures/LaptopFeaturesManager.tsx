@@ -206,7 +206,6 @@ function LaptopFeaturesManager({ productId }: { productId: string }) {
       fields={laptopFields}
       title="Características Generales"
       manageFeature={addLaptop}
-      buttonText="hacer cambios"
       handleCancel={handleCancel}
     />
   );

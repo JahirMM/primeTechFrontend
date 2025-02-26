@@ -1,3 +1,5 @@
+import PenIcon from "@/icons/PenIcon";
+
 interface FeatureTableProps {
   data: Record<string, string | boolean>;
   setData: (
@@ -15,7 +17,6 @@ interface FeatureTableProps {
   }[];
   title: string;
   manageFeature: () => void;
-  buttonText: string;
   handleCancel: () => void;
 }
 
@@ -27,7 +28,6 @@ function FeatureTable({
   fields,
   title,
   manageFeature,
-  buttonText,
   handleCancel,
 }: FeatureTableProps) {
   const handleChange = (key: string, value: string | boolean) => {
@@ -65,12 +65,12 @@ function FeatureTable({
       <div className="flex items-center justify-between my-6">
         <h2 className="text-lg font-semibold">{title}</h2>
         {!isDisabled && (
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col items-center gap-4 md:flex-row">
             <button
               className="px-2 py-1 text-xs text-white rounded-lg bg-primaryColor"
               onClick={manageFeature}
             >
-              confirmar cambios
+              confirmar
             </button>
             <button
               className="px-2 py-1 text-xs transition duration-200 border border-gray-500 rounded-lg hover:border-primaryColor hover:text-white hover:bg-primaryColor"
@@ -81,12 +81,10 @@ function FeatureTable({
           </div>
         )}
         {isDisabled && (
-          <button
-            className="px-2 py-1 text-xs text-white rounded-lg bg-primaryColor"
+          <PenIcon
+            className="size-4 text-primaryColor cursor-pointer"
             onClick={() => setDisabled(false)}
-          >
-            {buttonText}
-          </button>
+          />
         )}
       </div>
       <div className="overflow-x-auto">

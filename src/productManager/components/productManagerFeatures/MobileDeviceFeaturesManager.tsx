@@ -193,7 +193,6 @@ function MobileDeviceFeaturesManager({
       fields={mobileDeviceFields}
       title="Características Generales"
       manageFeature={addMobileDevice}
-      buttonText="hacer cambios"
       handleCancel={handleCancel}
     />
   );

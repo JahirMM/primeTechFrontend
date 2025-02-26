@@ -154,7 +154,6 @@ function SimCardFeaturesManager({
       fields={simCardFields}
       title="Sim Card"
       manageFeature={addSimCard}
-      buttonText="Hacer cambios"
       handleCancel={handleCancel}
     />
   );

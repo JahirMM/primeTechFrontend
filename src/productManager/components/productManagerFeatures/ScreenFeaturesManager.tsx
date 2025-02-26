@@ -151,7 +151,6 @@ function ScreenFeaturesManager({ productId }: { productId: string }) {
       fields={screenFields}
       title="Pantalla"
       manageFeature={screenManager}
-      buttonText={"hacer cambios"}
       handleCancel={handleCancel}
     />
   );

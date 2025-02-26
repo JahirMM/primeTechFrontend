@@ -147,7 +147,6 @@ function BatteryFeaturesManager({ productId }: { productId: string }) {
       fields={batteryFields}
       title="Batería"
       manageFeature={addBattery}
-      buttonText="hacer cambios"
       handleCancel={handleCancel}
     />
   );
