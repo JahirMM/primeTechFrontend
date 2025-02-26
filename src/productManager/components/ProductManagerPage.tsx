@@ -5,23 +5,21 @@ import { useRouter } from "next/navigation";
 
 import ProductManagerFeatures from "@/productManager/components/ProductManagerFeatures";
 import ProductManagerForm from "@/productManager/components/ProductManagerForm";
+import NotSellerMessage from "@/profile/components/NotSellerMessage";
 
 import { useGetProductDetails } from "@/productDetails/hook/useGetProductDetails";
+import { useGetUserInformation } from "@/share/hook/useGetUserInformation";
+
 import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
 
 function ProductManagerPage() {
-  const router = useRouter();
+  const { data: userInformation } = useGetUserInformation();
   const productIdFromUrl = getProductIdFromUrl();
+  const { data: productDetails, isLoading: productDetailsLoading } = productIdFromUrl ? useGetProductDetails(productIdFromUrl) : { data: null };
+  const router = useRouter();
 
-  const [deviceType, setDeviceType] = useState<
-    "mobile" | "laptop" | "other" | ""
-  >("");
-  const [productId, setProductId] = useState<string | undefined>(
-    productIdFromUrl
-  );
-
-  const { data: productDetails, isLoading: productDetailsLoading } =
-    productIdFromUrl ? useGetProductDetails(productIdFromUrl) : { data: null };
+  const [deviceType, setDeviceType] = useState<"mobile" | "laptop" | "other" | "">("");
+  const [productId, setProductId] = useState<string | undefined>(productIdFromUrl);
 
   useEffect(() => {
     if (productDetails) {
@@ -35,6 +33,18 @@ function ProductManagerPage() {
       );
     }
   }, [productDetails]);
+
+  if (userInformation) {
+    if (!userInformation.user.roleNames.includes("seller")) {
+      return (
+        <NotSellerMessage
+          title="Convierte tu Pasión en Ventas"
+          message="Parece que aún no eres vendedor. ¡Publica tus productos y alcanza a miles de clientes potenciales!"
+          buttonText="Convertirse en Vendedor"
+        />
+      );
+    }
+  }
 
   return (
     <>
