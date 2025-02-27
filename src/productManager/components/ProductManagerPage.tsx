@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -7,19 +5,28 @@ import ProductManagerFeatures from "@/productManager/components/ProductManagerFe
 import ProductManagerForm from "@/productManager/components/ProductManagerForm";
 import NotSellerMessage from "@/profile/components/NotSellerMessage";
 
-import { useGetProductDetails } from "@/productDetails/hook/useGetProductDetails";
 import { useGetUserInformation } from "@/share/hook/useGetUserInformation";
 
-import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
+import { GetProductDetailsResponseInterface } from "@/productDetails/interfaces/getProductDetailsResponseInterface";
 
-function ProductManagerPage() {
+interface ProductManagerPageProps {
+  productIdFromUrl: string | undefined;
+  productDetails: GetProductDetailsResponseInterface | undefined;
+}
+
+function ProductManagerPage({
+  productIdFromUrl,
+  productDetails,
+}: ProductManagerPageProps) {
   const { data: userInformation } = useGetUserInformation();
-  const productIdFromUrl = getProductIdFromUrl();
-  const { data: productDetails, isLoading: productDetailsLoading } = productIdFromUrl ? useGetProductDetails(productIdFromUrl) : { data: null };
   const router = useRouter();
 
-  const [deviceType, setDeviceType] = useState<"mobile" | "laptop" | "other" | "">("");
-  const [productId, setProductId] = useState<string | undefined>(productIdFromUrl);
+  const [deviceType, setDeviceType] = useState<
+    "mobile" | "laptop" | "other" | ""
+  >("");
+  const [productId, setProductId] = useState<string | undefined>(
+    productIdFromUrl
+  );
 
   useEffect(() => {
     if (productDetails) {
@@ -57,17 +64,13 @@ function ProductManagerPage() {
         </button>
       </div>
 
-      {productDetailsLoading ? (
-        <div>Cargando</div>
-      ) : (
-        <ProductManagerForm
-          deviceType={deviceType}
-          productId={productId}
-          setDeviceType={setDeviceType}
-          setProductId={setProductId}
-          productDetails={productDetails || null}
-        />
-      )}
+      <ProductManagerForm
+        deviceType={deviceType}
+        productId={productId}
+        setDeviceType={setDeviceType}
+        setProductId={setProductId}
+        productDetails={productDetails || null}
+      />
 
       {deviceType && productId && (
         <ProductManagerFeatures deviceType={deviceType} productId={productId} />
