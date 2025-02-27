@@ -42,8 +42,18 @@ function ProductManagerForm({
     brand: productDetails ? productDetails.product.brand : "",
     stock: productDetails ? productDetails.product.stock : 0,
     price: productDetails ? productDetails.product.price : 0,
-    category: productDetails ? productDetails.product.category : "",
+    category: productDetails
+      ? productDetails.product.category === "cellular"
+        ? "celular"
+        : productDetails.product.category === "tablet"
+        ? "tablet"
+        : productDetails.product.category === "other"
+        ? "other"
+        : ""
+      : "",
   });
+
+  console.log(productData);
 
   const handleSaveProduct = async () => {
     if (
