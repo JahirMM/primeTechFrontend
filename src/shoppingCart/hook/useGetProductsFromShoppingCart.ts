@@ -5,10 +5,11 @@ import { GetShoppingCartResponseInterface } from "@/shoppingCart/interfaces/getS
 import { getProductsFromTheShoppingCart } from "@/shoppingCart/services/shoppingCartService";
 
 export const useGetProductsFromShoppingCart = () => {
-  return useQuery<GetShoppingCartResponseInterface, Error>({
+  return useQuery<GetShoppingCartResponseInterface | null, Error>({
     queryKey: ["productFromShoppingCart"],
     queryFn: () => getProductsFromTheShoppingCart(),
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
+    retry: false,
   });
 };

@@ -4,11 +4,11 @@ import { GetUserProductsResponse } from "@/profile/interfaces/getUserProductsRes
 
 import { getUserProducts } from "@/profile/service/userProductsService";
 
-export const useGetUserProducts = (shouldFetch: boolean) => {
+export const useGetUserProducts = (isSeller: boolean) => {
   return useQuery<GetUserProductsResponse, Error>({
     queryKey: ["userProducts"],
     queryFn: getUserProducts,
-    enabled: shouldFetch,
+    enabled: isSeller,
     staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
   });
