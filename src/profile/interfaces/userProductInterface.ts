@@ -3,5 +3,11 @@ import { Product } from "@/share/interfaces/productInterface";
 export interface UserProductInterface
   extends Omit<
     Product,
-    "sellerId" | "averageRating" | "discountPercentage" | "activeOffer"
-  > {}
+    | "sellerId"
+    | "averageRating"
+    | "discountPercentage"
+    | "activeOffer"
+    | "image"
+  > {
+  imageUrl: string;
+}

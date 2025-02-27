@@ -5,6 +5,8 @@ import { ProductImageInterface } from "@/share/interfaces/productImageInterface"
 import BoxIcon from "@/icons/BoxIcon";
 import { useState } from "react";
 
+const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
+
 function ProductDetailsImages({ productId }: { productId: string }) {
   const {
     data: productImagesData,
@@ -12,7 +14,7 @@ function ProductDetailsImages({ productId }: { productId: string }) {
     isError: hasProductImagesError,
   } = useGetProductImages(productId);
 
-  const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
+
   const productImages = productImagesData?.productImages || [];
 
   const getInitialSelectedImage = (images: ProductImageInterface[]) => {
@@ -40,7 +42,7 @@ function ProductDetailsImages({ productId }: { productId: string }) {
 
   return (
     <div className="px-5 pt-5 sm:flex sm:justify-center sm:gap-x-10 md:justify-center md:items-center md:col-start-1 md:col-end-3">
-      <div className="flex justify-center items-center p-3 mb-3 bg-secondaryColor sm:order-2">
+      <div className="flex items-center justify-center p-3 mb-3 bg-secondaryColor sm:order-2">
         {selectedImage ? (
           <img
             src={backendDomain + selectedImage.imageUrl}
@@ -60,7 +62,7 @@ function ProductDetailsImages({ productId }: { productId: string }) {
                 key={productImageId}
                 src={backendDomain + imageUrl}
                 alt="Imagen secundaria"
-                className="border border-gray-500 size-20 cursor-pointer"
+                className="border border-gray-500 cursor-pointer size-20"
                 onClick={() => setSelectedImage({ imageId: productImageId, imageUrl })}
               />
             ))}
