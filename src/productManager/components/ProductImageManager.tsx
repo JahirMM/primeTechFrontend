@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useEffect, useState, useRef } from "react";
 import { useUploadProductImage } from "@/share/hook/useUploadProductImage";
@@ -12,6 +12,7 @@ interface ProductImageManagerProps {
   productId?: string;
   images: ImageObjectInterface[];
   setImages: (images: ImageObjectInterface[]) => void;
+  isDisabled: boolean;
 }
 
 const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
@@ -20,6 +21,7 @@ function ProductImageManager({
   productId,
   images,
   setImages,
+  isDisabled
 }: ProductImageManagerProps) {
   const mutationUpload = useUploadProductImage();
   const mutationDeleteProductImage = useDeleteProductImage();
@@ -140,6 +142,7 @@ function ProductImageManager({
         ref={mainImageInputRef}
         className="hidden"
         onChange={(e) => handleAddImage(e, true)}
+        disabled={isDisabled}
       />
 
       {/* Lista de imágenes adicionales */}
@@ -185,6 +188,7 @@ function ProductImageManager({
               ref={additionalImageInputRef}
               className="hidden"
               onChange={(e) => handleAddImage(e, false)}
+              disabled={isDisabled}
             />
           </>
         )}

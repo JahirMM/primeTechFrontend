@@ -16,6 +16,7 @@ interface ProductPricingManagerProps {
   setDeviceType: React.Dispatch<
     React.SetStateAction<"mobile" | "laptop" | "other" | "">
   >;
+  isDisabled: boolean;
 }
 
 function ProductPricingManager({
@@ -23,6 +24,7 @@ function ProductPricingManager({
   setProductData,
   deviceType,
   setDeviceType,
+  isDisabled,
 }: ProductPricingManagerProps) {
   const onUpdate = useCallback(
     (field: keyof ProductData, value: string | number) => {
@@ -64,6 +66,7 @@ function ProductPricingManager({
           className="p-1 border border-black rounded-lg"
           value={deviceType}
           onChange={handleDeviceTypeChange}
+          disabled={isDisabled}
         >
           <option value="">Seleccionar</option>
           <option value="mobile">Móvil</option>
@@ -79,6 +82,7 @@ function ProductPricingManager({
             className="p-1 border border-black rounded-lg"
             value={productData.category}
             onChange={(e) => onUpdate("category", e.target.value)}
+            disabled={isDisabled}
           >
             <option value="celular">Celular</option>
             <option value="tablet">Tablet</option>
@@ -101,8 +105,11 @@ function ProductPricingManager({
             className="w-full px-3 py-2 text-sm border border-black rounded-lg"
             value={productData.brand}
             onChange={(e) => handleBrandChange(e.target.value)}
+            disabled={isDisabled}
           />
-          <span className="block text-sm text-right text-gray-400">caracteres {productData.brand.length}/50</span>
+          <span className="block text-sm text-right text-gray-400">
+            caracteres {productData.brand.length}/50
+          </span>
         </div>
       </div>
 
@@ -113,6 +120,7 @@ function ProductPricingManager({
           className="px-3 py-2 text-sm border border-black rounded-lg"
           value={productData.price === 0 ? "" : productData.price}
           onChange={(e) => onUpdate("price", e.target.value)}
+          disabled={isDisabled}
         />
       </div>
 
@@ -124,6 +132,7 @@ function ProductPricingManager({
           className="px-3 py-2 text-sm border border-black rounded-lg"
           value={productData.stock === 0 ? "" : productData.stock}
           onChange={(e) => onUpdate("stock", e.target.value)}
+          disabled={isDisabled}
         />
       </div>
     </div>

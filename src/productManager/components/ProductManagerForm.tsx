@@ -35,6 +35,7 @@ function ProductManagerForm({
   const mutationUploadProductImages = useUploadProductImage();
 
   const [images, setImages] = useState<ImageObjectInterface[]>([]);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const [productData, setProductData] = useState<ProductRequestInterface>({
     name: productDetails ? productDetails.product.name : "",
@@ -103,6 +104,7 @@ function ProductManagerForm({
         );
 
         setProductId(productResponse.productId);
+        setIsDisabled(true);
       } catch (error) {
         return;
       }
@@ -136,16 +138,19 @@ function ProductManagerForm({
         productId={productId}
         images={images}
         setImages={setImages}
+        isDisabled={isDisabled}
       />
       <ProductDetailsManager
         productData={productData}
         setProductData={setProductData}
+        isDisabled={isDisabled}
       />
       <ProductPricingManager
         productData={productData}
         setProductData={setProductData}
         deviceType={deviceType}
         setDeviceType={setDeviceType}
+        isDisabled={isDisabled}
       />
       {!productId && (
         <button
