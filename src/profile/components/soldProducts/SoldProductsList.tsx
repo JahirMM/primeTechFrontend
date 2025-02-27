@@ -16,6 +16,11 @@ function SoldProductsList() {
   const { data: userInformation } = useGetUserInformation();
   const { data, isLoading, isError } = useSoldProduct();
 
+  
+  if (isLoading) {
+    return <ProfileProductListSkeleton />;
+  }
+  
   if (userInformation) {
     if (!userInformation.user.roleNames.includes("seller")) {
       return (
@@ -27,11 +32,7 @@ function SoldProductsList() {
       );
     }
   }
-
-  if (isLoading) {
-    return <ProfileProductListSkeleton />;
-  }
-
+  
   if (isError)
     return (
       <ErrorMessage
@@ -66,7 +67,7 @@ function SoldProductsList() {
           title="No has vendido ningún producto todavía"
           message="Parece que aún no has realizado ninguna venta. ¡Publica tus productos y empieza a vender ahora!"
           buttonText="Agregar Producto"
-          buttonLink="/add-product"
+          buttonLink="/profile/add-product"
         />
       )}
     </div>

@@ -43,7 +43,7 @@ function SimCardFeaturesManager({
   productId,
 }: {
   mobileDeviceId: string;
-  productId: string | undefined
+  productId: string | undefined;
 }) {
   const simCardResponse = productId ? useGetSimCard(productId) : null;
   const mutationAddSimCard = useAddSimCard();
@@ -84,10 +84,6 @@ function SimCardFeaturesManager({
 
   useEffect(() => {
     if (simCardResponse?.data) {
-      console.log(
-        "Se obtuvo la información del SIM Card:",
-        simCardResponse.data
-      );
       setSimCard(parseSimCardData(simCardResponse.data));
     }
   }, [simCardResponse?.data]);

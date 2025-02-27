@@ -31,7 +31,6 @@ function ProductManagerPage({
   useEffect(() => {
     if (productDetails) {
       setProductId(productDetails.product.productId);
-      console.log(productDetails.product.deviceType);
       
       setDeviceType(
         ["mobile", "laptop", "other"].includes(

@@ -13,10 +13,14 @@ import Link from "next/link";
 
 function UserProductsList() {
   const { data: userInformation } = useGetUserInformation();
-  const { data, isLoading, isError } = useGetUserProducts();
+  const isSeller = !!userInformation?.user.roleNames.includes("seller");
+
+  const { data, isLoading, isError } = useGetUserProducts(isSeller);
+
+  if (isLoading) return <ProfileProductListSkeleton />;
 
   if (userInformation) {
-    if (!userInformation.user.roleNames.includes("seller")) {
+    if (!isSeller) {
       return (
         <NotSellerMessage
           title="Convierte tu Pasión en Ventas"
@@ -26,8 +30,6 @@ function UserProductsList() {
       );
     }
   }
-
-  if (isLoading) return <ProfileProductListSkeleton />;
 
   if (isError)
     return (
@@ -61,7 +63,7 @@ function UserProductsList() {
           title="No has publicado ningún producto todavía"
           message="Parece que aún no has añadido productos. ¡Empieza a vender ahora!"
           buttonText="Agregar Producto"
-          buttonLink="/add-product"
+          buttonLink="/profile/add-product"
         />
       )}
     </div>

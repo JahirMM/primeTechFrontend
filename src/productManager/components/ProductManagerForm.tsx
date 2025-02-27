@@ -53,8 +53,6 @@ function ProductManagerForm({
       : "",
   });
 
-  console.log(productData);
-
   const handleSaveProduct = async () => {
     if (
       !productData.name ||

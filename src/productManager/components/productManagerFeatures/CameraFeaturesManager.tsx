@@ -60,8 +60,6 @@ function CameraFeaturesManager({
     value: string
   ) => {
     if (numericFields.includes(field) && Number(value) < 0) {
-      console.log("PERRO");
-
       setCameras((prevCameras) =>
         prevCameras.map((cam) =>
           cam.cameraId === cameraId ? { ...cam, [field]: "" } : cam

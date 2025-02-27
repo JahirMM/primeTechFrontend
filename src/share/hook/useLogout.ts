@@ -12,12 +12,10 @@ export function uselogout() {
   const mutationlogout = useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      console.log("PERRRORO");
       store.logout();
       router.push("/");
     },
     onError: () => {
-      console.log("PERRRORO");
       store.logout();
       router.push("/");
     },
