@@ -1,8 +1,13 @@
 "use client";
 
+import ProductManagerPageSkeleton from "@/share/skeletons/ProductManagerPageSkeleton";
+
 import { useGetProductDetails } from "@/productDetails/hook/useGetProductDetails";
+
 import ProductManagerPage from "@/productManager/components/ProductManagerPage";
+
 import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
+
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -23,13 +28,10 @@ function Page() {
     }
   }, [isNotFound, router]);
 
-  if (productDetailsLoading) {
-    return <div>cargando...</div>;
+  if (productDetailsLoading || isNotFound) {
+    return <ProductManagerPageSkeleton />;
   }
 
-  if (isNotFound) {
-    return <div>Redirigiendo a página no encontrada...</div>;
-  }
   return (
     <ProductManagerPage
       productIdFromUrl={productIdFromUrl}
