@@ -11,20 +11,16 @@ import ProductCameraFeatures from "@/productDetails/components/features/ProductC
 import { useGetProductDetails } from "@/productDetails/hook/useGetProductDetails";
 
 import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
-import ChevronIcon from "@/icons/ChevronIcon";
 
 function ProductFeatures() {
-  const [showFeatures, setShowFeatures] = useState(false);
   const [productId] = useState(getProductIdFromUrl());
 
   if (!productId) {
     return <div>No se encontró un productId</div>;
   }
 
-  const {
-    data: productDetailsData,
-    isLoading: isProductLoading,
-  } = useGetProductDetails(productId);
+  const { data: productDetailsData, isLoading: isProductLoading } =
+    useGetProductDetails(productId);
 
   if (isProductLoading) {
     return (
@@ -42,41 +38,28 @@ function ProductFeatures() {
 
   return (
     <section>
-      <div
-        className={`flex items-center gap-3 px-5 mt-3 ${showFeatures ? "hidden" : "mb-3"}`}
-        onClick={() => setShowFeatures(!showFeatures)}
-      >
-        <span className="text-sm font-bold cursor-pointer text-primaryColor">Ver todas las características</span>
-        <ChevronIcon
-          className={`size-3 transition-transform duration-700 ease-linear cursor-pointer ${
-            showFeatures ? "rotate-90" : " rotate-0"
-          }`}
+      <div className="grid grid-cols-2 px-5 py-3 mt-10 gap-x-3 gap-y-8 sm:gap-x-40 sm:gap-y-16">
+        <ProductGeneralFeatures
+          productId={productId}
+          deviceType={productDetailsData.product.deviceType}
         />
+        {(productDetailsData.product.deviceType === "mobile" ||
+          productDetailsData.product.deviceType === "laptop") && (
+          <>
+            <ProductScreenFeatures productId={productId} />
+            <ProductBatteryFeatures productId={productId} />
+          </>
+        )}
+
+        {productDetailsData.product.deviceType === "mobile" && (
+          <ProductSimCardFeatures productId={productId} />
+        )}
+
+        {(productDetailsData.product.deviceType === "mobile" ||
+          productDetailsData.product.deviceType === "laptop") && (
+          <ProductCameraFeatures productId={productId} />
+        )}
       </div>
-      {showFeatures && (
-        <div className="grid grid-cols-2 px-5 py-3 mt-10 gap-x-3 gap-y-8 sm:gap-x-40 sm:gap-y-16">
-          <ProductGeneralFeatures
-            productId={productId}
-            deviceType={productDetailsData.product.deviceType}
-          />
-          {(productDetailsData.product.deviceType === "mobile" ||
-            productDetailsData.product.deviceType === "laptop") && (
-            <>
-              <ProductScreenFeatures productId={productId} />
-              <ProductBatteryFeatures productId={productId} />
-            </>
-          )}
-
-          {productDetailsData.product.deviceType === "mobile" && (
-            <ProductSimCardFeatures productId={productId} />
-          )}
-
-          {(productDetailsData.product.deviceType === "mobile" ||
-            productDetailsData.product.deviceType === "laptop") && (
-            <ProductCameraFeatures productId={productId} />
-          )}
-        </div>
-      )}
     </section>
   );
 }
