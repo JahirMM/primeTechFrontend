@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState, useRef } from "react";
 import { useUploadProductImage } from "@/share/hook/useUploadProductImage";
 import { ImageObjectInterface } from "@/addProduct/interfaces/imageObjectInterface";

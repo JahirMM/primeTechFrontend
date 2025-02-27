@@ -39,37 +39,40 @@ function ProfileNav() {
         />
       </div>
       <nav
-          className={`overflow-hidden transition-all duration-500 ease-in-out ${
-            showMenu ? "mt-4 max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-          } sm:max-h-none sm:opacity-100`}
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          showMenu ? "mt-4 max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+        } sm:max-h-none sm:opacity-100`}
       >
         <ul className="flex flex-col w-full gap-y-8">
-          {menuItems.map(({ url, label, Icon }) => (
-            <li
-              key={label}
-              className="flex px-3 group sm:px-0"
-            >
-              <span className="hidden w-1 mr-2 sm:block group-hover:bg-primaryColor"></span>
-              <Link
-                href={url}
-                className="flex items-center gap-x-3"
-                onClick={() => setShowMenu(false)}
-              >
-                <Icon
-                  className={`size-7 ${
-                    pathname === url ? "text-gray-900" : "text-gray-600"
-                  }`}
-                />
-                <span
-                  className={`text-sm ${
-                    pathname === url ? "font-bold" : "font-normal"
-                  }`}
+          {menuItems.map(({ url, label, Icon }) => {
+            const isActive =
+              pathname === url ||
+              (url === "/profile/my-products" &&
+                pathname.startsWith("/profile/my-products/"));
+            return (
+              <li key={label} className="flex px-3 group sm:px-0">
+                <span className="hidden w-1 mr-2 sm:block group-hover:bg-primaryColor"></span>
+                <Link
+                  href={url}
+                  className="flex items-center gap-x-3"
+                  onClick={() => setShowMenu(false)}
                 >
-                  {label}
-                </span>
-              </Link>
-            </li>
-          ))}
+                  <Icon
+                    className={`size-7 ${
+                      isActive ? "text-gray-900" : "text-gray-600"
+                    }`}
+                  />
+                  <span
+                    className={`text-sm ${
+                      isActive ? "font-bold" : "font-normal"
+                    }`}
+                  >
+                    {label}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </section>
