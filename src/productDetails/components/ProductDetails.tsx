@@ -1,30 +1,22 @@
-"use client";
-
-import { useGetProductDetails } from "@/productDetails/hook/useGetProductDetails";
 import { useGetAverageRating } from "@/share/hook/useGetAverageRating";
+
+import { GetProductDetailsResponseInterface } from "@/productDetails/interfaces/getProductDetailsResponseInterface";
 
 import ProductDetailsNameAndRating from "@/productDetails/components/ProductDetailsNameAndRating";
 import ProductDetailsCartControls from "@/productDetails/components/ProductDetailsCartControls";
 import ProductDetailsSellerInfo from "@/productDetails/components/ProductDetailsSellerInfo";
 import ProductDetailsImages from "@/productDetails/components/ProductDetailsImages";
 
-import ProductDetailsSkeleton from "@/productDetails/skeletons/ProductDetailsSkeleton";
 
-import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
+interface ProductDetailsProps {
+  productDetailsData: GetProductDetailsResponseInterface | undefined;
+  productId: string;
+}
 
-function ProductDetails() {
-  const productId = getProductIdFromUrl();
-
-  if (!productId) {
-    return <div>No se encontró un productId</div>;
-  }
-
-  const {
-    data: productDetailsData,
-    isLoading: isProductLoading,
-    isError: hasProductError,
-  } = useGetProductDetails(productId);
-
+function ProductDetails({
+  productDetailsData,
+  productId,
+}: ProductDetailsProps) {
   const {
     data: averageRatingData,
     isLoading: isAverageRatingLoading,
@@ -36,37 +28,31 @@ function ProductDetails() {
       <ProductDetailsImages productId={productId} />
 
       <div className="md:col-start-3 md:col-end-5 md:grid md:grid-cols-1 md:content-center md:gap-y-5 md:max-w-[85%]">
-        {isAverageRatingLoading && isProductLoading ? (
-          <ProductDetailsSkeleton />
-        ) : hasProductError ? (
-          <div>Error en la carga de los detalles del producto</div>
-        ) : (
-          productDetailsData && (
-            <>
-              <ProductDetailsNameAndRating
-                averageRating={
-                  hasAverageRatingError
-                    ? 0
-                    : averageRatingData?.averageRating || 0
-                }
-                deviceType={productDetailsData.product.deviceType}
-                productName={productDetailsData.product.name}
-                productPrice={productDetailsData.product.price}
-              />
+        {productDetailsData && (
+          <>
+            <ProductDetailsNameAndRating
+              averageRating={
+                hasAverageRatingError
+                  ? 0
+                  : averageRatingData?.averageRating || 0
+              }
+              deviceType={productDetailsData.product.deviceType}
+              productName={productDetailsData.product.name}
+              productPrice={productDetailsData.product.price}
+            />
 
-              <ProductDetailsSellerInfo
-                sellerId={productDetailsData.product.sellerId}
-              />
-              <ProductDetailsCartControls
-                productId={productId}
-                stock={productDetailsData.product.stock}
-              />
+            <ProductDetailsSellerInfo
+              sellerId={productDetailsData.product.sellerId}
+            />
+            <ProductDetailsCartControls
+              productId={productId}
+              stock={productDetailsData.product.stock}
+            />
 
-              <div className="px-5 mt-5 text-sm text-pretty md:mt-0 md:row-start-2 md:row-end-3">
-                {productDetailsData.product.description}
-              </div>
-            </>
-          )
+            <div className="px-5 mt-5 text-sm text-pretty md:mt-0 md:row-start-2 md:row-end-3">
+              {productDetailsData.product.description}
+            </div>
+          </>
         )}
       </div>
     </section>

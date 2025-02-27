@@ -24,7 +24,6 @@ function ProductFeatures() {
   const {
     data: productDetailsData,
     isLoading: isProductLoading,
-    isError: hasProductError,
   } = useGetProductDetails(productId);
 
   if (isProductLoading) {
@@ -35,10 +34,6 @@ function ProductFeatures() {
         </div>
       </div>
     );
-  }
-
-  if (hasProductError) {
-    return <div>Error</div>;
   }
 
   if (!productDetailsData || !productDetailsData.product) {
