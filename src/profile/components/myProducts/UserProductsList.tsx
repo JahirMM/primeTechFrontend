@@ -4,6 +4,7 @@ import EmptyStateMessage from "@/profile/components/EmptyStateMessage";
 import UserProduct from "@/profile/components/myProducts/UserProduct";
 import NotSellerMessage from "@/profile/components/NotSellerMessage";
 import ErrorMessage from "@/profile/components/ErrorMessage";
+import OfferActions from "@/offer/components/OfferActions";
 
 import ProfileProductListSkeleton from "@/profile/skeletons/ProfileProductListSkeleton";
 import { useGetUserProducts } from "@/profile/hook/useGetUserProducts";
@@ -12,8 +13,7 @@ import { useGetUserInformation } from "@/share/hook/useGetUserInformation";
 import Link from "next/link";
 
 function UserProductsList() {
-  const { data: userInformation, isLoading: isLoadingUser } =
-    useGetUserInformation();
+  const { data: userInformation } = useGetUserInformation();
   const isSeller = !!userInformation?.user.roleNames.includes("seller");
 
   const { data, isLoading, isError } = useGetUserProducts(isSeller);
@@ -51,12 +51,15 @@ function UserProductsList() {
               key={product.productId}
             >
               <UserProduct product={product} />
-              <Link
-                href={`/profile/my-products/${product.productId}`}
-                className="px-3 py-2 text-xs text-center text-white rounded-lg bg-primaryColor"
-              >
-                Editar información
-              </Link>
+              <div className="flex flex-col gap-3">
+                <Link
+                  href={`/profile/my-products/${product.productId}`}
+                  className="px-3 py-2 text-xs text-center transition-colors duration-300 border border-black rounded-lg hover:text-white hover:bg-primaryColor hover:border-primaryColor"
+                >
+                  Editar información
+                </Link>
+                <OfferActions productId={product.productId} />
+              </div>
             </article>
           ))
         : isSeller && (
