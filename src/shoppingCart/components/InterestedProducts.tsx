@@ -1,19 +1,25 @@
-import { useEffect, useState } from "react";
 import Link from "next/link";
 
-import { Product } from "@/share/interfaces/productInterface";
+import { useGetRecentProducts } from "@/share/hook/useGetRecentProducts";
+import { useAuthStore } from "@/share/hook/store/useAuth";
 
+import AuthMessageBox from "@/share/components/AuthMessageBox";
 import ProductItem from "@/share/components/ProductItem";
 
 function InterestedProducts() {
-  const [listRecentProducts, setListRecentProducts] = useState<Product[]>([]);
+  const { isAuthenticated } = useAuthStore();
+  const { data: listRecentProducts, isLoading: recentProductsLoading } =
+    useGetRecentProducts(isAuthenticated);
 
-  useEffect(() => {
-    const recentProducts = JSON.parse(
-      localStorage.getItem("recentProducts") || "[]"
+  if (!isAuthenticated) {
+    return (
+      <AuthMessageBox className="mt-20 bg-sectionColor flex flex-col justify-center items-center" />
     );
-    setListRecentProducts(recentProducts);
-  }, []);
+  }
+
+  if (recentProductsLoading) {
+    return <div>cargando</div>;
+  }
 
   return (
     <section className="mt-20">
@@ -22,16 +28,40 @@ function InterestedProducts() {
         className="flex w-full gap-5 overflow-auto"
         aria-label="Lista de productos recientes"
       >
-        {listRecentProducts.length > 0 ? (
-          listRecentProducts.map((product: Product) => (
-            <li key={product.productId}>
-              <ProductItem
-                classContainer="mb-3 min-h-[252px] min-w-[216px] max-h-[252px] max-w-[216px]"
-                product={product}
-                isFavorite={false}
-              />
-            </li>
-          ))
+        {listRecentProducts && listRecentProducts.length > 0 ? (
+          listRecentProducts.map(
+            ({
+              productId,
+              name,
+              brand,
+              price,
+              imageUrl,
+              activeOffer,
+              averageRating,
+              discountPercentage,
+            }) => {
+              const product = {
+                productId,
+                name,
+                brand,
+                price,
+                image: imageUrl,
+                averageRating,
+                activeOffer,
+                discountPercentage,
+              };
+
+              return (
+                <li key={productId}>
+                  <ProductItem
+                    classContainer="mb-3 min-h-[252px] min-w-[216px] max-h-[252px] max-w-[216px]"
+                    product={product}
+                    isFavorite={false}
+                  />
+                </li>
+              );
+            }
+          )
         ) : (
           <li className="w-full">
             <article className="min-h-[252px] flex flex-col items-center justify-center w-full p-3">

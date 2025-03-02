@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 
-import useRecentProducts from "@/share/hook/useRecentProducts";
+import { useAddRecentProduct } from "@/share/hook/useAddRecentProduct";
 
 import ProductActionButtons from "@/share/components/ProductActionButtons";
 
@@ -9,6 +9,7 @@ import { splitPrice } from "@/share/utils/priceUtils";
 
 import StarIcon from "@/icons/StarIcon";
 import BoxIcon from "@/icons/BoxIcon";
+import { useAuthStore } from "../hook/store/useAuth";
 
 interface ProductItemInterface {
   isFavorite: boolean;
@@ -34,11 +35,18 @@ const ProductItem = ({
   product,
 }: ProductItemInterface) => {
   const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
 
-  const { addProductToRecent } = useRecentProducts();
+  const mutationAddRecentProduct = useAddRecentProduct();
 
   const handleViewProductDetails = async () => {
-    await addProductToRecent(product);
+    try {
+      if (isAuthenticated) {
+        await mutationAddRecentProduct.mutateAsync(product.productId);
+      }
+    } catch (error) {
+      return;
+    }
     router.push(`/products/${product.productId}`);
   };
 
