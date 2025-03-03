@@ -1,5 +1,9 @@
-import { useCartPriceStore } from "@/share/hook/store/useShoppingCart";
+import { ProductPurchaseRequestInterface } from "@/shoppingCart/interfaces/productPurchaseRequestInterface";
 import { ProductInCart } from "@/shoppingCart/interfaces/ProductInCardInterface";
+
+import { useCartPriceStore } from "@/share/hook/store/useShoppingCart";
+import { useAddPurchasedProducts } from "../hook/useAddPurchasedProducts";
+import { useDeleteProductFromShoppingCart } from "../hook/useDeleteProductFromShoppingCart";
 
 interface PurchaseSummaryProps {
   cartIsEmpty: boolean;
@@ -10,12 +14,43 @@ function PurchaseSummary({
   cartIsEmpty,
   productsInCart,
 }: PurchaseSummaryProps) {
-  const {getTotalPrice} = useCartPriceStore();
+  const mutationAddPurchasedProducts = useAddPurchasedProducts();
+  const mutationDeleteProductFromShoppingCart =
+    useDeleteProductFromShoppingCart();
+
+  const { getTotalPrice } = useCartPriceStore();
 
   const shippingCost = 3000;
   const totalPrice = getTotalPrice() + shippingCost;
-  
-  
+
+  const buyProducts = async () => {
+    console.log(productsInCart);
+    const shoppingList: ProductPurchaseRequestInterface[] = productsInCart.map(
+      (product) => {
+        return {
+          productId: product.productId,
+          purchaseQuantity: product.quantity,
+        };
+      }
+    );
+    try {
+      await mutationAddPurchasedProducts.mutateAsync(shoppingList);
+    } catch (error) {
+      return;
+    }
+
+    try {
+      for (const product of shoppingList) {
+        await mutationDeleteProductFromShoppingCart.mutateAsync(
+          product.productId
+        );
+      }
+    } catch (error) {
+      return;
+    }
+    console.log(shoppingList);
+  };
+
   return (
     <article className="p-3 bg-white shadow-md rounded-xl lg:col-start-3 lg:col-end-4 lg:max-h-[240px]">
       <p className="py-4 text-sm font-semibold border-b border-gray-300">
@@ -39,7 +74,10 @@ function PurchaseSummary({
             <span>Total</span>
             <span>${totalPrice}</span>
           </div>
-          <button className="w-full px-4 py-2 mt-3 text-white uppercase rounded-xl bg-primaryColor">
+          <button
+            className="w-full px-4 py-2 mt-3 text-white uppercase rounded-xl bg-primaryColor"
+            onClick={() => buyProducts()}
+          >
             Comprar
           </button>
         </div>

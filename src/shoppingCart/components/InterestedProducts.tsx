@@ -13,7 +13,7 @@ function InterestedProducts() {
 
   if (!isAuthenticated) {
     return (
-      <AuthMessageBox className="mt-20 bg-sectionColor flex flex-col justify-center items-center" />
+      <AuthMessageBox className="mt-20 flex flex-col justify-center items-center" />
     );
   }
 
