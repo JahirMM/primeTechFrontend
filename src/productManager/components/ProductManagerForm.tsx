@@ -72,7 +72,7 @@ function ProductManagerForm({
 
     const categoryMap: Record<string, string> = {
       celular: "cellular",
-      otro: "other",
+      other: "other",
       tablet: "tablet",
       laptop: "laptop",
     };
