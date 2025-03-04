@@ -42,7 +42,11 @@ function Page() {
   }
 
   if (isNotFound) {
-    return <div>Redirigiendo a página no encontrada...</div>;
+    return (
+      <section className="mt-[58px] min-h-[calc(100vh-58px)] bg-red-400 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-white"></div>
+      </section>
+    );
   }
 
   return (
