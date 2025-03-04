@@ -12,12 +12,18 @@ function ProductManagerFeatures({
 }) {
   return (
     <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
-      <ScreenFeaturesManager productId={productId} />
-      <BatteryFeaturesManager productId={productId} />
+      {deviceType !== "other" && (
+        <>
+          <ScreenFeaturesManager productId={productId} />
+          <BatteryFeaturesManager productId={productId} />
+        </>
+      )}
 
       <GeneralFeaturesManager deviceType={deviceType} productId={productId} />
 
-      <CameraFeaturesManager productId={productId} deviceType={deviceType}/>
+      {deviceType !== "other" && (
+        <CameraFeaturesManager productId={productId} deviceType={deviceType} />
+      )}
     </div>
   );
 }

@@ -19,14 +19,19 @@ function GeneralFeaturesManager({
       {deviceType === "laptop" ? (
         <LaptopFeaturesManager productId={productId} />
       ) : (
-        <MobileDeviceFeaturesManager
-          productId={productId}
-          setMobileDeviceId={setMobileDeviceId}
-        />
+        deviceType !== "other" && (
+          <MobileDeviceFeaturesManager
+            productId={productId}
+            setMobileDeviceId={setMobileDeviceId}
+          />
+        )
       )}
 
       {deviceType === "mobile" && mobileDeviceId && (
-        <SimCardFeaturesManager mobileDeviceId={mobileDeviceId} productId={productId} />
+        <SimCardFeaturesManager
+          mobileDeviceId={mobileDeviceId}
+          productId={productId}
+        />
       )}
     </>
   );

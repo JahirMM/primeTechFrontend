@@ -22,8 +22,9 @@ export function useUploadProductImage() {
         duration: 2000,
         style: { backgroundColor: "#1F5A54", color: "white" },
       });
+      queryClient.invalidateQueries({ queryKey: ["productImages"], exact: false });
       queryClient.invalidateQueries({ queryKey: ["productImages", productId] });
-
+      queryClient.invalidateQueries({ queryKey: ["userProducts"], exact: false });
       queryClient.invalidateQueries({ queryKey: ["products"], exact: false });
     },
     onError: (error: AxiosError<ErrorResponseInterface>) => {
