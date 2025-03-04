@@ -7,6 +7,7 @@ import ErrorMessage from "@/profile/components/ErrorMessage";
 import OfferActions from "@/offer/components/OfferActions";
 
 import ProfileProductListSkeleton from "@/profile/skeletons/ProfileProductListSkeleton";
+import { useDeleteUserProduct } from "@/profile/hook/useDeleteUserProduct";
 import { useGetUserProducts } from "@/profile/hook/useGetUserProducts";
 
 import { useGetUserInformation } from "@/share/hook/useGetUserInformation";
@@ -17,6 +18,7 @@ function UserProductsList() {
   const isSeller = !!userInformation?.user.roleNames.includes("seller");
 
   const { data, isLoading, isError } = useGetUserProducts(isSeller);
+  const mutationDeleteUserProduct = useDeleteUserProduct();
 
   if (isLoading) return <ProfileProductListSkeleton />;
 
@@ -42,6 +44,10 @@ function UserProductsList() {
       />
     );
 
+  const deleteUserProduct = (productId: string) => {
+    mutationDeleteUserProduct.mutate(productId);
+  };
+
   return (
     <div className="flex flex-col gap-y-20">
       {data && data.product && data.product.length > 0
@@ -59,6 +65,12 @@ function UserProductsList() {
                   Editar información
                 </Link>
                 <OfferActions productId={product.productId} />
+                <button
+                  className="px-3 py-2 text-xs transition-colors duration-300 border border-black rounded-lg hover:border-red-500 hover:bg-red-500 hover:text-white"
+                  onClick={() => deleteUserProduct(product.productId)}
+                >
+                  Eliminar
+                </button>
               </div>
             </article>
           ))

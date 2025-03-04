@@ -24,6 +24,7 @@ export function useUpdateProduct() {
         style: { backgroundColor: "#1F5A54", color: "white" },
       });
       queryClient.invalidateQueries({ queryKey: ["productDetails"] });
+      queryClient.invalidateQueries({ queryKey: ["userProducts"] });
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: (error: AxiosError<ErrorResponseInterface>) => {

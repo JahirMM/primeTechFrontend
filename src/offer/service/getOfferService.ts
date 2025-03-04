@@ -3,17 +3,20 @@ import { getInitialApi } from "@/share/hook/useInitialApi";
 
 const initialApi = getInitialApi();
 
+export const getProductOfferStatus = async (
+  productId: string
+): Promise<{ hasProductOffer: boolean }> => {
+  const response = await initialApi.get(`/offers/${productId}/offer-status`);
+  return response.data;
+};
+
 export const getOffer = async (
   productId: string
 ): Promise<GetOfferResponseInterface | null> => {
-  try {
+  const { hasProductOffer } = await getProductOfferStatus(productId);
+  if (hasProductOffer) {
     const response = await initialApi.get(`/offers/${productId}`);
     return response.data;
-  } catch (error: any) {
-    if (error.response && error.response.status === 404) {
-      console.error = () => {};
-      return null;
-    }
-    throw error;
   }
+  return null;
 };
