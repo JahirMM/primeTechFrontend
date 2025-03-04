@@ -24,6 +24,7 @@ export function useAddCamera() {
         style: { backgroundColor: "#1F5A54", color: "white" },
       });
       queryClient.invalidateQueries({ queryKey: ["cameraInformation"] });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: (error: AxiosError<ErrorResponseInterface>) => {
       toast.error(error.message, {
