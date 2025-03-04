@@ -23,6 +23,7 @@ export function useUpdateProduct() {
         duration: 2000,
         style: { backgroundColor: "#1F5A54", color: "white" },
       });
+      queryClient.invalidateQueries({ queryKey: ["cameraInformation"] });
       queryClient.invalidateQueries({ queryKey: ["productDetails"] });
       queryClient.invalidateQueries({ queryKey: ["userProducts"] });
       queryClient.invalidateQueries({ queryKey: ["products"] });
