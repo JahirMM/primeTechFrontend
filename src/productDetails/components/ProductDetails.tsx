@@ -7,7 +7,6 @@ import ProductDetailsCartControls from "@/productDetails/components/ProductDetai
 import ProductDetailsSellerInfo from "@/productDetails/components/ProductDetailsSellerInfo";
 import ProductDetailsImages from "@/productDetails/components/ProductDetailsImages";
 
-
 interface ProductDetailsProps {
   productDetailsData: GetProductDetailsResponseInterface | undefined;
   productId: string;
@@ -39,6 +38,7 @@ function ProductDetails({
               deviceType={productDetailsData.product.deviceType}
               productName={productDetailsData.product.name}
               productPrice={productDetailsData.product.price}
+              productId={productId}
             />
 
             <ProductDetailsSellerInfo

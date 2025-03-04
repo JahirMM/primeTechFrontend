@@ -24,7 +24,6 @@ function PurchaseSummary({
   const totalPrice = getTotalPrice() + shippingCost;
 
   const buyProducts = async () => {
-    console.log(productsInCart);
     const shoppingList: ProductPurchaseRequestInterface[] = productsInCart.map(
       (product) => {
         return {
@@ -48,7 +47,6 @@ function PurchaseSummary({
     } catch (error) {
       return;
     }
-    console.log(shoppingList);
   };
 
   return (
