@@ -1,5 +1,4 @@
 import { SuccessResponseInterface } from "@/share/interfaces/successResponseInterface";
-import { UserImageInterface } from "@/profile/interfaces/userImageInterface";
 
 import { getInitialApi } from "@/share/hook/useInitialApi";
 import { GetUserImageResponseInterface } from "../interfaces/getUserImageResponseInterface";

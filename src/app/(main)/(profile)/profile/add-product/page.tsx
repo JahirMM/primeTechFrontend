@@ -14,13 +14,12 @@ import { useEffect } from "react";
 function Page() {
   const router = useRouter();
   const productIdFromUrl = getProductIdFromUrl();
+
   const {
     data: productDetails,
     isLoading: productDetailsLoading,
     isNotFound,
-  } = productIdFromUrl
-    ? useGetProductDetails(productIdFromUrl)
-    : { data: null };
+  } = useGetProductDetails(productIdFromUrl);
 
   useEffect(() => {
     if (isNotFound) {

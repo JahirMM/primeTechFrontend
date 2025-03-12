@@ -16,7 +16,7 @@ function ProductCameraFeatures({ productId }: { productId: string }) {
     <div className="col-start-1 col-end-3">
       <p className="mb-4 text-lg font-semibold">Cámaras</p>
       <div className="grid grid-cols-1 gap-x-3 sm:gap-y-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {data.camera.map((camera, index) => {
+        {data.camera.map((camera) => {
           const cameraData = {
             Tipo: camera.type,
             Resolución: camera.resolution,

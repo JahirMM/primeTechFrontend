@@ -1,27 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { GetProductDetailsResponseInterface } from "@/productDetails/interfaces/getProductDetailsResponseInterface";
-
 import { getProductDetails } from "@/productDetails/service/productDetailsService";
 
-export const useGetProductDetails = (productId: string) => {
+export const useGetProductDetails = (productId: string | null | undefined) => {
+  const isValidProductId = Boolean(
+    productId && /^[a-f0-9-]{36}$/.test(productId)
+  );
+
   const { data, isLoading, error } = useQuery<
     GetProductDetailsResponseInterface,
     any
   >({
     queryKey: ["productDetails", productId],
-    queryFn: () => getProductDetails(productId),
+    queryFn: isValidProductId
+      ? () => getProductDetails(productId as string)
+      : () => Promise.reject({ response: { status: 400 } }),
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
-    retry: (failureCount, error: any) => {
-      return ![400, 404].includes(error?.response?.status);
-    },
+    retry: false,
+    enabled: isValidProductId,
   });
 
   return {
     data,
     isLoading,
-    isNotFound:
-      error?.response?.status === 404 || error?.response?.status === 400,
+    isNotFound: !!error && [400, 404].includes(error?.response?.status),
   };
 };

@@ -10,50 +10,46 @@ import ReviewList from "@/review/components/ReviewList";
 import ProductDetailsSkeleton from "@/productDetails/skeletons/ProductDetailsSkeleton";
 
 import { useGetProductDetails } from "@/productDetails/hook/useGetProductDetails";
-
 import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
 
 function Page() {
   const router = useRouter();
   const productId = getProductIdFromUrl();
+  const isValidProductId = Boolean(
+    productId && /^[a-f0-9-]{36}$/.test(productId)
+  );
 
-  if (!productId) {
-    useEffect(() => {
+  useEffect(() => {
+    if (!isValidProductId) {
       router.replace("/not_found");
-    }, [router]);
-
-    return null;
-  }
+    }
+  }, [isValidProductId, router]);
 
   const {
     data: productDetailsData,
     isLoading: isProductLoading,
     isNotFound,
-  } = useGetProductDetails(productId);
+  } = useGetProductDetails(isValidProductId ? productId : null);
 
   useEffect(() => {
-    if (isNotFound || productId === undefined) {
+    if (isNotFound) {
       router.replace("/not_found");
     }
   }, [isNotFound, router]);
 
-  if (isProductLoading) {
-    return <ProductDetailsSkeleton />;
+  if (!isValidProductId || isNotFound) {
+    return null;
   }
 
-  if (isNotFound) {
-    return (
-      <section className="mt-[58px] min-h-[calc(100vh-58px)] bg-red-400 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-white"></div>
-      </section>
-    );
+  if (isProductLoading) {
+    return <ProductDetailsSkeleton />;
   }
 
   return (
     <>
       <ProductDetails
         productDetailsData={productDetailsData}
-        productId={productId}
+        productId={productId!}
       />
       <ProductFeatures />
       <ReviewList />

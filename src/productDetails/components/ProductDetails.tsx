@@ -16,11 +16,8 @@ function ProductDetails({
   productDetailsData,
   productId,
 }: ProductDetailsProps) {
-  const {
-    data: averageRatingData,
-    isLoading: isAverageRatingLoading,
-    isError: hasAverageRatingError,
-  } = useGetAverageRating(productId);
+  const { data: averageRatingData, isError: hasAverageRatingError } =
+    useGetAverageRating(productId);
 
   return (
     <section className="mt-[58px] min-h-[calc(100vh-58px)] md:grid md:grid-cols-4 md:justify-center md:w-[95%] md:mx-auto">

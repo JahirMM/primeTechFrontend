@@ -11,25 +11,24 @@ import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-function page() {
+function Page() {
   const router = useRouter();
   const productIdFromUrl = getProductIdFromUrl();
+
   const {
     data: productDetails,
     isLoading: productDetailsLoading,
     isNotFound,
-  } = productIdFromUrl
-    ? useGetProductDetails(productIdFromUrl)
-    : { data: null };
+  } = useGetProductDetails(productIdFromUrl);
 
   useEffect(() => {
     if (isNotFound || productIdFromUrl === undefined) {
       router.replace("/not_found");
     }
-  }, [isNotFound, router]);
+  }, [isNotFound, productIdFromUrl, router]);
 
   if (productDetailsLoading || isNotFound) {
-    return <ProductManagerPageSkeleton />
+    return <ProductManagerPageSkeleton />;
   }
 
   return (
@@ -40,4 +39,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
