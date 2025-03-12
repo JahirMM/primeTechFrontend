@@ -16,7 +16,7 @@ export async function middleware(request: Request) {
       await jwtVerify(jwt.value, secretKey);
 
       return NextResponse.next();
-    } catch (error) {
+    } catch {
       return NextResponse.redirect(new URL("/", request.url));
     }
   }

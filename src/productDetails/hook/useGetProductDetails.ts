@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { GetProductDetailsResponseInterface } from "@/productDetails/interfaces/getProductDetailsResponseInterface";
 import { getProductDetails } from "@/productDetails/service/productDetailsService";
+import { AxiosError } from "axios";
 
 export const useGetProductDetails = (productId: string | null | undefined) => {
   const isValidProductId = Boolean(
@@ -9,7 +10,7 @@ export const useGetProductDetails = (productId: string | null | undefined) => {
 
   const { data, isLoading, error } = useQuery<
     GetProductDetailsResponseInterface,
-    any
+    AxiosError<{ response: { status: number } }>
   >({
     queryKey: ["productDetails", productId],
     queryFn: isValidProductId
@@ -24,6 +25,9 @@ export const useGetProductDetails = (productId: string | null | undefined) => {
   return {
     data,
     isLoading,
-    isNotFound: !!error && [400, 404].includes(error?.response?.status),
+    isNotFound:
+      !!error &&
+      error?.response?.status != null &&
+      [400, 404].includes(error?.response?.status),
   };
 };
