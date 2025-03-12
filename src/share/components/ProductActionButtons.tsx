@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import HeartXmarkIcon from "@/icons/HeartXmarkIcon";
 import HeartPlusIcon from "@/icons/HeartPlusIcon";
@@ -22,8 +23,7 @@ function ProductActionButtons({
   const mutationDeleteFavoriteProduct = useDeleteFavoriteProduct();
   const mutationShoppingCart = useAddProductToShoppingCart();
 
-  const { initializeAuth } = useAuthStore();
-  const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
 
   const handleFavoriteProduct = (
     event: React.MouseEvent,
@@ -31,8 +31,11 @@ function ProductActionButtons({
   ) => {
     event.stopPropagation();
 
-    if (!initializeAuth) {
-      router.push("/login");
+    if (!isAuthenticated) {
+      toast.error("Por favor iniciar sesión", {
+        duration: 5000,
+        style: { backgroundColor: "#ad8908", color: "white" },
+      });
       return;
     }
 
@@ -48,6 +51,15 @@ function ProductActionButtons({
 
   const handleAddToCart = (event: React.MouseEvent) => {
     event.stopPropagation();
+
+    if (!isAuthenticated) {
+      toast.error("Por favor iniciar sesión", {
+        duration: 5000,
+        style: { backgroundColor: "#ad8908", color: "white" },
+      });
+      return;
+    }
+
     mutationShoppingCart.mutate({ productId: productId, quantity: 1 });
   };
 

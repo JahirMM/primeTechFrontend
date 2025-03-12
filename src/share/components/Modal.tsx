@@ -9,7 +9,7 @@ interface ModalProps {
 function Modal({ title, children, onClose }: ModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="p-6 bg-white rounded-lg shadow-lg w-[95%] sm:w-[50%] sm:ml-48">
+      <div className="p-6 bg-white rounded-lg shadow-lg w-[95%] mt-[90px] max-h-[85%] overflow-auto sm:mt-20 sm:w-[50%] sm:ml-48">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold">{title}</h2>
           <button

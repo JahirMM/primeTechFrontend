@@ -47,7 +47,7 @@ function ProductDetailsImages({ productId }: { productId: string }) {
           <img
             src={backendDomain + selectedImage.imageUrl}
             alt="Imagen principal"
-            className="w-64 h-64 bg-gray-100 md:w-[800px] md:h-[464px]"
+            className="w-64 h-96 bg-gray-100 sm:h-[500px] md:w-[500px] md:h-[500px]"
           />
         ) : (
           <BoxIcon className="text-gray-400 w-64 h-64 bg-gray-100 md:w-full md:h-[464px] p-10" />

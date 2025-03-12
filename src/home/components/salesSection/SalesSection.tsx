@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import HomeProductList from "@/home/components/HomeProductList";
 
@@ -23,7 +23,9 @@ function SalesSection() {
           <ArrowIcon className="size-4 text-white" />
         </button>
       </header>
-      <HomeProductList filter={{ onSale: true }} withBorder={true} />
+      <div className="md:max-w-[50%] lg:max-w-[80%] overflow-auto">
+        <HomeProductList filter={{ onSale: true }} withBorder={true} />
+      </div>
     </section>
   );
 }
