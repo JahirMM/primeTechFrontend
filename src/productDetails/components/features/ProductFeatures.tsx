@@ -15,12 +15,12 @@ import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
 function ProductFeatures() {
   const [productId] = useState(getProductIdFromUrl());
 
+  const { data: productDetailsData, isLoading: isProductLoading } =
+    useGetProductDetails(productId);
+
   if (!productId) {
     return <div>No se encontró un productId</div>;
   }
-
-  const { data: productDetailsData, isLoading: isProductLoading } =
-    useGetProductDetails(productId);
 
   if (isProductLoading) {
     return (
