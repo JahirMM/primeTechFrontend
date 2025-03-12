@@ -1,3 +1,3 @@
 import { ScreenInterface } from "@/share/interfaces/screenInterface";
 
-export interface AddScreenInterface extends Omit<ScreenInterface, "screenId"> {}
+export type AddScreenInterface = Omit<ScreenInterface, "screenId">;

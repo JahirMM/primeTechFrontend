@@ -1,5 +1,7 @@
 import { getInitialApi } from "@/share/hook/useInitialApi";
-import { SignUpResponseInterface } from "../interfaces/signUpResponseInterface";
+
+import { SignUpResponseInterface } from "@/auth/interfaces/signUpResponseInterface";
+import { SignUpDataInterface } from "@/auth/interfaces/signUpDataInterface";
 
 export const fetchSignUp = async (
   data: SignUpDataInterface

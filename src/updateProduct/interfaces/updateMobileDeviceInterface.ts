@@ -1,4 +1,6 @@
 import { MobileDeviceInterface } from "@/share/interfaces/mobileDeviceInterface";
 
-export interface UpdateMobileDeviceInterface
-  extends Omit<MobileDeviceInterface, "mobileDeviceid"> {}
+export type UpdateMobileDeviceInterface = Omit<
+  MobileDeviceInterface,
+  "mobileDeviceid"
+>;

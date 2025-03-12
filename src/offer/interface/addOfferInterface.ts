@@ -1,4 +1,6 @@
 import { OfferInterface } from "@/offer/interface/offerInterface";
 
-export interface AddOfferInterface
-  extends Omit<OfferInterface, "offerId" | "productId" | "active"> {}
+export type AddOfferInterface = Omit<
+  OfferInterface,
+  "offerId" | "productId" | "active"
+>;

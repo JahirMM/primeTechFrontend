@@ -1,4 +1,3 @@
 import { SimCardInterface } from "@/share/interfaces/simCardInterface";
 
-export interface AddSimCardInterface
-  extends Omit<SimCardInterface, "simCardId"> {}
+export type AddSimCardInterface = Omit<SimCardInterface, "simCardId">;

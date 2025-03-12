@@ -1,3 +1,3 @@
 import { LaptopInterface } from "@/share/interfaces/laptopInterface";
 
-export interface AddLaptopInterface extends Omit<LaptopInterface, "laptopId"> {}
+export type AddLaptopInterface = Omit<LaptopInterface, "laptopId">;
