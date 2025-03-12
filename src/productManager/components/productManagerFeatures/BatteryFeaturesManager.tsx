@@ -45,7 +45,7 @@ const batteryFields: BatteryField[] = [
 ];
 
 function BatteryFeaturesManager({ productId }: { productId: string }) {
-  const batteryResponse = productId ? useGetBattery(productId) : null;
+  const batteryResponse = useGetBattery(productId);
   const mutationAddBattery = useAddBattery();
   const mutationUpdateBattery = useUpdateBattery();
 
@@ -64,7 +64,7 @@ function BatteryFeaturesManager({ productId }: { productId: string }) {
     batteryData?: GetBatteryResponseInterface | null
   ) => {
     return batteryFields.reduce((acc, field) => {
-      let value =
+      const value =
         batteryData?.battery[0]?.[field.key as keyof BatteryInterface];
 
       if (value !== undefined) {
@@ -120,7 +120,8 @@ function BatteryFeaturesManager({ productId }: { productId: string }) {
           batteryData: batteryRequest,
         });
         setIsDisabled(true);
-      } catch (error) {
+      } catch {
+        toast.error("Ocurrió un error al agregar la batería.");
         return;
       }
     }
@@ -132,7 +133,8 @@ function BatteryFeaturesManager({ productId }: { productId: string }) {
           batteryData: batteryRequest,
         });
         setIsDisabled(true);
-      } catch (error) {
+      } catch {
+        toast.error("Ocurrió un error al actualizar la batería.");
         return;
       }
     }
