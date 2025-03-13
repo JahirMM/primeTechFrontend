@@ -147,8 +147,12 @@ function OfferForm({ productId, isAdd, offerData }: OfferFormProps) {
         <button
           type="submit"
           className="px-4 py-2 text-white rounded-lg bg-primaryColor hover:bg-primaryDarkColor"
+          aria-label={`${offerData ? "Actualizar" : "Agregar"} oferta`}
         >
           {offerData ? "Actualizar" : "Agregar"} oferta
+          <span className="sr-only">{`${
+            offerData ? "Actualizar" : "Agregar"
+          } oferta`}</span>
         </button>
       </div>
     </form>

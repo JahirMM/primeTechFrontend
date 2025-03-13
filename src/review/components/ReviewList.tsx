@@ -1,6 +1,6 @@
 "use client";
 
-import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
+import { useProductIdFromUrl } from "@/share/utils/useProductIdFromUrl";
 
 import ReviewSummary from "@/review/components/ReviewSummary";
 import ReviewItem from "@/review/components/ReviewItem";
@@ -8,7 +8,9 @@ import ReviewItem from "@/review/components/ReviewItem";
 import { useGetReviews } from "@/review/hook/useGetReviews";
 
 function ReviewList() {
-  const productId = getProductIdFromUrl();
+  const productId = useProductIdFromUrl();
+
+  const { data, isLoading, isError } = useGetReviews(productId);
 
   if (!productId) {
     return (
@@ -17,8 +19,6 @@ function ReviewList() {
       </div>
     );
   }
-
-  const { data, isLoading, isError } = useGetReviews(productId);
 
   if (isLoading) {
     return <div className="text-center text-gray-500">Cargando reviews...</div>;

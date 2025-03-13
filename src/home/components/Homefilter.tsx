@@ -24,8 +24,13 @@ function HomeFilter() {
 
   return (
     <div className="flex items-center gap-2 p-2 bg-secondaryColor rounded-xl">
-      <button onClick={handleSearch}>
+      <button
+        type="button"
+        onClick={handleSearch}
+        aria-label="Buscar productos"
+      >
         <SearchIcon className="cursor-pointer size-4" />
+        <span className="sr-only">Buscar producto</span>
       </button>
       <input
         ref={inputRef}

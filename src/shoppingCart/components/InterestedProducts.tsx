@@ -69,9 +69,10 @@ function InterestedProducts() {
                 ¡Descubre algo nuevo! Explora nuestros productos y encuentra
                 algo que te encante.
               </p>
-              <Link href="/products">
-                <button className="px-4 py-2 mt-3 text-xs text-white uppercase rounded-xl bg-primaryColor">
+              <Link href="/products" aria-label="Ver productos">
+                <button type="button" aria-label="Ver productos" className="px-4 py-2 mt-3 text-xs text-white uppercase rounded-xl bg-primaryColor">
                   Ver productos
+                  <span className="sr-only">Ver productos</span>
                 </button>
               </Link>
             </article>

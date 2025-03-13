@@ -86,7 +86,7 @@ const laptopFields: {
 ];
 
 function LaptopFeaturesManager({ productId }: { productId: string }) {
-  const laptopResponse = productId ? useGetLaptop(productId) : null;
+  const laptopResponse = useGetLaptop(productId);
   const mutationAddLaptop = useAddLaptop();
   const mutationUpdateLaptop = useUpdateLaptop();
 
@@ -103,7 +103,7 @@ function LaptopFeaturesManager({ productId }: { productId: string }) {
 
   const parseLaptopData = (laptopData?: GetLaptopResponseInterface | null) => {
     return laptopFields.reduce((acc, field) => {
-      let value = laptopData?.laptop[0]?.[field.key as keyof LaptopInterface];
+      const value = laptopData?.laptop[0]?.[field.key as keyof LaptopInterface];
 
       if (value !== undefined) {
         if (field.type === "checkbox") {
@@ -179,7 +179,8 @@ function LaptopFeaturesManager({ productId }: { productId: string }) {
           laptopData: laptopRequest,
         });
         setIsDisabled(true);
-      } catch (error) {
+      } catch {
+        toast.error("Ocurrió un error al agregar la laptop.");
         return;
       }
     }
@@ -191,7 +192,8 @@ function LaptopFeaturesManager({ productId }: { productId: string }) {
           laptopData: laptopRequest,
         });
         setIsDisabled(true);
-      } catch (error) {
+      } catch {
+        toast.error("Ocurrió un error al actualizar la laptop.");
         return;
       }
     }

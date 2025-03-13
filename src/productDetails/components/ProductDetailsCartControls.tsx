@@ -36,22 +36,28 @@ function ProductDetailsCartControls({
         <>
           <div className="flex items-center px-3 py-2 bg-secondaryColor rounded-xl">
             <button
+              type="button"
               className="px-2 text-lg font-bold"
               onClick={handleDecrease}
               disabled={quantity <= 1}
+              aria-label="menos"
             >
               -
             </button>
             <span className="px-4">{quantity}</span>
             <button
+              type="button"
               className="px-2 text-lg font-bold"
               onClick={handleIncrease}
               disabled={quantity >= stock}
+              aria-label="mas"
             >
               +
             </button>
           </div>
           <button
+            type="button"
+            aria-label="Agregar al carrito"
             className="px-3 py-2 text-white bg-primaryColor rounded-xl"
             onClick={handleAddToCart}
           >
@@ -64,8 +70,12 @@ function ProductDetailsCartControls({
           <p className="mt-2 text-sm text-gray-600">
             Pero no te preocupes, tenemos más productos increíbles para ti.
           </p>
-          <Link href="/products">
-            <button className="px-4 py-2 mt-3 text-sm text-white rounded-lg bg-primaryColor">
+          <Link href="/products" aria-label="Productos disponibles">
+            <button
+              type="button"
+              className="px-4 py-2 mt-3 text-sm text-white rounded-lg bg-primaryColor"
+              aria-label="Ver productos disponibles"
+            >
               Ver productos disponibles
             </button>
           </Link>

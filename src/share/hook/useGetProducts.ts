@@ -4,7 +4,20 @@ import { ProductsResponse } from "@/share/interfaces/productInterface";
 
 import { getProducts } from "@/share/services/productService";
 
-export const useProducts = (filters: Record<string, any> = {}) => {
+interface ProductFilters {
+  brand?: string;
+  name?: string;
+  categoryId?: string;
+  sellerId?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  page?: number;
+  size?: number;
+  onSale?: boolean;
+  minRating?: number;
+}
+
+export const useProducts = (filters: Partial<ProductFilters> = {}) => {
   return useQuery<ProductsResponse, Error>({
     queryKey: ["products", filters],
     queryFn: () => getProducts(filters),

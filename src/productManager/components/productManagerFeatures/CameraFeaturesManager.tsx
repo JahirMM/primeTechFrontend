@@ -20,7 +20,7 @@ function CameraFeaturesManager({
   productId,
   deviceType,
 }: CameraFeaturesManagerProps) {
-  const cameraResponse = productId ? useGetCameras(productId) : null;
+  const cameraResponse = useGetCameras(productId);
   const mutationUpdateCamera = useUpdateCamera();
   const mutationDeleteCamera = useDeleteCamera();
   const mutationAddCamera = useAddCamera();
@@ -176,6 +176,7 @@ function CameraFeaturesManager({
                   <div className="flex items-center gap-2">
                     {!editingCameras[camera.cameraId] ? (
                       <button
+                        type="button"
                         className="px-3 py-2 text-xs text-white rounded-lg bg-primaryColor"
                         onClick={() =>
                           setEditingCameras((prev) => ({
@@ -183,22 +184,30 @@ function CameraFeaturesManager({
                             [camera.cameraId]: true,
                           }))
                         }
+                        aria-label="Hacer cambios"
                       >
                         Hacer cambios
+                        <span className="sr-only">Haver cambios</span>
                       </button>
                     ) : (
                       <>
                         <button
+                          type="button"
                           className="px-3 py-2 text-xs text-white rounded-lg bg-primaryColor"
                           onClick={() => saveCamera(camera)}
+                          aria-label="Confirmar"
                         >
                           Confirmar
+                          <span className="sr-only">Confirmar</span>
                         </button>
                         <button
+                          type="button"
                           className="px-3 py-2 text-xs text-black border border-black rounded-lg hover:text-white hover:bg-primaryColor hover:border-primaryColor"
                           onClick={() => handleCancelEdit(camera.cameraId)}
+                          aria-label="Cancelar"
                         >
                           Cancelar
+                          <span className="sr-only">Cancelar</span>
                         </button>
                       </>
                     )}
@@ -343,6 +352,7 @@ function CameraFeaturesManager({
             ))}
           {productId && cameras.length < maxCameras && (
             <button
+              type="button"
               onClick={handleAddCamera}
               className="flex items-center justify-center bg-gray-300 border border-gray-500 rounded-lg size-14"
             >

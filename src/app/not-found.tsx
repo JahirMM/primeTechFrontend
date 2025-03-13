@@ -23,11 +23,11 @@ function NotFound() {
             </p>
             <p className="mt-20 text-sm text-gray-500">
               Vuelva a la{" "}
-              <Link href={"/"} className="font-semibold text-primaryColor">
+              <Link href={"/"} className="font-semibold text-primaryColor" aria-label="Página de inicio">
                 página de inicio
               </Link>{" "}
               o visite{" "}
-              <Link href={"/products"} className="font-semibold text-primaryColor">
+              <Link href={"/products"} className="font-semibold text-primaryColor" aria-label="Nuestros productos">
                 nuestros productos.
               </Link>
             </p>

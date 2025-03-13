@@ -9,8 +9,15 @@ export const getOffer = async (
   try {
     const response = await initialApi.get(`/offers/${productId}`);
     return response.data;
-  } catch (error: any) {
-    if (error.response?.status === 404) {
+  } catch (error: unknown) {
+    if (
+      error instanceof Error &&
+      "response" in error &&
+      error.response &&
+      typeof error.response === "object" &&
+      "status" in error.response &&
+      error.response.status === 404
+    ) {
       return null;
     }
     throw error;

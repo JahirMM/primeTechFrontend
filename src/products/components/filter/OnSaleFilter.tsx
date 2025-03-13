@@ -11,24 +11,30 @@ function OnSaleFilter({ onSale, setOnSale }: OnSaleFilterProps) {
       <span className="text-xs">Productos en ofertas</span>
       <div className="space-x-2">
         <button
+          type="button"
           className={`w-7 h-7 text-xs rounded-md border ${
             onSale
               ? "bg-primaryColor text-white border-primaryColor"
               : "bg-white text-black border-gray-600"
           }`}
           onClick={() => setOnSale(true)}
+          aria-label="Si"
         >
           Si
+          <span className="sr-only">si</span>
         </button>
         <button
+          type="button"
           className={`w-7 h-7 text-xs rounded-md border ${
             onSale === false
               ? "bg-primaryColor text-white border-primaryColor"
               : "bg-white text-black border-gray-600"
           }`}
           onClick={() => setOnSale(false)}
+          aria-label="No"
         >
           No
+          <span className="sr-only">No</span>
         </button>
       </div>
     </div>

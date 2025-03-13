@@ -10,11 +10,11 @@ import ReviewList from "@/review/components/ReviewList";
 import ProductDetailsSkeleton from "@/productDetails/skeletons/ProductDetailsSkeleton";
 
 import { useGetProductDetails } from "@/productDetails/hook/useGetProductDetails";
-import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
+import { useProductIdFromUrl } from "@/share/utils/useProductIdFromUrl";
 
 function Page() {
   const router = useRouter();
-  const productId = getProductIdFromUrl();
+  const productId = useProductIdFromUrl();
   const isValidProductId = Boolean(
     productId && /^[a-f0-9-]{36}$/.test(productId)
   );

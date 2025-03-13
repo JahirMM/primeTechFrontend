@@ -6,14 +6,14 @@ import { useGetProductDetails } from "@/productDetails/hook/useGetProductDetails
 
 import ProductManagerPage from "@/productManager/components/ProductManagerPage";
 
-import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
+import { useProductIdFromUrl } from "@/share/utils/useProductIdFromUrl";
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 function Page() {
   const router = useRouter();
-  const productIdFromUrl = getProductIdFromUrl();
+  const productIdFromUrl = useProductIdFromUrl();
 
   const {
     data: productDetails,

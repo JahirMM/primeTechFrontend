@@ -185,8 +185,10 @@ function ProfileForm({
           <button
             type="submit"
             className="w-full px-2 py-3 mt-8 text-sm font-bold text-white uppercase bg-primaryColor rounded-xl"
+            aria-label="Cancelar cambios"
           >
             Guardar cambios
+            <span className="sr-only">Cancelar cambios</span>
           </button>
         )}
       </form>

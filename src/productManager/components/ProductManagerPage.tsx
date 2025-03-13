@@ -31,7 +31,7 @@ function ProductManagerPage({
   useEffect(() => {
     if (productDetails) {
       setProductId(productDetails.product.productId);
-      
+
       setDeviceType(
         ["mobile", "laptop", "other"].includes(
           productDetails.product.deviceType
@@ -58,10 +58,13 @@ function ProductManagerPage({
     <>
       <div className="flex justify-end">
         <button
+          type="button"
           className="px-3 py-2 mb-3 text-xs text-white rounded-md bg-primaryColor"
           onClick={() => router.push("/profile/my-products")}
+          aria-label="Volver"
         >
           Volver
+          <span className="sr-only">Volver</span>
         </button>
       </div>
 

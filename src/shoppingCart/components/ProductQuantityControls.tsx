@@ -47,6 +47,7 @@ function ProductQuantityControls({
     <div className="flex items-center gap-2">
       <div>
         <button
+          type="button"
           className="px-2 py-1 text-sm bg-gray-300 rounded disabled:opacity-50"
           onClick={() =>
             updateProductQuantity(productId, shoppingCartId, quantity - 1)
@@ -61,6 +62,7 @@ function ProductQuantityControls({
 
       <div>
         <button
+          type="button"
           className="px-2 py-1 text-sm bg-gray-300 rounded"
           onClick={() =>
             updateProductQuantity(productId, shoppingCartId, quantity + 1)
@@ -72,10 +74,13 @@ function ProductQuantityControls({
 
       <div>
         <button
+          type="button"
           className="px-2 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-700"
           onClick={() => deleteProduct(productId)}
+          aria-label="Borrar"
         >
           Borrar
+          <span className="sr-only">Borrar</span>
         </button>
       </div>
     </div>

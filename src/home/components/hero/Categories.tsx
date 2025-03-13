@@ -29,7 +29,10 @@ function Categories() {
       .map((category) => ({
         ...category,
         categoryName: categoryMap[category.categoryName].displayName,
-        href: categoryMap[category.categoryName].href + "?categoryId=" + category.categoryId,
+        href:
+          categoryMap[category.categoryName].href +
+          "?categoryId=" +
+          category.categoryId,
       })) || [];
 
   return (
@@ -40,6 +43,7 @@ function Categories() {
           key={categoryName}
           href={href ?? "/"}
           className="px-4 py-2 text-xs text-center rounded-lg bg-primaryColor text-md text-white/90"
+          aria-label={categoryName}
         >
           {categoryName}
         </Link>

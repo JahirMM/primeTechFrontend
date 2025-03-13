@@ -6,7 +6,7 @@ import UserIcon from "@/icons/UserIcon";
 import { useGetUserInformation } from "@/share/hook/useGetUserInformation";
 
 import HeaderUserPicture from "@/share/components/HeaderUserPicture";
-import { uselogout } from "../hook/useLogout";
+import { useLogout } from "../hook/useLogout";
 
 function HeaderProfileNavItem({
   showNav,
@@ -15,13 +15,13 @@ function HeaderProfileNavItem({
   showNav: boolean;
   setShowNav: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const mutationLogout = uselogout();
+  const mutationLogout = useLogout();
   const { data: userInformation, isLoading: userInfoLoading } =
     useGetUserInformation();
 
   const handleLogout = () => {
-    mutationLogout.mutate()
-  }
+    mutationLogout.mutate();
+  };
 
   return (
     <li className="relative group">
@@ -29,6 +29,7 @@ function HeaderProfileNavItem({
         href="/profile"
         className="flex items-center justify-between gap-10 text-left text-gray-700 whitespace-nowrap sm:gap-0 sm:px-3 sm:py-2 sm:rounded-full sm:bg-secondaryColor sm:text-black"
         onClick={() => setShowNav(!showNav)}
+        aria-label="Perfil"
       >
         <UserIcon className="size-3" />
         <span className="sm:hidden">Perfil</span>
@@ -40,7 +41,11 @@ function HeaderProfileNavItem({
         ) : (
           <ul className="py-4 space-y-4">
             <li>
-              <Link href={"/profile"} className="flex items-center gap-3 px-4">
+              <Link
+                href={"/profile"}
+                className="flex items-center gap-3 px-4"
+                aria-label="My Perfil"
+              >
                 <HeaderUserPicture />
 
                 <div className="flex flex-col text-left gap-y-1">
@@ -62,16 +67,24 @@ function HeaderProfileNavItem({
               </Link>
             </li>
             <li className="px-4 py-1 text-sm text-left hover:bg-gray-200">
-              <Link href={"/profile/purchases"}>Compras</Link>
+              <Link href={"/profile/purchases"} aria-label="Compras">
+                Compras
+              </Link>
             </li>
             <li className="px-4 py-1 text-sm text-left hover:bg-gray-200">
-              <Link href={"/profile/sales"}>Ventas</Link>
+              <Link href={"/profile/sales"} aria-label="Ventas">
+                Ventas
+              </Link>
             </li>
             <li className="px-4 py-1 text-sm text-left hover:bg-gray-200">
-              <Link href={"/profile/my-products"}>Mis productos</Link>
+              <Link href={"/profile/my-products"} aria-label="Mis productos">
+                Mis productos
+              </Link>
             </li>
             <li className="px-4 py-1 text-sm text-left hover:bg-gray-200">
-              <Link href={"/profile/add-product"}>Agregar product</Link>
+              <Link href={"/profile/add-product"} aria-label="Agregar producto">
+                Agregar product
+              </Link>
             </li>
             <li className="px-4 py-1 text-left">
               <span

@@ -36,7 +36,10 @@ function PurchasedProduct({ product }: { product: PurchasedProductInterface }) {
           )}
           <div>
             <p className="text-sm font-bold">
-              <Link href={`/products/${product.productId}`}>
+              <Link
+                href={`/products/${product.productId}`}
+                aria-label={product.productName}
+              >
                 {product.productName}
               </Link>
             </p>
@@ -59,14 +62,23 @@ function PurchasedProduct({ product }: { product: PurchasedProductInterface }) {
             <Link
               href={`/products?sellerId=${product.sellerId}`}
               className="text-xs font-bold cursor-pointer text-primaryColor"
+              aria-label="Productos del vendedor"
             >
               Sus productos
             </Link>
           </div>
           <div className="flex flex-row items-center gap-3 sm:flex-col">
-            <Link href={`/products/${product.productId}`}>
-              <button className="px-3 py-2 text-xs text-white rounded-lg bg-primaryColor">
+            <Link
+              href={`/products/${product.productId}`}
+              aria-label="Volver a comprar"
+            >
+              <button
+                type="button"
+                className="px-3 py-2 text-xs text-white rounded-lg bg-primaryColor"
+                aria-label="Volver a comprar"
+              >
                 Volver a comprar
+                <span className="sr-only">Volver a comprar</span>
               </button>
             </Link>
             {isLoading ? (
@@ -74,11 +86,14 @@ function PurchasedProduct({ product }: { product: PurchasedProductInterface }) {
             ) : (
               !data?.hasReview && (
                 <button
+                  type="button"
                   className="flex items-center justify-center gap-3 px-3 py-2 text-xs transition-colors duration-300 border border-black rounded-lg hover:border-primaryColor hover:text-white hover:bg-primaryColor group"
                   onClick={() => setShowModal(true)}
+                  aria-label="Editar"
                 >
                   <PlusIcon className="text-black size-3 group-hover:text-white" />{" "}
                   comentario
+                  <span className="sr-only">Editar</span>
                 </button>
               )
             )}

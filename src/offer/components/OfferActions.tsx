@@ -36,23 +36,31 @@ function OfferActions({ productId }: OfferActionsProps) {
         <div className="flex flex-col gap-3">
           <button
             className="px-3 py-2 text-xs text-center transition-colors duration-300 border border-black rounded-lg hover:text-white hover:bg-primaryColor hover:border-primaryColor"
+            aria-label="Actualizar oferta"
+            type="button"
             onClick={() => setShowModal(true)}
           >
             Actualizar oferta
+            <span className="sr-only">Actualizar oferta</span>
           </button>
           {offerData.offer.active ? (
             <button
               className="px-3 py-2 text-xs text-center transition-colors duration-300 border border-black rounded-lg hover:text-white hover:bg-primaryColor hover:border-primaryColor"
+              aria-label="Desactivar oferta"
+              type="button"
               onClick={() => deactivateOffer(offerData.offer.offerId)}
             >
               Desactivar oferta
+              <span className="sr-only">Desactivar oferta</span>
             </button>
           ) : (
             <button
               className="px-3 py-2 text-xs text-center transition-colors duration-300 border border-black rounded-lg hover:text-white hover:bg-primaryColor hover:border-primaryColor"
+              aria-label="Activar oferta"
               onClick={() => activateOffer(offerData.offer.offerId)}
             >
               Activar oferta
+              <span className="sr-only">Activar oferta</span>
             </button>
           )}
         </div>

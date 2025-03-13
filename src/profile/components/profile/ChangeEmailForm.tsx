@@ -55,8 +55,10 @@ export default function ChangeEmailForm({ onClose }: { onClose: () => void }) {
         <button
           type="submit"
           className="w-full py-2 border border-black rounded-lg transition-colors duration-300 hover:text-white hover:bg-primaryColor hover:border-primaryColor"
+          aria-label="Actualizar"
         >
           Actualizar
+          <span className="sr-only">Actualizar</span>
         </button>
       </form>
     </div>

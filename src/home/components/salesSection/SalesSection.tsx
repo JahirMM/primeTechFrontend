@@ -17,9 +17,11 @@ function SalesSection() {
         </p>
         <button
           className="bg-primaryColor flex items-center gap-5 px-3 py-1 rounded-xl"
+          aria-label="Ver todos"
           onClick={() => router.push("/products?onSale=true")}
         >
           <span className="text-sm text-white">Ver todos</span>
+          <span className="sr-only">Ver todos</span>
           <ArrowIcon className="size-4 text-white" />
         </button>
       </header>

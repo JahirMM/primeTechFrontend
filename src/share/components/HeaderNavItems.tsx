@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 
+import useFetchAuthStatus from "@/share/hook/useFetchAuthStatus";
 import { useAuthStore } from "@/share/hook/store/useAuth";
-import { uselogout } from "@/share/hook/useLogout";
+import { useLogout } from "@/share/hook/useLogout";
 
 import CartShoppingIcon from "@/icons/CartShoppingIcon";
 import BoxesIcon from "@/icons/BoxesIcon";
@@ -61,22 +61,14 @@ function HeaderNavItems({
   showNav: boolean;
   setShowNav: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const mutationLogout = uselogout();
+  const mutationLogout = useLogout();
 
-  const { isAuthenticated, initializeAuth } = useAuthStore();
-  const [loading, setLoading] = useState(true);
+  const { isAuthenticated } = useAuthStore();
+  const loading = useFetchAuthStatus();
 
   const handleLogout = () => {
     mutationLogout.mutate();
   };
-
-  useEffect(() => {
-    const initialize = async () => {
-      await initializeAuth();
-      setLoading(false);
-    };
-    initialize();
-  }, [initializeAuth]);
 
   return (
     <ul
@@ -95,6 +87,7 @@ function HeaderNavItems({
           href={"/"}
           className="flex items-center justify-between gap-10 text-left whitespace-nowrap sm:gap-0 sm:px-5 sm:rounded-xl sm:bg-gray-900 sm:text-white sm:py-1"
           onClick={() => setShowNav(!showNav)}
+          aria-label="Inicio"
         >
           <HomeIcon className="size-3 sm:hidden" />
           <span>Inicio</span>
@@ -105,6 +98,7 @@ function HeaderNavItems({
           href={"/products"}
           className="flex items-center justify-between gap-10 text-left whitespace-nowrap sm:gap-0 sm:px-5 sm:rounded-xl sm:bg-secondaryColor sm:text-black sm:py-1"
           onClick={() => setShowNav(!showNav)}
+          aria-label="Prodictos"
         >
           <BoxesIcon className="size-3 sm:hidden" />
           <span>Productos</span>
@@ -132,6 +126,7 @@ function HeaderNavItems({
                 href={href}
                 className={`flex justify-between items-center text-left gap-10 whitespace-nowrap text-gray-700 ${contendorClass}`}
                 onClick={() => setShowNav(!showNav)}
+                aria-label={label}
               >
                 {icon ? icon : <div className="sm:hidden"></div>}
                 <span className={`${textClass}`}>{label}</span>

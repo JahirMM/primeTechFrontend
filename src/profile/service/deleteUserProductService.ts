@@ -4,7 +4,7 @@ import { getInitialApi } from "@/share/hook/useInitialApi";
 const initialApi = getInitialApi();
 
 export const deleteUserProduct = async (
-  productId: String
+  productId: string
 ): Promise<SuccessResponseInterface> => {
   const response = await initialApi.delete(`/products/${productId}`);
 

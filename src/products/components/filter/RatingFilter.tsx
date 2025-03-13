@@ -36,6 +36,7 @@ function RatingFilter({ minRating, setMinRating }: RatingFilterProps) {
         <div className="flex gap-1">
           {[1, 2, 3, 4, 5].map((rating) => (
             <button
+              type="button"
               key={rating}
               onClick={() => handleClick(rating)}
               onMouseEnter={() => handleHover(rating)}

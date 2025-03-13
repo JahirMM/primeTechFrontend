@@ -10,10 +10,10 @@ import ProductCameraFeatures from "@/productDetails/components/features/ProductC
 
 import { useGetProductDetails } from "@/productDetails/hook/useGetProductDetails";
 
-import { getProductIdFromUrl } from "@/share/utils/getProductIdFromUrl";
+import { useProductIdFromUrl } from "@/share/utils/useProductIdFromUrl";
 
 function ProductFeatures() {
-  const [productId] = useState(getProductIdFromUrl());
+  const [productId] = useState(useProductIdFromUrl());
 
   const { data: productDetailsData, isLoading: isProductLoading } =
     useGetProductDetails(productId);

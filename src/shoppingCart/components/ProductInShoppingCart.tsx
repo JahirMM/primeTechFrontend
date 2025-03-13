@@ -41,7 +41,7 @@ function ProductInShoppingCart({
     return () => {
       removePrice(totalPrice);
     };
-  }, [totalPrice]);
+  }, [totalPrice, addPrice, removePrice]);
 
   return (
     <article

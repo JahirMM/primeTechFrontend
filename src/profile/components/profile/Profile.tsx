@@ -18,8 +18,10 @@ function Profile() {
       <div className="flex items-center justify-between mb-10 sm:px-10 lg:px-20">
         <h1 className="text-2xl font-bold uppercase">Mi perfil</h1>
         <button
+          type="button"
           className="flex items-center px-3 py-2 rounded-xl gap-x-2 bg-primaryColor"
           onClick={toggleEdit}
+          aria-label={isDisabled ? "Editar" : "Cancelar edición"}
         >
           <PenIcon className="text-white size-4" />
           {isDisabled ? (
@@ -27,6 +29,9 @@ function Profile() {
           ) : (
             <span className="text-xs text-white">Cancelar edición</span>
           )}
+          <span className="sr-only">
+            {isDisabled ? "Editar" : "Cancelar edición"}
+          </span>
         </button>
       </div>
       <ProfilePicture />

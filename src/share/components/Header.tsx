@@ -13,7 +13,11 @@ function Header() {
 
   return (
     <header className="h-[58px] px-10 fixed top-0 w-full flex justify-between items-center sm:py-0 bg-white z-[80]">
-      <Link href={"/"} className="text-lg font-bold scale-100">
+      <Link
+        href={"/"}
+        className="text-lg font-bold scale-100"
+        aria-label="PrimeTech"
+      >
         PrimeTech
       </Link>
       <nav className="relative flex flex-col items-end">
@@ -30,7 +34,7 @@ function Header() {
             />
           )}
         </span>
-        <HeaderNavItems showNav={showNav} setShowNav={setShowNav}/>
+        <HeaderNavItems showNav={showNav} setShowNav={setShowNav} />
       </nav>
     </header>
   );

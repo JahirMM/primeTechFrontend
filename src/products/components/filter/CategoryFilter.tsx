@@ -19,6 +19,8 @@ function CategoryFilter({
         {categoryItems.map((category) => (
           <li key={category.categoryId}>
             <button
+              type="button"
+              aria-label={category.categoryName}
               className={`border border-gray-400 text-[10px] px-2 py-1 rounded-lg ${
                 selectedCategory === category.categoryId
                   ? "bg-primaryColor text-white border-primaryColor"
@@ -33,6 +35,7 @@ function CategoryFilter({
               }
             >
               {category.categoryName}
+              <span className="sr-only">{category.categoryName}</span>
             </button>
           </li>
         ))}

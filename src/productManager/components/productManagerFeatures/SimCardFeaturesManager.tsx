@@ -43,9 +43,9 @@ function SimCardFeaturesManager({
   productId,
 }: {
   mobileDeviceId: string;
-  productId: string | undefined;
+  productId: string;
 }) {
-  const simCardResponse = productId ? useGetSimCard(productId) : null;
+  const simCardResponse = useGetSimCard(productId);
   const mutationAddSimCard = useAddSimCard();
   const mutationUpdateSimCard = useUpdateSimCard();
 
@@ -63,7 +63,7 @@ function SimCardFeaturesManager({
     simCardData?: GetSimCardResponseInterface | null
   ) => {
     return simCardFields.reduce((acc, field) => {
-      let value =
+      const value =
         simCardData?.simCard[0]?.[field.key as keyof SimCardInterface];
 
       if (value !== undefined) {
@@ -118,7 +118,8 @@ function SimCardFeaturesManager({
           simCardData: simCardRequest,
         });
         return;
-      } catch (error) {
+      } catch {
+        toast.error("Ocurrió un error al agregar la sim card");
         return;
       }
     }
@@ -131,7 +132,8 @@ function SimCardFeaturesManager({
         });
         setIsDisabled(true);
         return;
-      } catch (error) {
+      } catch {
+        toast.error("Ocurrió un error al actualizar el sim card.");
         return;
       }
     }

@@ -21,7 +21,7 @@ function ProductImageManager({
   productId,
   images,
   setImages,
-  isDisabled
+  isDisabled,
 }: ProductImageManagerProps) {
   const mutationUpload = useUploadProductImage();
   const mutationDeleteProductImage = useDeleteProductImage();
@@ -98,6 +98,7 @@ function ProductImageManager({
                   className="object-contain w-64 h-64 bg-gray-100 border border-gray-500 rounded-xl"
                 />
                 <button
+                  type="button"
                   onClick={() =>
                     handleDeleteMainImage(image.productImageId, null)
                   }
@@ -119,6 +120,7 @@ function ProductImageManager({
                   className="object-contain w-64 h-64 bg-gray-100 border border-gray-500 rounded-xl"
                 />
                 <button
+                  type="button"
                   onClick={() => handleDeleteMainImage(null, image.img)}
                   className="absolute text-sm text-white bg-red-500 rounded-full right-1 top-1 size-8"
                 >
@@ -177,6 +179,7 @@ function ProductImageManager({
         {(productId ? loadedImages.length : images.length) < 5 && (
           <>
             <button
+              type="button"
               onClick={() => additionalImageInputRef.current?.click()}
               className="flex items-center justify-center bg-gray-300 border border-gray-500 rounded-lg size-14"
             >

@@ -24,8 +24,10 @@ function NotSellerMessage({
       <h2 className="mb-2 text-xl font-bold text-gray-800">{title}</h2>
       <p className="mb-4 text-gray-600">{message}</p>
       <button
+        type="button"
         className="px-4 py-2 text-white rounded bg-primaryColor hover:bg-primaryColor/95"
         onClick={() => assignRole()}
+        aria-label={buttonText}
       >
         {buttonText}
       </button>

@@ -100,8 +100,10 @@ export default function AddCommentForm({ productId }: AddCommentFormProps) {
         type="submit"
         className="w-full py-2 text-sm transition duration-300 border border-black rounded-lg hover:text-white hover:bg-primaryColor hover:border-primaryColor"
         onClick={() => addReview()}
+        aria-label="Enviar comentario"
       >
         Enviar comentario
+        <span className="sr-only">Enviar comentario</span>
       </button>
     </form>
   );

@@ -44,7 +44,7 @@ const screenFields: ScreenField[] = [
 ];
 
 function ScreenFeaturesManager({ productId }: { productId: string }) {
-  const screenResponse = productId ? useGetScreen(productId) : null;
+  const screenResponse = useGetScreen(productId);
   const mutationAddScreen = useAddScreen();
   const mutationUpdateScreen = useUpdateScreen();
 
@@ -61,7 +61,7 @@ function ScreenFeaturesManager({ productId }: { productId: string }) {
 
   const parseScreenData = (screenData?: GetScreenResponseInterface | null) => {
     return screenFields.reduce((acc, field) => {
-      let value = screenData?.screen[0]?.[field.key as keyof ScreenInterface];
+      const value = screenData?.screen[0]?.[field.key as keyof ScreenInterface];
 
       if (value !== undefined) {
         if (field.type === "checkbox") {
@@ -123,7 +123,8 @@ function ScreenFeaturesManager({ productId }: { productId: string }) {
         });
         setIsDisabled(true);
         return;
-      } catch (error) {
+      } catch {
+        toast.error("Ocurrió un error al agregar la pantalla.");
         return;
       }
     }
@@ -135,8 +136,9 @@ function ScreenFeaturesManager({ productId }: { productId: string }) {
           screenData: screenRequest,
         });
         setIsDisabled(true);
-        return
-      } catch (error) {
+        return;
+      } catch {
+        toast.error("Ocurrió un error al actualizar la pantalla");
         return;
       }
     }

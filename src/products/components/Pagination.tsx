@@ -36,6 +36,7 @@ function Pagination({ data, filters }: PaginationProps) {
     <section className="flex items-center justify-center pb-5 lg:ml-60">
       <div className="flex items-center gap-x-3">
         <button
+          type="button"
           className="flex items-center justify-center p-1 text-center rounded-md bg-primaryColor"
           onClick={backPage}
         >
@@ -43,6 +44,7 @@ function Pagination({ data, filters }: PaginationProps) {
         </button>
         <span className="text-lg font-bold">{page + 1}</span>
         <button
+          type="button"
           className="flex items-center justify-center p-1 text-center rounded-md bg-primaryColor"
           onClick={nextPage}
         >

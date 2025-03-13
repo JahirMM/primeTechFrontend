@@ -16,8 +16,10 @@ function ErrorMessage({
       <p className="mb-2 text-lg font-semibold text-red-500">{title}</p>
       <p className="mb-4 text-gray-500">{message}</p>
       <button
+        type="button"
         className="px-4 py-2 text-white rounded bg-primaryColor hover:bg-primaryColor/95"
         onClick={onClick}
+        aria-label={buttonText}
       >
         {buttonText}
       </button>

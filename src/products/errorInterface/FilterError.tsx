@@ -11,3 +11,5 @@ function FilterError({ containerClass = "", title }: FilterErrorProps) {
     </div>
   );
 }
+
+export default FilterError;

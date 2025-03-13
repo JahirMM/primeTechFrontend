@@ -5,33 +5,33 @@ import { logout } from "@/share/services/logoutService";
 
 import { useRouter } from "next/navigation";
 
-export function uselogout() {
+export function useLogout() {
   const router = useRouter();
   const store = useAuthStore();
-
   const queryClient = useQueryClient();
 
-  const mutationlogout = useMutation({
+  return useMutation({
     mutationFn: logout,
     onSuccess: () => {
       store.logout();
       router.push("/");
 
-      queryClient.invalidateQueries({ queryKey: ["productFromShoppingCart"] });
-      queryClient.invalidateQueries({ queryKey: ["userProductReview"] });
-      queryClient.invalidateQueries({ queryKey: ["purchasedProduct"] });
-      queryClient.invalidateQueries({ queryKey: ["favoriteProducts"] });
-      queryClient.invalidateQueries({ queryKey: ["userInformation"] });
-      queryClient.invalidateQueries({ queryKey: ["recentProducts"] });
-      queryClient.invalidateQueries({ queryKey: ["userProducts"] });
-      queryClient.invalidateQueries({ queryKey: ["soldProduct"] });
-      queryClient.invalidateQueries({ queryKey: ["userImage"] });
+      const keys = [
+        "productFromShoppingCart",
+        "userProductReview",
+        "purchasedProduct",
+        "favoriteProducts",
+        "userInformation",
+        "recentProducts",
+        "userProducts",
+        "soldProduct",
+        "userImage",
+      ];
+      keys.forEach((key) => queryClient.invalidateQueries({ queryKey: [key] }));
     },
     onError: () => {
       store.logout();
       router.push("/");
     },
   });
-
-  return mutationlogout;
 }

@@ -11,6 +11,7 @@ import RatingFilter from "@/products/components/filter/RatingFilter";
 import OnSaleFilter from "@/products/components/filter/OnSaleFilter";
 import BrandFilter from "@/products/components/filter/BrandFilter";
 import PriceFilter from "@/products/components/filter/Pricefilter";
+import FilterError from "@/products/errorInterface/FilterError";
 
 interface FilterSidebarProps {
   showFilter: boolean;
@@ -124,16 +125,22 @@ function FilterSidebar({
         <RatingFilter minRating={minRating} setMinRating={setMinRating} />
         <OnSaleFilter onSale={onSale} setOnSale={setOnSale} />
         <button
+          type="button"
           className="w-full p-2 mt-4 text-sm text-white rounded-md bg-primaryColor"
           onClick={cleanFilter}
+          aria-label="Borrar filtro"
         >
           borrar filtro
+          <span className="sr-only">Borrar filtro</span>
         </button>
         <button
+          type="button"
           className="w-full p-2 mt-4 text-sm text-white rounded-md bg-primaryColor"
           onClick={handleSearch}
+          aria-label="Aplicar filtro"
         >
           Aplicar filtro
+          <span className="sr-only">Aplicar filtro</span>
         </button>
       </div>
     </section>

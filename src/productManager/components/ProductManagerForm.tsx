@@ -105,7 +105,8 @@ function ProductManagerForm({
 
         setProductId(productResponse.productId);
         setIsDisabled(true);
-      } catch (error) {
+      } catch {
+        toast.error("Ocurrió un error al agregar la información");
         return;
       }
     }
@@ -116,7 +117,8 @@ function ProductManagerForm({
           productId: productId,
           productData: productRequest,
         });
-      } catch (error) {
+      } catch {
+        toast.error("Ocurrió un error al actualizar la información");
         return;
       }
     }
@@ -127,10 +129,13 @@ function ProductManagerForm({
       {productId && (
         <div className="mb-3">
           <button
+            type="button"
             className="px-3 py-2 text-xs text-white rounded-md bg-primaryColor"
             onClick={() => handleSaveProduct()}
+            aria-label="Guardar cambios"
           >
             Guardar cambios
+            <span className="sr-only">Guardar cambios</span>
           </button>
         </div>
       )}
@@ -156,8 +161,10 @@ function ProductManagerForm({
         <button
           onClick={handleSaveProduct}
           className="px-4 py-2 mt-4 text-sm text-white rounded-lg bg-primaryColor"
+          aria-label="Crear producto"
         >
           Crear producto
+          <span className="sr-only">Crear producto</span>
         </button>
       )}
     </div>

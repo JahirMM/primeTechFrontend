@@ -56,6 +56,7 @@ function ProfileNav() {
                   href={url}
                   className="flex items-center gap-x-3"
                   onClick={() => setShowMenu(false)}
+                  aria-label={label}
                 >
                   <Icon
                     className={`size-7 ${

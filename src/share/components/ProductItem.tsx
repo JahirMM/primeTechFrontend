@@ -1,6 +1,8 @@
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import { useAddRecentProduct } from "@/share/hook/useAddRecentProduct";
+import { useAuthStore } from "@/share/hook/store/useAuth";
 
 import ProductActionButtons from "@/share/components/ProductActionButtons";
 
@@ -9,7 +11,6 @@ import { splitPrice } from "@/share/utils/priceUtils";
 
 import StarIcon from "@/icons/StarIcon";
 import BoxIcon from "@/icons/BoxIcon";
-import { useAuthStore } from "../hook/store/useAuth";
 
 interface ProductItemInterface {
   isFavorite: boolean;
@@ -44,7 +45,8 @@ const ProductItem = ({
       if (isAuthenticated) {
         await mutationAddRecentProduct.mutateAsync(product.productId);
       }
-    } catch (error) {
+    } catch {
+      toast.error("Ocurrió un error al agregar el producto reciente");
       return;
     }
     router.push(`/products/${product.productId}`);

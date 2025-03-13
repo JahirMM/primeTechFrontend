@@ -4,6 +4,7 @@ import { ProductInCart } from "@/shoppingCart/interfaces/ProductInCardInterface"
 import { useCartPriceStore } from "@/share/hook/store/useShoppingCart";
 import { useAddPurchasedProducts } from "../hook/useAddPurchasedProducts";
 import { useDeleteProductFromShoppingCart } from "../hook/useDeleteProductFromShoppingCart";
+import { toast } from "sonner";
 
 interface PurchaseSummaryProps {
   cartIsEmpty: boolean;
@@ -34,7 +35,8 @@ function PurchaseSummary({
     );
     try {
       await mutationAddPurchasedProducts.mutateAsync(shoppingList);
-    } catch (error) {
+    } catch {
+      toast.error("Ocurrió un error al agregar al producto.");
       return;
     }
 
@@ -44,7 +46,8 @@ function PurchaseSummary({
           product.productId
         );
       }
-    } catch (error) {
+    } catch {
+      toast.error("Ocurrió un error al borrar el producto.");
       return;
     }
   };
@@ -73,10 +76,13 @@ function PurchaseSummary({
             <span>${totalPrice}</span>
           </div>
           <button
+            type="button"
             className="w-full px-4 py-2 mt-3 text-white uppercase rounded-xl bg-primaryColor"
             onClick={() => buyProducts()}
+            aria-label="Comprar"
           >
             Comprar
+            <span className="sr-only">Comprar</span>
           </button>
         </div>
       )}

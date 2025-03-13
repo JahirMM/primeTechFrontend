@@ -33,10 +33,13 @@ function MessageBox({
       <div className="mt-4">
         <p className="mb-4">{description}</p>
         <button
+          type="button"
           className="px-4 py-2 text-sm font-bold text-white transition-[border-radius] duration-1000 rounded-lg bg-primaryColor hover:rounded-xl"
           onClick={handleClick}
+          aria-label={buttonLabel}
         >
           {buttonLabel}
+          <span className="sr-only">{buttonLabel}</span>
         </button>
       </div>
     </div>

@@ -67,16 +67,22 @@ function FeatureTable({
         {!isDisabled && (
           <div className="flex flex-col items-center gap-4 md:flex-row">
             <button
+              type="button"
               className="px-2 py-1 text-xs text-white rounded-lg bg-primaryColor"
               onClick={manageFeature}
+              aria-label="Confirmar"
             >
               confirmar
+              <span className="sr-only">Confirmar</span>
             </button>
             <button
+              type="button"
               className="px-2 py-1 text-xs transition duration-200 border border-gray-500 rounded-lg hover:border-primaryColor hover:text-white hover:bg-primaryColor"
               onClick={() => handleCancel()}
+              aria-label="Cancelar"
             >
               cancelar
+              <span className="Cancelar">Cancelar</span>
             </button>
           </div>
         )}

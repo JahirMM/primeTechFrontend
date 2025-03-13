@@ -27,10 +27,13 @@ function ProductsList({ productList }: { productList: ProductsResponse }) {
             Intenta ajustar tus filtros o explorar otras categorías.
           </p>
           <button
+            type="button"
             className="px-3 py-2 text-sm text-white rounded-lg bg-primaryColor"
             onClick={() => router.push("/products")}
+            aria-label="Borrar filtro"
           >
             Borrar Filtro
+            <span className="sr-only">Borrar filtro</span>
           </button>
         </div>
       )}

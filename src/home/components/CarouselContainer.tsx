@@ -25,6 +25,7 @@ function CarouselContainer({
   return (
     <div className="relative">
       <button
+        type="button"
         onClick={scrollBackward}
         className={`absolute left-0 z-10 p-2 -translate-y-1/2 bg-white border border-gray-200 rounded-full shadow-md top-1/2 ${
           listLength > 5 ? "" : "hidden"
@@ -35,6 +36,7 @@ function CarouselContainer({
       </button>
       {children}
       <button
+        type="button"
         onClick={scrollForward}
         className={`absolute right-0 z-10 p-2 -translate-y-1/2 bg-white border border-gray-200 rounded-full shadow-md top-1/2 ${
           listLength > 5 ? "" : "hidden"

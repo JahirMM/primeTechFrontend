@@ -61,15 +61,19 @@ function UserProductsList() {
                 <Link
                   href={`/profile/my-products/${product.productId}`}
                   className="px-3 py-2 text-xs text-center transition-colors duration-300 border border-black rounded-lg hover:text-white hover:bg-primaryColor hover:border-primaryColor"
+                  aria-label="Editar información"
                 >
                   Editar información
                 </Link>
                 <OfferActions productId={product.productId} />
                 <button
+                  type="button"
                   className="px-3 py-2 text-xs transition-colors duration-300 border border-black rounded-lg hover:border-red-500 hover:bg-red-500 hover:text-white"
                   onClick={() => deleteUserProduct(product.productId)}
+                  aria-label="Eliminar"
                 >
                   Eliminar
+                  <span className="sr-only">Eliminar</span>
                 </button>
               </div>
             </article>

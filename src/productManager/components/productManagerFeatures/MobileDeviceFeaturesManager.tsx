@@ -69,7 +69,7 @@ function MobileDeviceFeaturesManager({
   productId: string;
   setMobileDeviceId: React.Dispatch<React.SetStateAction<string | null>>;
 }) {
-  const mobileDeviceResponse = productId ? useGetMobileDevice(productId) : null;
+  const mobileDeviceResponse = useGetMobileDevice(productId);
   const mutationAddMobileDevice = useAddMobileDevice();
   const mutationUpdateMobileDevice = useUpdateMobileDevice();
 
@@ -88,7 +88,7 @@ function MobileDeviceFeaturesManager({
     mobileDeviceData?: GetMobileDeviceResponseInterface | null
   ) => {
     return mobileDeviceFields.reduce((acc, field) => {
-      let value =
+      const value =
         mobileDeviceData?.mobileDevice[0]?.[
           field.key as keyof MobileDeviceInterface
         ];
@@ -113,13 +113,14 @@ function MobileDeviceFeaturesManager({
     if (productId && mobileDeviceDataResponse) {
       if (mobileDeviceDataResponse.mobileDevice?.length > 0) {
         setMobileDevice(parseMobileDeviceData(mobileDeviceDataResponse));
-        setMobileDeviceId(mobileDeviceDataResponse.mobileDevice[0].mobileDeviceid);
+        setMobileDeviceId(
+          mobileDeviceDataResponse.mobileDevice[0].mobileDeviceid
+        );
       } else {
         setMobileDeviceId(null);
       }
     }
-  }, [productId, mobileDeviceDataResponse]);
-  
+  }, [productId, mobileDeviceDataResponse, setMobileDeviceId]);
 
   const handleCancel = useCallback(() => {
     if (mobileDeviceResponse?.data) {
@@ -165,7 +166,8 @@ function MobileDeviceFeaturesManager({
         });
         setMobileDeviceId(mobileDeviceResponse.mobileDevice.mobileDeviceid);
         setIsDisabled(true);
-      } catch (error) {
+      } catch {
+        toast.error("Ocurrió un error al agregar.");
         return;
       }
     }
@@ -179,7 +181,8 @@ function MobileDeviceFeaturesManager({
             mobileDeviceData: mobileDeviceRequest,
           });
           setIsDisabled(true);
-        } catch (error) {
+        } catch {
+          toast.error("Ocurrió un error al actualizar");
           return;
         }
       }

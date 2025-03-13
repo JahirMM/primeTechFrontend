@@ -25,7 +25,6 @@ function RecentSection() {
     );
   }
 
-
   return (
     <section className="py-10 mt-20 bg-sectionColor" id="recentSection">
       <Marquee />
@@ -87,8 +86,13 @@ function RecentSection() {
                       ¡Descubre algo nuevo! Explora nuestros productos y
                       encuentra algo que te encante.
                     </p>
-                    <button className="px-4 py-2 mt-3 text-xs text-white uppercase rounded-xl bg-primaryColor">
+                    <button
+                      type="button"
+                      className="px-4 py-2 mt-3 text-xs text-white uppercase rounded-xl bg-primaryColor"
+                      aria-label="Ver productos"
+                    >
                       Ver productos
+                      <span className="sr-only">Ver productos</span>
                     </button>
                   </article>
                 </li>
@@ -102,7 +106,11 @@ function RecentSection() {
                 ¡Descubre algo nuevo! Explora nuestros productos y encuentra
                 algo que te encante.
               </p>
-              <Link href={"/products"} className="px-4 py-2 mt-3 text-xs text-white uppercase rounded-xl bg-primaryColor">
+              <Link
+                href={"/products"}
+                className="px-4 py-2 mt-3 text-xs text-white uppercase rounded-xl bg-primaryColor"
+                aria-label="Ver productos"
+              >
                 Ver productos
               </Link>
             </article>

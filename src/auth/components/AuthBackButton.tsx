@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function AuthBackButton() {
   return (
-    <Link href={"/"} className="flex items-center gap-x-3">
+    <Link href={"/"} className="flex items-center gap-x-3" aria-label="Volver">
       <span className="p-2 rounded-full bg-secondaryColor">
         <ArrowIcon className="rotate-180 size-3" />
       </span>

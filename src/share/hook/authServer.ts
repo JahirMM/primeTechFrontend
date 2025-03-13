@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { verifyJWT } from "../utils/verifyJWT";
 
-export async function useAuthServer(): Promise<boolean> {
+export async function authServer(): Promise<boolean> {
   const cookieStore = await cookies();
   const token = cookieStore.get(process.env.NEXT_COOKIE_NAME || "jwt");
 
