@@ -14,7 +14,6 @@ function ProductDetailsImages({ productId }: { productId: string }) {
     isError: hasProductImagesError,
   } = useGetProductImages(productId);
 
-
   const productImages = productImagesData?.productImages || [];
 
   const getInitialSelectedImage = (images: ProductImageInterface[]) => {
@@ -32,7 +31,10 @@ function ProductDetailsImages({ productId }: { productId: string }) {
 
   if (
     productImages.length > 0 &&
-    (!selectedImage || !productImages.some((img) => img.productImageId === selectedImage.imageId))
+    (!selectedImage ||
+      !productImages.some(
+        (img) => img.productImageId === selectedImage.imageId
+      ))
   ) {
     setSelectedImage(getInitialSelectedImage(productImages));
   }
@@ -63,7 +65,9 @@ function ProductDetailsImages({ productId }: { productId: string }) {
                 src={backendDomain + imageUrl}
                 alt="Imagen secundaria"
                 className="border border-gray-500 cursor-pointer size-20"
-                onClick={() => setSelectedImage({ imageId: productImageId, imageUrl })}
+                onClick={() =>
+                  setSelectedImage({ imageId: productImageId, imageUrl })
+                }
               />
             ))}
       </div>

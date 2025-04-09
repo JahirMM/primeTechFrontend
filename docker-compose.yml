@@ -1,0 +1,15 @@
+services:
+  primetech-frontend:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    networks:
+      - primetech-network
+    environment:
+      NODE_ENV: production
+
+networks:
+  primetech-network:
+    name: primetech-network
